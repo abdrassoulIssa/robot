@@ -23,7 +23,6 @@ public class DrawOnImage extends PApplet{
 		 if (keyPressed == false){
 			 image(limage,0,0, width,height);
 		 }
-	
 		 grille(30, 30);
 	}
 	
