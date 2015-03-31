@@ -1,10 +1,16 @@
 package processing;
 
+import java.awt.Color;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class Ball extends PApplet{
+public class DinamicGrid extends PApplet{
 	private static final long serialVersionUID = 1L;
+	private List<Point> fillCells;
 	
 	PImage pimg;
 	//COORDONNÉES DE LA BALLE DANS LE SYSTÈME DE LA GRILLE
@@ -14,23 +20,26 @@ public class Ball extends PApplet{
 	int dy = 1;
 
 	public void setup() {
-		size(640,600);
 		frameRate(8);
 		size(640,480);
+		fillCells = new ArrayList<Point>();
 	}
 
 	public void draw() {
-	  x += dx;
-	  y += dy;
-	  if (x >= 20 || x <= 0) dx = -dx;
-	  if (y >= 19 || y <= 0) dy = -dy;
-	  grille(30, 30); 
-	  /*
-	  // BALLE
-	  fill(0);
-	  ellipse(x*30 + 10, y*30 + 10, 20, 20);
-	  fill(255);
-	  */
+
+        fillCell(20,0);
+        fillCell(1,0);
+        fillCell(2,2);
+        fillCell(20,15);
+		g.fill(255, 255, 255);
+		grille(30, 30); 
+		for (Point fillCell : fillCells) {
+		    int cellX = fillCell.x * 30;
+		    int cellY = fillCell.y * 30;
+		    g.fill(255, 0, 0);
+		    g.rect(cellX, cellY, 30, 30);
+		}
+
 	}
 	
 	private void grille(int gwidth,int gheight){
@@ -43,11 +52,17 @@ public class Ball extends PApplet{
 		    }
 		  }
 	}
+	
+    public void fillCell(int x, int y) {
+        fillCells.add(new Point(x, y));
+        repaint();
+    }
 
 	public void mousePressed() {
 	  // CONVERSION DES COORDONNÉES DE LA SOURIS DANS LE SYSTEME DE LA GRILLE
 	  x = (int)(mouseX/30.0); 
 	  y = (int)(mouseY/30.0);
+	  fillCell(x,y);
 	  println("("+x+","+y+")");
 	}
 
