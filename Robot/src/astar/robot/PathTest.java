@@ -20,5 +20,6 @@ public class PathTest{
 		 map.display();
 		 System.out.println("Path length"+path.getLength());
 		 System.out.println(path.getY(15));
+		 System.out.println("Bonjour");
 	}
 }
