@@ -15,7 +15,7 @@ public class DrawOnImage extends PApplet{
 	public void setup(){
 		 size(640,480);
 		 pg = createGraphics(width, height);
-		 limage=loadImage("../img/2.jpg");
+		 limage=loadImage("../img/hollande.jpg");
 	}
 
 	public void draw(){
@@ -32,7 +32,8 @@ public class DrawOnImage extends PApplet{
 		int nc = height/gheight;
 		  // GRILLE
 		pg.beginDraw(); 
-		pg.fill(0, 0, 0, 0);
+		//pg.fill(0, 0, 0, 0);
+		  pg.fill(255, 255, 255, 0);
 		  for(int i=0;i<nl;i++){
 		    for(int j=0;j<nc;j++){
 		      pg.rect(0 + i*gwidth, 0 + j*gheight, gwidth, gheight);

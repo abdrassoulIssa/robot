@@ -16,7 +16,11 @@ import javax.swing.JPanel;
 
 public class PaintRectangle extends JPanel {
 
-    private Point mouseLocation;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Point mouseLocation;
 
     public PaintRectangle() {
         setPreferredSize(new Dimension(500, 500));

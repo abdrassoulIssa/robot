@@ -14,10 +14,14 @@ import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
 public class ImageProcessingFrame extends JFrame {
   
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JMenuBar menuBar;
 	private JMenu fileMenu, filterMenu, resizeMenu;
 	private ImageProcessing imageProcessing;
-	private final String[] EXTENSION=new String[]{"jpg","idx","hash","Hash"};
+	//private final String[] EXTENSION=new String[]{"jpg","idx","hash","Hash"};
 
 	public ImageProcessingFrame () 
     {
