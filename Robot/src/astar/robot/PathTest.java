@@ -1,4 +1,6 @@
 package astar.robot;
+import java.io.IOException;
+
 import astar.AStarPathFinder;
 import astar.Path;
 import astar.PathFinder;
@@ -10,7 +12,7 @@ import astar.PathFinder;
  */
 public class PathTest{
 	
-	public static void main(String[] argv) {
+	public static void main(String[] argv) throws IOException {
 		/** The map on which the units will move */
 		 RobotMap map      = new RobotMap("data/map3.dat");
 		/** The path finder we'll use to search our map */

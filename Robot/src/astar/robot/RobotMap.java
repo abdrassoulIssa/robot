@@ -1,7 +1,10 @@
 package astar.robot;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
@@ -39,12 +42,16 @@ public class RobotMap implements TileBasedMap {
 		fillArea(8,8,6,10,BLOCK);
 	}
 	
-	public RobotMap(String filename){
+	public RobotMap(String filename) throws IOException{
+		readMatrix(filename);
+	}
+	
+
+	
+	private void readMatrix(String filename){
 		try
 		{
-			File fp=new File(filename);
-		    @SuppressWarnings("resource")
-			Scanner sc = new Scanner(fp);
+			Scanner sc = new Scanner(new File(filename));
 		    sc.useLocale(Locale.US);
 		    int nl=sc.nextInt();
 		    int nc=sc.nextInt();
@@ -52,10 +59,11 @@ public class RobotMap implements TileBasedMap {
 		    for (int i=0; i<nl; i++)
 		    	 for (int j=0; j<nc; j++)
 		    terrain[i][j]= sc.nextInt();
+		    sc.close();
 		 }
 		 catch (FileNotFoundException e){
 		  System.out.println("File not found.");
-		 }		
+		 }
 	}
 
 	/**
@@ -132,9 +140,9 @@ public class RobotMap implements TileBasedMap {
 		
 	}
 	
-	public static void main(String[]args){
-		//RobotMap robot = new RobotMap("data/map.dat");
-		RobotMap robot = new RobotMap();
+	public static void main(String[]args) throws IOException{
+		RobotMap robot = new RobotMap("data/map1.dat");
+		//RobotMap robot = new RobotMap();
 		robot.display();
 	}
 }
