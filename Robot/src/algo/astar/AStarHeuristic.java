@@ -1,4 +1,4 @@
-package astar;
+package algo.astar;
 /**
  * The description of a class providing a cost for a given tile based
  * on a target location and entity being moved. This heuristic controls

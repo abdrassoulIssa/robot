@@ -1,6 +1,6 @@
-package astar.robot;
+package algo.astar.robot;
 
-import astar.Mover;
+import algo.astar.Mover;
 
 /**
  * A mover to represent one of a ID based unit in our example

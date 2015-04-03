@@ -1,4 +1,4 @@
-package astar;
+package algo.astar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

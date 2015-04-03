@@ -1,4 +1,4 @@
-package astar;
+package algo.astar;
 /**
  * A heuristic that uses the tile that is closest to the target
  * as the next best tile.

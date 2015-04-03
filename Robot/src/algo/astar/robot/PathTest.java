@@ -1,9 +1,9 @@
-package astar.robot;
+package algo.astar.robot;
 import java.io.IOException;
 
-import astar.AStarPathFinder;
-import astar.Path;
-import astar.PathFinder;
+import algo.astar.AStarPathFinder;
+import algo.astar.Path;
+import algo.astar.PathFinder;
 
 /**
  * A simple test to show some path finding at unit movement

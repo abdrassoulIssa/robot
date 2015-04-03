@@ -1,4 +1,4 @@
-package astar;
+package algo.astar;
 /**
  * A tagging interface for an object representing the entity in the game that
  * is going to moving along the path. This allows us to pass around entity/state
