@@ -1,6 +1,10 @@
 package processing;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +37,14 @@ public class DinamicGrid extends PApplet{
         fillCell(20,15);
 		g.fill(255, 255, 255);
 		grille(30, 30); 
+		
 		for (Point fillCell : fillCells) {
 		    int cellX = fillCell.x * 30;
 		    int cellY = fillCell.y * 30;
 		    g.fill(255, 0, 0);
 		    g.rect(cellX, cellY, 30, 30);
 		}
+		
 
 	}
 	
