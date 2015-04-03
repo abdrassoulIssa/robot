@@ -70,6 +70,7 @@ public class DinamicGrid extends PApplet{
 	  y = (int)(mouseY/30.0);
 	  fillCell(x,y);
 	  println("("+x+","+y+")");
+	  println("("+mouseX+","+mouseY+")");
 	}
 
 }

@@ -1,9 +1,14 @@
 package algo.otsu;
  
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
  
 public class OtsuBinarize {
@@ -11,19 +16,83 @@ public class OtsuBinarize {
     private static BufferedImage original, grayscale, binarized;
  
     public static void main(String[] args) throws IOException {
+    	System.out.println(System.getProperty("user.dir"));
  
-        File original_f = new File(args[0]+".jpg");
+        File original_f = new File(args[0]+".png");
         String output_f = args[0]+"_bin";
         original = ImageIO.read(original_f);
+        original = scale(original, 640, 480);
+
         grayscale = toGray(original);
         binarized = binarize(grayscale);
+        
+        int [][] map = new int [21][16];
+        System.out.println(map.length);
+        readImagePixelsInMatrix(original,map);
+       
+        for (int i = 0; i < map.length; i++) {
+        	for (int j = 0; j < map[0].length; j++) {
+				System.out.print(map[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+        writeMatrix("data/map4.data", map);
         writeImage(output_f);         
- 
+    }
+    
+    public static void readImagePixelsInMatrix(BufferedImage image, int [][] map){
+    	BufferedImage binarized = binarize(toGray(image));
+    	System.out.println(binarized.getWidth());
+    	
+
+    	for(int i=0; i<map.length; i++) {
+            for(int j=0; j<map[0].length; j++) {
+                // Get pixels
+            	int x = (int)( Math.abs(i*30 - 21) + 1)/2;
+            	int y = (int)(Math.abs(j*30 - 16) + 1)/2;
+            	//System.out.println("x = "+x+" y = "+y);
+                int pixels = new Color(binarized.getRGB(x, y)).getRed();
+                if(pixels == 255) {
+                	map[i][j] = 1;
+                }
+                else {
+                	map[i][j] = 0;
+                }
+            }
+        }
+    	
+    }
+    
+    public static void writeMatrix(String filename,int [][]map) throws IOException{
+    	File fp = new File(filename);
+		if(!fp.exists()){
+			fp.createNewFile();
+		}
+		
+		try(BufferedWriter buffer = new BufferedWriter(new FileWriter(fp))) {
+			for (int i = 0; i < map.length; i++) {
+				for (int j = 0; j < map[0].length; j++) {
+					buffer.write(map[i][j]+" ");
+				}
+				buffer.newLine();
+			}
+			
+			buffer.flush();
+		}
     }
  
     private static void writeImage(String output) throws IOException {
         File file = new File(output+".jpg");
         ImageIO.write(binarized, "jpg", file);
+    }
+    public static BufferedImage scale(BufferedImage source, int width, int height) {
+        BufferedImage buf = new BufferedImage(width, height, BufferedImage.SCALE_DEFAULT);
+        Graphics2D g = buf.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(source, 0, 0, width, height, null);
+        g.dispose();
+        return buf;
     }
  
     // Return histogram of grayscale image
@@ -57,9 +126,9 @@ public class OtsuBinarize {
  
                 // Get pixels by R, G, B
                 alpha = new Color(original.getRGB(i, j)).getAlpha();
-                red = new Color(original.getRGB(i, j)).getRed();
+                red   = new Color(original.getRGB(i, j)).getRed();
                 green = new Color(original.getRGB(i, j)).getGreen();
-                blue = new Color(original.getRGB(i, j)).getBlue();
+                blue  = new Color(original.getRGB(i, j)).getBlue();
  
                 red = (int) (0.21 * red + 0.71 * green + 0.07 * blue);
                 // Return back to original format
