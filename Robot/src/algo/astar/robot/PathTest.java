@@ -1,4 +1,5 @@
 package algo.astar.robot;
+
 import java.io.IOException;
 
 import algo.astar.AStarPathFinder;
@@ -20,8 +21,10 @@ public class PathTest{
 		 
 		 Path path = finder.findPath(new Robot(1), 0, 0, 19, 19);
 		 map.display();
+		 
 		 System.out.println("Path length"+path.getLength());
-		 System.out.println(path.getY(15));
-		 System.out.println("Bonjour");
+		 for (int i = 0; i < path.getLength(); i++) {
+			 System.out.println("("+path.getX(i)+","+path.getY(i)+")");
+		 }
 	}
 }

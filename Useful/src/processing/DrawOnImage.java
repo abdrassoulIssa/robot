@@ -10,19 +10,17 @@ public class DrawOnImage extends PApplet{
 	 */
 	private static final long serialVersionUID = 1L;
 	PImage limage; // préparer une image
-	PGraphics pg; // creer une image dans la mémoire
+	PGraphics pg;  // creer une image dans la mémoire
 
 	public void setup(){
 		 size(640,480);
-		 pg = createGraphics(width, height);
-		 limage=loadImage("../img/hollande.jpg");
+		 pg     = createGraphics(width, height);
+		 limage =loadImage("../img/blobs.png");
 	}
 
 	public void draw(){
-		 background(0);
-		 if (keyPressed == false){
-			 image(limage,0,0, width,height);
-		 }
+		 background(255);
+		 image(limage,0,0, width,height);
 		 grille(30, 30);
 	}
 	

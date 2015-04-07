@@ -142,5 +142,6 @@ public class RobotMap implements TileBasedMap {
 		RobotMap robot = new RobotMap("data/map1.dat");
 		//RobotMap robot = new RobotMap();
 		robot.display();
+		System.out.println(1+""+2);
 	}
 }
