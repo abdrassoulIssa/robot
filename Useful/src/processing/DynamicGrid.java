@@ -1,9 +1,6 @@
 package processing;
 
-<<<<<<< HEAD:Useful/src/processing/DinamicGrid.java
 
-=======
->>>>>>> 267dbeba71a45a7ffb800a008d4ca12da1e4e29e:Useful/src/processing/DynamicGrid.java
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +12,11 @@ import processing.core.PImage;
 public class DynamicGrid extends PApplet{
 	private static final long serialVersionUID = 1L;
 	private List<Point> fillCells;
-<<<<<<< HEAD:Useful/src/processing/DinamicGrid.java
-	
-	PImage pimg;
-	//COORDONNÉES DE LA BALLE DANS LE SYSTÈME DE LA GRILLE
-	int x, y;
-=======
 	private PGraphics pg;  // create a image in the buffer
 	private PImage pimg;  // prepare a image
 	private int x; //Mouse click x coordinate
 	private int y; //Mouse click y coordinate
->>>>>>> 267dbeba71a45a7ffb800a008d4ca12da1e4e29e:Useful/src/processing/DynamicGrid.java
+
 
 	public void setup() {
 		frameRate(8);
