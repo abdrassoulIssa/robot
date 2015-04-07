@@ -18,7 +18,7 @@ public class OtsuBinarize {
     public static void main(String[] args) throws IOException {
     	System.out.println(System.getProperty("user.dir"));
  
-        File original_f = new File(args[0]+".png");
+        File original_f = new File(args[0]+".jpg");
         String output_f = args[0]+"_bin";
         original = ImageIO.read(original_f);
         original = scale(original, 640, 480);
@@ -45,7 +45,6 @@ public class OtsuBinarize {
     	BufferedImage binarized = binarize(toGray(image));
     	System.out.println(binarized.getWidth());
     	
-
     	for(int i=0; i<map.length; i++) {
             for(int j=0; j<map[0].length; j++) {
                 // Get pixels
@@ -77,7 +76,6 @@ public class OtsuBinarize {
 				}
 				buffer.newLine();
 			}
-			
 			buffer.flush();
 		}
     }
@@ -209,9 +207,7 @@ public class OtsuBinarize {
  
             }
         }
- 
         return binarized;
- 
     }
  
     // Convert R, G, B, Alpha to standard 8 bit

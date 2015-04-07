@@ -1,10 +1,6 @@
 package processing;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Label;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +14,7 @@ public class DinamicGrid extends PApplet{
 	
 	PImage pimg;
 	//COORDONNÉES DE LA BALLE DANS LE SYSTÈME DE LA GRILLE
-	int x = (int)(Math.random()*21 + 0);
-	int y = (int)(Math.random()*20 + 0); 
-	int dx = 1;
-	int dy = 1;
+	int x, y;
 
 	public void setup() {
 		frameRate(8);
