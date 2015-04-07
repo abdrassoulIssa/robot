@@ -1,32 +1,28 @@
 package processing;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Label;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
 
 public class DynamicGrid extends PApplet{
 	private static final long serialVersionUID = 1L;
 	private List<Point> fillCells;
-	
-	PImage pimg;
-	//COORDONNÉES DE LA BALLE DANS LE SYSTÈME DE LA GRILLE
-	int x = (int)(Math.random()*21 + 0);
-	int y = (int)(Math.random()*20 + 0); 
-	int dx = 1;
-	int dy = 1;
+	private PGraphics pg;  // create a image in the buffer
+	private PImage pimg;  // prepare a image
+	private int x; //Mouse click x coordinate
+	private int y; //Mouse click y coordinate
 
 	public void setup() {
 		frameRate(8);
 		size(640,480);
 		fillCells = new ArrayList<Point>();
+		pg     = createGraphics(width, height);
+		pimg   = loadImage("../img/blobs.png");
 	}
 
 	public void draw() {
@@ -35,9 +31,10 @@ public class DynamicGrid extends PApplet{
         fillCell(1,0);
         fillCell(2,2);
         fillCell(20,15);
+        
 		g.fill(255, 255, 255);
-		grille(30, 30); 
-		
+		image(pimg,0,0, width,height);
+		dynamicGrid(30, 30); 
 		for (Point fillCell : fillCells) {
 		    int cellX = fillCell.x * 30;
 		    int cellY = fillCell.y * 30;
@@ -48,15 +45,31 @@ public class DynamicGrid extends PApplet{
 
 	}
 	
-	private void grille(int gwidth,int gheight){
+	@SuppressWarnings("unused")
+	private void staticGrid(int gwidth,int gheight){
 		int nl = width/gwidth;
 		int nc = height/gheight;
-		  // GRILLE
-		  for(int i=0;i<nl;i++){
+
+		for(int i=0;i<nl;i++){
 		    for(int j=0;j<nc;j++){
 		      rect(0 + i*gwidth, 0 + j*gheight, gwidth, gheight);
 		    }
 		  }
+	}
+	
+	private void dynamicGrid(int gwidth,int gheight){
+		int nl = width/gwidth;
+		int nc = height/gheight;
+		pg.beginDraw(); 
+		//pg.fill(0, 0, 0, 0);
+		  pg.fill(255, 255, 255, 0);
+		  for(int i=0;i<nl;i++){
+		    for(int j=0;j<nc;j++){
+		      pg.rect(0 + i*gwidth, 0 + j*gheight, gwidth, gheight);
+		    }
+		  }
+		pg.endDraw();
+		image(pg,0,0);
 	}
 	
     public void fillCell(int x, int y) {
@@ -65,7 +78,7 @@ public class DynamicGrid extends PApplet{
     }
 
 	public void mousePressed() {
-	  // CONVERSION DES COORDONNÉES DE LA SOURIS DANS LE SYSTEME DE LA GRILLE
+	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  x = (int)(mouseX/30.0); 
 	  y = (int)(mouseY/30.0);
 	  fillCell(x,y);
