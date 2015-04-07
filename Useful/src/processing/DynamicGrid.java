@@ -1,6 +1,5 @@
 package processing;
 
-
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +25,12 @@ public class DynamicGrid extends PApplet{
 	}
 
 	public void draw() {
-
         fillCell(20,0);
         fillCell(1,0);
         fillCell(2,2);
         fillCell(20,15);
         
+        //g.fill(color.getRGB());
 		g.fill(255, 255, 255);
 		image(pimg,0,0, width,height);
 		dynamicGrid(30, 30); 
