@@ -12,7 +12,7 @@ import java.util.List;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class DinamicGrid extends PApplet{
+public class DynamicGrid extends PApplet{
 	private static final long serialVersionUID = 1L;
 	private List<Point> fillCells;
 	
