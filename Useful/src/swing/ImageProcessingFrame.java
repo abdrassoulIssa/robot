@@ -27,7 +27,7 @@ public class ImageProcessingFrame extends JFrame {
     {
 		super("ImageProcessing");
 		imageProcessing = new ImageProcessing();
-		setResizable (true);
+		setResizable(true);
 		setSize (640, 480);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		build();

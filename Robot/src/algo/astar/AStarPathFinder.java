@@ -71,7 +71,6 @@ public class AStarPathFinder implements PathFinder {
 		if (map.blocked(mover, tx, ty)) {
 			return null;
 		}
-		System.out.println("findPath");
 		// initial state for A star. The closed group is empty. Only the starting
 		// tile is in the open list and it'e're already there
 		nodes[sx][sy].cost = 0;
@@ -93,7 +92,6 @@ public class AStarPathFinder implements PathFinder {
 			if (current == nodes[tx][ty]) {
 				break;
 			}
-			System.out.println("findPath");
 
 			removeFromOpen(current);
 			addToClosed(current);
@@ -179,6 +177,8 @@ public class AStarPathFinder implements PathFinder {
 			target = target.parent;
 		}
 		path.prependStep(sx,sy);
+		System.out.println("findPath");
+
 		// thats it, we have our path 
 		return path;
 	}
