@@ -26,7 +26,6 @@ public class DrawPath extends PApplet{
 	private static final int maxSearchDistance = 500;
 	private static final String MAPPATH = "../data/map2.dat";
 
-	JButton button = new JButton("Choose file...");
 	public void setup(){
 		size(640, 480);
 		pg        = createGraphics(width, height);

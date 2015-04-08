@@ -2,9 +2,11 @@ package swing;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.PrintStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,7 +20,6 @@ public class LayoutTest extends JFrame {
 	MyProcessingSketch sketch = new MyProcessingSketch();
 	public LayoutTest() {
 		super("RCRTL");
-		
 		init();
 		setSize(640, 480);
 		Dimension dimScreen = getToolkit().getScreenSize();
@@ -27,6 +28,7 @@ public class LayoutTest extends JFrame {
 		setVisible(true);
 	}
 	private void init(){
+		Container container = getContentPane();
 		sketch.init();
 		sketch.start();
 		ImageIcon icon = null;
@@ -40,8 +42,8 @@ public class LayoutTest extends JFrame {
 		panel = makePanelWithFlowLayout();
 		tabbedPane.addTab("FlowLayout", icon, panel, "une info bulle");
 
-		getContentPane().setLayout(new GridLayout(1, 1));
-		getContentPane().add(tabbedPane);
+		container.setLayout(new GridLayout(1, 1));
+		container.add(tabbedPane);
 	}
 	
 	private JPanel makePanelWithBorderLayout() {
@@ -73,6 +75,16 @@ public class LayoutTest extends JFrame {
 	
 	public static void main(String[] args) {
 		new LayoutTest();
+	}
+	
+	/**
+	 *  Dans cette méthode, il faut mettre System.out dans une variable locale elle-même nomée out. 
+	 *  Ceci est pour éviter de recalculer System.out à chaque passage dans la boucle.
+	 *  Lorsque l'on programme une méthode, il est important d'éviter de recalculer les mêmes valeurs. 
+	 */
+	public void printToConsole(){
+		PrintStream out = System.out;
+		out.print("Bonjour");
 	}
 		  
 }
