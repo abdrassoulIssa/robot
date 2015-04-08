@@ -24,7 +24,7 @@ public class DrawPath extends PApplet{
 	private RobotMap map;
 	private PathFinder finder;
 	private static final int maxSearchDistance = 500;
-	private static final String MAPPATH = "../data/map2.dat";
+	private static final String MAPPATH = "data/map2.dat";
 
 	public void setup(){
 		size(640, 480);
