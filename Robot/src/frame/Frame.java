@@ -11,10 +11,15 @@ import javax.swing.JTabbedPane;
 
 public class Frame extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7673339013524116854L;
+
 	public Frame() {
 		super("RCRTL");
 		init();
-		setSize(640, 480);
+		setSize(640, 800);
 		Dimension dimScreen = getToolkit().getScreenSize();
 		setLocation((dimScreen.width-getWidth())/2,(dimScreen.height-getHeight())/2);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

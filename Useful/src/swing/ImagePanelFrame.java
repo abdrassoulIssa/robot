@@ -6,6 +6,10 @@ import javax.swing.JFrame;
 
 public class ImagePanelFrame extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6747269961690021300L;
 	private ImagePanel imagePanel;
 	public ImagePanelFrame() throws IOException {
 		// TODO Auto-generated constructor stub

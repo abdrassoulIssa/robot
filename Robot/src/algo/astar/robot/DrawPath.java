@@ -1,11 +1,9 @@
 package algo.astar.robot;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.swing.JButton;
 
 import algo.astar.AStarPathFinder;
 import algo.astar.Path;
@@ -24,7 +22,7 @@ public class DrawPath extends PApplet{
 	private RobotMap map;
 	private PathFinder finder;
 	private static final int maxSearchDistance = 500;
-	private static final String MAPPATH = "data/map2.dat";
+	private static final String MAPPATH = "data/map3.dat";
 
 	public void setup(){
 		size(640, 480);
@@ -112,8 +110,9 @@ public class DrawPath extends PApplet{
 	public void keyPressed() {
 
 		if(keyCode == ENTER){
-			pg.clear();
 			cells.clear();
+			pg.clear();
+			g.clear();
 			background(255, 255, 255, 0);
 		}
 	}

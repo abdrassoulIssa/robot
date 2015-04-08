@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 
 public class ImageProcessing extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3663886615952931538L;
 	BufferedImage img = null;
 	public ImageProcessing(){
 	    setBackground (Color.WHITE);

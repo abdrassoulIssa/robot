@@ -9,6 +9,10 @@ import algo.astar.robot.DrawPath;
 
 public class Simulation extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1001951408054203780L;
 	private JButton restart;
 	private DrawPath dpath;
 	public Simulation() {
