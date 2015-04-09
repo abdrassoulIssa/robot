@@ -19,7 +19,7 @@ public class Frame extends JFrame{
 	public Frame() {
 		super("RCRTL");
 		init();
-		setSize(640, 800);
+		setSize(620, 715);
 		Dimension dimScreen = getToolkit().getScreenSize();
 		setLocation((dimScreen.width-getWidth())/2,(dimScreen.height-getHeight())/2);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +33,7 @@ public class Frame extends JFrame{
 		JTabbedPane tabbedPane = new JTabbedPane();
 		Component panel = new Simulation();
 		
+		//tabbedPane.setBounds(0, 0, 500, 500);
 		tabbedPane.addTab("Simulation", icon,panel, "Alstar algorithm");
 		tabbedPane.setSelectedIndex(0);//DEFINIT L'ONGLET ACTIF AU DEMARRAGE DE L'API
 		

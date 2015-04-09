@@ -25,7 +25,7 @@ public class DrawPath extends PApplet{
 	private static final String MAPPATH = "data/map3.dat";
 
 	public void setup(){
-		size(640, 480);
+		size(600, 600);
 		pg        = createGraphics(width, height);
 		cells     = new HashMap<String, Cell>();
 		try {
