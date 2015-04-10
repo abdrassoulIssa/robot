@@ -50,8 +50,9 @@ public class Simulation extends JPanel implements ActionListener{
 		panel.add(choosemap);
 		panel.add(start);
 		panel.add(restart);
-		panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.GRAY, Color.GRAY));
-		
+		panel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, 
+													Color.GRAY, Color.GRAY));
+
 		add(BorderLayout.CENTER,dpath);
 		add(BorderLayout.SOUTH, panel);
 	}

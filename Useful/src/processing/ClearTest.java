@@ -3,6 +3,7 @@ package processing;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
+@SuppressWarnings("serial")
 public class ClearTest extends PApplet {
 
 	PGraphics pg;

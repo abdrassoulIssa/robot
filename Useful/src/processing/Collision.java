@@ -1,6 +1,7 @@
 package processing;
 
 import processing.core.PApplet;
+@SuppressWarnings("serial")
 public class Collision extends PApplet{
 	//Déclaration d'une variable contenant le nombre de balles
 	int nbreBalle = 3;

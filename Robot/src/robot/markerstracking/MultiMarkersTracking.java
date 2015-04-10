@@ -9,8 +9,8 @@ import codeanticode.gsvideo.*; // The GSVideo library
 
 public class MultiMarkersTracking extends PApplet{
 	private static final long serialVersionUID = 1L;
-	private String camPara     = "/home/issa/workspaceSTAGE/Robot/resources/data/camera_para.dat";
-	private String patternPath = "/home/issa/workspaceSTAGE/Robot/resources/data/";
+	private String camPara     = "/home/issa/workspaceSTAGE/Robot/resources/camera_para.dat";
+	private String patternPath = "/home/issa/workspaceSTAGE/Robot/resources/patterns/";
 	private String background  ="/home/issa/workspaceSTAGE/Robot/resources/img/canvas.png";
 	private static final int SCREEN_WIDTH  = 640;
 	private static final int SCREEN_HEIGHT = 360;
