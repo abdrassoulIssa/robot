@@ -1,4 +1,4 @@
-package algo.astar.robot;
+package robot.algo.astar.robot;
 
 import java.awt.Color;
 

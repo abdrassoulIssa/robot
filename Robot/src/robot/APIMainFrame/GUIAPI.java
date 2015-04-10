@@ -1,4 +1,4 @@
-package frame;
+package robot.APIMainFrame;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -9,14 +9,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-public class Frame extends JFrame{
+public class GUIAPI extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7673339013524116854L;
 
-	public Frame() {
+	public GUIAPI() {
 		super("RCRTL");
 		init();
 		setSize(620, 715);
@@ -43,10 +43,4 @@ public class Frame extends JFrame{
 		container.setLayout(new GridLayout(1, 1));
 		container.add(tabbedPane);
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(System.getProperty("user.dir"));
-		new Frame();
-	}
-
 }

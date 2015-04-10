@@ -1,16 +1,15 @@
-package algo.astar.robot;
+package robot.algo.astar.robot;
 
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 
-
-import algo.astar.AStarPathFinder;
-import algo.astar.Path;
-import algo.astar.PathFinder;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
+import robot.algo.astar.AStarPathFinder;
+import robot.algo.astar.Path;
+import robot.algo.astar.PathFinder;
 
 @SuppressWarnings("serial")
 public class DrawPath extends PApplet{
@@ -107,13 +106,10 @@ public class DrawPath extends PApplet{
 	  println("("+x+","+y+")");
 	}
 	
-	public void keyPressed() {
-
-		if(keyCode == ENTER){
-			cells.clear();
-			pg.clear();
-			g.clear();
-			background(255, 255, 255, 0);
-		}
+	public void restart() {
+		cells.clear();
+		g.clear();
+		pg.clear();
+		background(255, 255, 255, 0);
 	}
 }

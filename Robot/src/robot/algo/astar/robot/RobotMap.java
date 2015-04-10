@@ -1,4 +1,4 @@
-package algo.astar.robot;
+package robot.algo.astar.robot;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
-import algo.astar.Mover;
-import algo.astar.TileBasedMap;
+import robot.algo.astar.Mover;
+import robot.algo.astar.TileBasedMap;
 
 /**
  * The data map from our example game. This holds the state and context of each tile

@@ -1,4 +1,4 @@
-package algo.otsu;
+package robot.algo.otsu;
  
 import java.awt.Color;
 import java.awt.Graphics2D;

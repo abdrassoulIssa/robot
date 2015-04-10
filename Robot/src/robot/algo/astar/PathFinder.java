@@ -1,4 +1,4 @@
-package algo.astar;
+package robot.algo.astar;
 /**
  * A description of an implementation that can find a path from one 
  * location on a tile map to another based on information provided
