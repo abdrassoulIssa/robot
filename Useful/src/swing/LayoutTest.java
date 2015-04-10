@@ -17,6 +17,10 @@ import javax.swing.JTabbedPane;
 import processing.MyProcessingSketch;
 
 public class LayoutTest extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	MyProcessingSketch sketch = new MyProcessingSketch();
 	public LayoutTest() {
 		super("RCRTL");

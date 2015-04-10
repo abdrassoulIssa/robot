@@ -8,7 +8,11 @@ import javax.swing.*;
  * operations and can paint itself.
  */
 public class CGMoveASprite extends JFrame {
-   // Name-constants for the various dimensions
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+// Name-constants for the various dimensions
    public static final int CANVAS_WIDTH = 400;
    public static final int CANVAS_HEIGHT = 140;
    public static final Color CANVAS_BG_COLOR = Color.CYAN;
@@ -95,7 +99,12 @@ public class CGMoveASprite extends JFrame {
  
    /** DrawCanvas (inner class) is a JPanel used for custom drawing */
    class DrawCanvas extends JPanel {
-      @Override
+      /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
       public void paintComponent(Graphics g) {
          super.paintComponent(g);
          setBackground(CANVAS_BG_COLOR);

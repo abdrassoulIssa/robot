@@ -1,12 +1,12 @@
 package robot.algo.astar.robot;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PImage;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
@@ -17,26 +17,23 @@ public class DrawPath extends PApplet{
 
 	private PGraphics pg;  // create a image in the buffer
 	@SuppressWarnings("unused")
-	private PImage pimg;  // prepare a image
+	private Cell startPoint;
+	private Cell wayPoint = new Cell(0, 0);
+	
 	private RobotMap map;
 	private PathFinder finder;
+	private boolean diagMovment = false;
 	private static final int maxSearchDistance = 500;
-	private static final String MAPPATH = "data/map3.dat";
+	
 
 	public void setup(){
 		size(600, 600);
 		pg        = createGraphics(width, height);
 		cells     = new HashMap<String, Cell>();
-		try {
-			map    = new RobotMap(MAPPATH);
-			finder = new AStarPathFinder(map, maxSearchDistance, false);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void draw(){
+		
 		fillCell(0, 0, Color.BLUE);
 		g.fill(255);
 		dynamicGrid(30,30);
@@ -53,10 +50,12 @@ public class DrawPath extends PApplet{
 		}
 		
 		//The blocks will be colored by red
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 20; j++) {
-				if(map.getTerrain(i, j) == 1){
-					fillCell(i, j, Color.RED);
+		if(isMapNotEmpty()){
+			for (int i = 0; i < 20; i++) {
+				for (int j = 0; j < 20; j++) {
+					if(map.getTerrain(i, j) == 1){
+						fillCell(i, j, Color.RED);
+					}
 				}
 			}
 		}
@@ -84,7 +83,7 @@ public class DrawPath extends PApplet{
     	cells.put(new String(x+""+y), new Cell(x,y,color));
     	repaint();
     }
-	public void setColor(int x,int y, Color color) {
+	public void setCellColor(int x,int y, Color color) {
 		String key = new String(x+""+y);
 		Cell cell  = cells.get(key);
 		cell.setColor(color);
@@ -95,21 +94,52 @@ public class DrawPath extends PApplet{
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/30; 
 	  int y = mouseY/30;
-	  
-	  Path path = finder.findPath(new Robot(1), 0, 0, x, y);
-	  if(path != null){
-		  for (int i = 0; i < path.getLength(); i++) {
-			  fillCell(path.getX(i),path.getY(i),Color.green);
-		  }
-	  }
-
+	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
+	  restart();
+	  fillCell(x, y, Color.BLACK);
+	  wayPoint = new Cell(x, y, Color.BLACK);
 	  println("("+x+","+y+")");
 	}
 	
+	public void addMap(String filename){
+		try {
+			if (isMapNotEmpty()) {
+				restart();
+			}
+			map    = new RobotMap(filename);
+			finder = new AStarPathFinder(map, maxSearchDistance, diagMovment);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean isMapNotEmpty(){
+		return map != null;
+	}
+	
+	public void authorizeDiagMovment(boolean diagMovment){
+		this.diagMovment = diagMovment;
+	}
+	
 	public void restart() {
-		cells.clear();
-		g.clear();
-		pg.clear();
-		background(255, 255, 255, 0);
+		if(cells != null){
+			cells.clear();
+			g.clear();
+			pg.clear();
+			background(255, 255, 255, 0);
+		}
+	}
+	
+	public void start(){
+		  if(isMapNotEmpty()){
+			  Path path = finder.findPath(new Robot(1), 0, 0,
+					  		wayPoint.getX(), wayPoint.getY());
+			  if(path != null){
+				  for (int i = 0; i < path.getLength()-1; i++) {
+					  fillCell(path.getX(i),path.getY(i),Color.green);
+				  }
+			  }
+		  }
 	}
 }
