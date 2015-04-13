@@ -24,14 +24,15 @@ public class Simulation extends JPanel implements ActionListener{
 	private JLabel info;
 	private DrawPath dpath;
 	public Simulation() {
+		dpath = new DrawPath();
+		dpath.init();
+		dpath.start();
 		build();
 	}
 	
 	private void build(){
 		setLayout(new BorderLayout());
-		dpath = new DrawPath();
-		dpath.init();
-		dpath.start();
+
 		Dimension buttonDim = new Dimension(100, 40);
 		JPanel panel = new JPanel();
 		restart   = new JButton("restart");

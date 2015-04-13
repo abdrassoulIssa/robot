@@ -2,22 +2,9 @@ package robot.markerstracking;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
 
-import processing.core.PApplet;
-
-public class TestMethods extends PApplet{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public void setup(){
-		
-	}
-	
-	public void draw(){
-		
-	}
+public class TestMethods {
 	
 	public static String[] loadPatternFilenames(String path) {
 	    File folder = new File(path);
@@ -25,15 +12,16 @@ public class TestMethods extends PApplet{
 	      public boolean accept(File dir, String name) {
 	        return name.toLowerCase().endsWith(".patt");
 	      }
-	    }; // fin filenameFilter
-	     return folder.list(pattFilter); // renvoi le tableau de String
-	} // fin loadPatternFilenames
+	    }; 
+	     return folder.list(pattFilter); 
+	} 
 	
 	public static void main(String[]args){
-		String patternPath = "/resources/data/1.patt";
-		String [] patterns = TestMethods.loadPatternFilenames(patternPath);
-		System.out.println("Bonjour");
-		System.out.println(patterns.toString());
+		
+		String patternPath = "resources/patterns/";
+		System.out.println(patternPath);
+		String [] patterns = loadPatternFilenames(patternPath);
+		System.out.println(Arrays.toString(patterns));
 		
 	}
 
