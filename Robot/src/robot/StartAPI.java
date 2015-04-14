@@ -3,7 +3,7 @@ package robot;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import robot.APIMainFrame.GUIAPI;
+import robot.APIMainFrame.MainFrame;
 
 public class StartAPI {
 
@@ -16,7 +16,7 @@ public class StartAPI {
 	        SwingUtilities.invokeLater(new Runnable() {
 	            @Override
 	            public void run() {
-	            	new GUIAPI();
+	            	new MainFrame();
 	            }
 	        });
 		

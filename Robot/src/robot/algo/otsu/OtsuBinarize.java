@@ -8,56 +8,61 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
  
 public class OtsuBinarize {
  
-    private static BufferedImage original, grayscale, binarized;
+    @SuppressWarnings("unused")
+	private static BufferedImage original, grayscale, binarized;
  
     public static void main(String[] args) throws IOException {
-    	System.out.println(System.getProperty("user.dir"));
- 
-        File original_f = new File(args[0]+".jpg");
-        String output_f = args[0]+"_bin";
+    	String imgPath = "resources/img/navmap.JPG";
+        File original_f = new File(imgPath);
+        String output_f = imgPath+"_bin";
         original = ImageIO.read(original_f);
         original = scale(original, 640, 480);
 
-        grayscale = toGray(original);
-        binarized = binarize(grayscale);
+        //grayscale = toGray(original);
+        //binarized = binarize(grayscale);
+        binarized = binarize(original);
         
-        int [][] map = new int [21][16];
+        int [][] map = new int [16][21];
         System.out.println(map.length);
-        readImagePixelsInMatrix(original,map);
+        imageToMatrix(original,map);
        
+        
         for (int i = 0; i < map.length; i++) {
-        	for (int j = 0; j < map[0].length; j++) {
-				System.out.print(map[i][j]+" ");
-			}
-			System.out.println();
+			System.out.println(Arrays.toString(map[i]));
 		}
 		
-        writeMatrix("data/map4.data", map);
+		
+		
+        writeMatrix("resources/map/map4.data", map);
         writeImage(output_f);         
     }
     
-    public static void readImagePixelsInMatrix(BufferedImage image, int [][] map){
-    	BufferedImage binarized = binarize(toGray(image));
-    	System.out.println(binarized.getWidth());
+    public static void imageToMatrix(BufferedImage image, int [][] map){
+    	//BufferedImage binarized = binarize(toGray(image));
+    	BufferedImage binarized = binarize(image);
     	
     	for(int i=0; i<map.length; i++) {
             for(int j=0; j<map[0].length; j++) {
                 // Get pixels
-            	int x = (int)( Math.abs(i*30 - 21) + 1)/2;
-            	int y = (int)(Math.abs(j*30 - 16) + 1)/2;
+            	
+            	int x = Math.abs(i*30 - 16);
+            	int y = Math.abs(j*30 - 21);
             	//System.out.println("x = "+x+" y = "+y);
-                int pixels = new Color(binarized.getRGB(x, y)).getRed();
+                int pixels = new Color(binarized.getRGB(y, x)).getRed();
+                        	
                 if(pixels == 255) {
                 	map[i][j] = 1;
                 }
                 else {
                 	map[i][j] = 0;
                 }
+                
             }
         }
     	
@@ -112,7 +117,8 @@ public class OtsuBinarize {
     }
  
     // The luminance method
-    private static BufferedImage toGray(BufferedImage original) {
+    @SuppressWarnings("unused")
+	private static BufferedImage toGray(BufferedImage original) {
  
         int alpha, red, green, blue;
         int newPixel;
@@ -181,7 +187,7 @@ public class OtsuBinarize {
  
     }
  
-    private static BufferedImage binarize(BufferedImage original) {
+    public static BufferedImage binarize(BufferedImage original) {
  
         int red;
         int newPixel;

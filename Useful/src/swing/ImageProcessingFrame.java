@@ -21,7 +21,6 @@ public class ImageProcessingFrame extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu fileMenu, filterMenu, resizeMenu;
 	private ImageProcessing imageProcessing;
-	//private final String[] EXTENSION=new String[]{"jpg","idx","hash","Hash"};
 
 	public ImageProcessingFrame () 
     {

@@ -12,19 +12,20 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.BevelBorder;
 
-public class GUIAPI extends JFrame{
+public class MainFrame extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7673339013524116854L;
 
-	public GUIAPI() {
+	public MainFrame() {
 		super("RCRTL");
 		init();
 		setSize(640, 750);
-		Dimension dimScreen = getToolkit().getScreenSize();
-		setLocation((dimScreen.width-getWidth())/2,(dimScreen.height-getHeight())/2);
+		//Dimension dimScreen = getToolkit().getScreenSize();
+		//setLocation((dimScreen.width-getWidth())/2,(dimScreen.height-getHeight())/2);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -38,7 +39,7 @@ public class GUIAPI extends JFrame{
 		
 		
 		//tabbedPane.setBounds(0, 0, 500, 500);
-		tabbedPane.addTab("Simulation", icon,panel, "Alstar algorithm");
+		tabbedPane.addTab("A Star simulation", icon,panel, "Alstar algorithm");
 		tabbedPane.setSelectedIndex(0);//DEFINIT L'ONGLET ACTIF AU DEMARRAGE DE L'API
 		
 		JPanel scenepan = new JPanel();
@@ -46,6 +47,7 @@ public class GUIAPI extends JFrame{
 		scenepan.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		panel = new SceneCapture();
 		scenepan.add(panel);
+		tabbedPane.addTab("Image processing", icon, new ImageFrame(), "Binarize image");
 		tabbedPane.addTab("Scene Capture ", icon, scenepan, "Video");
 
 		container.setLayout(new GridLayout(1, 1));
