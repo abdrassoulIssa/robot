@@ -53,10 +53,17 @@ public class ImageProcessing extends PApplet {
 		repaint();
 	}
 	
-	public void saveImage(File file) throws IOException{
+	public boolean saveImage(File file) {
 		String format ="JPG";
 		BufferedImage image = toBufferedImage(img);
-		ImageIO.write(image, format, file);   
+		try {
+			ImageIO.write(image, format, file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}   
+		return true;
 	}
 	
 	private BufferedImage toBufferedImage(PImage pimage) {
