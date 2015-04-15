@@ -65,7 +65,7 @@ public class ImageFrame extends JPanel implements ActionListener{
 		panButton.add(save);
 				  
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,panCenter,panButton);
-		splitPane.setDividerLocation(600);
+		splitPane.setDividerLocation(500);
 		splitPane.setAutoscrolls(true);
 		splitPane.setOneTouchExpandable(true);
 		add(splitPane);

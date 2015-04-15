@@ -24,19 +24,24 @@ public class DrawPath extends PApplet{
 	private PathFinder finder;
 	private boolean diagMovment = false;
 	private static final int maxSearchDistance = 500;
+	private static final int cellsize = 30;
+	private int rows, cols;
 	
 
 	public void setup(){
-		size(600, 600);
-		pg        = createGraphics(width, height);
-		cells     = new HashMap<String, Cell>();
+		size(640, 480);
+		pg    = createGraphics(width, height);
+		cells = new HashMap<String, Cell>();
+		cols  = width/cellsize;
+		rows  = height/cellsize;
+		println("row="+cols);
 	}
 	
 	public void draw(){
 		
 		fillCell(0, 0, Color.BLUE);
 		g.fill(255);
-		dynamicGrid(30,30);
+		dynamicGrid();
 		
 		Iterator<String> keySetIterator = cells.keySet().iterator();
 		while(keySetIterator.hasNext()){
@@ -51,8 +56,8 @@ public class DrawPath extends PApplet{
 		
 		//The blocks will be colored by red
 		if(isMapNotEmpty()){
-			for (int i = 0; i < 20; i++) {
-				for (int j = 0; j < 20; j++) {
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
 					if(map.getTerrain(i, j) == 1){
 						fillCell(i, j, Color.RED);
 					}
@@ -61,14 +66,14 @@ public class DrawPath extends PApplet{
 		}
 		
 	}
-	private void dynamicGrid(int gwidth,int gheight){
-		int nl = width/gwidth;
-		int nc = height/gheight;
+	private void dynamicGrid(){
 		pg.beginDraw(); 
 		  pg.fill(255, 255, 255, 0);
-		  for(int i=0;i<nl;i++){
-		    for(int j=0;j<nc;j++){
-		      pg.rect(0 + i*gwidth, 0 + j*gheight, gwidth, gheight);
+		  for(int i=0;i<cols;i++){
+		    for(int j=0;j<rows;j++){
+		      int x = i*cellsize;
+		      int y = j*cellsize;
+		      pg.rect(x, y, cellsize, cellsize);
 		    }
 		  }
 		pg.endDraw();
@@ -94,11 +99,11 @@ public class DrawPath extends PApplet{
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/30; 
 	  int y = mouseY/30;
+	  println(x+"--"+y);
 	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
 	  restart();
 	  fillCell(x, y, Color.BLACK);
 	  wayPoint = new Cell(x, y, Color.BLACK);
-	  println("("+x+","+y+")");
 	}
 	
 	public void addMap(String filename){

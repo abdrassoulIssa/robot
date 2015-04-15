@@ -22,7 +22,7 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		super("RCRTL");
 		init();
-		setSize(640, 750);
+		setSize(670, 640);
 		//Dimension dimScreen = getToolkit().getScreenSize();
 		//setLocation((dimScreen.width-getWidth())/2,(dimScreen.height-getHeight())/2);
 		setLocationRelativeTo(null);
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame{
 	
 		ImageIcon icon = null;
 		JTabbedPane tabbedPane = new JTabbedPane();
-		Component panel = new Simulation();
+		Component panel = new SimulationFrame();
 		
 		
 		//tabbedPane.setBounds(0, 0, 500, 500);
@@ -45,7 +45,7 @@ public class MainFrame extends JFrame{
 		JPanel scenepan = new JPanel();
 		scenepan.setPreferredSize(new Dimension(600,600));
 		scenepan.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		panel = new SceneCapture();
+		panel = new SceneCaptureFrame();
 		scenepan.add(panel);
 		tabbedPane.addTab("Image processing", icon, new ImageFrame(), "Binarize image");
 		tabbedPane.addTab("Scene Capture ", icon, scenepan, "Video");

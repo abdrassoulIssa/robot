@@ -24,10 +24,10 @@ public class OtsuBinarize {
         original = ImageIO.read(original_f);
         original = scale(original, 640, 480);
 
-        //grayscale = toGray(original);
-        //binarized = binarize(grayscale);
-        binarized = binarize(original);
-        
+        grayscale = toGray(original);
+        binarized = binarize(grayscale);
+        //binarized = binarize(original);
+        /*
         int [][] map = new int [16][21];
         System.out.println(map.length);
         imageToMatrix(original,map);
@@ -36,11 +36,9 @@ public class OtsuBinarize {
         for (int i = 0; i < map.length; i++) {
 			System.out.println(Arrays.toString(map[i]));
 		}
-		
-		
-		
-        writeMatrix("resources/map/map4.data", map);
-        writeImage(output_f);         
+        saveMap("resources/map/map4.data", map);
+        */
+        saveImage(output_f);         
     }
     
     public static void imageToMatrix(BufferedImage image, int [][] map){
@@ -68,7 +66,7 @@ public class OtsuBinarize {
     	
     }
     
-    public static void writeMatrix(String filename,int [][]map) throws IOException{
+    public static void saveMap(String filename,int [][]map) throws IOException{
     	File fp = new File(filename);
 		if(!fp.exists()){
 			fp.createNewFile();
@@ -85,7 +83,7 @@ public class OtsuBinarize {
 		}
     }
  
-    private static void writeImage(String output) throws IOException {
+    private static void saveImage(String output) throws IOException {
         File file = new File(output+".jpg");
         ImageIO.write(binarized, "jpg", file);
     }
@@ -134,7 +132,7 @@ public class OtsuBinarize {
                 green = new Color(original.getRGB(i, j)).getGreen();
                 blue  = new Color(original.getRGB(i, j)).getBlue();
  
-                red = (int) (0.21 * red + 0.71 * green + 0.07 * blue);
+                red = (int) (0.2126 * red + 0.7152 * green + 0.0722 * blue);
                 // Return back to original format
                 newPixel = colorToRGB(alpha, red, red, red);
  
