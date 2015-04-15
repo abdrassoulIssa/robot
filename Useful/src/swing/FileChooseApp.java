@@ -7,6 +7,7 @@ import java.io.*;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class FileChooseApp extends JFrame implements ActionListener {
 	
 	
@@ -112,7 +113,6 @@ public class FileChooseApp extends JFrame implements ActionListener {
 	* the string from the textarea into it.
 	**/
 	private boolean saveFile () {
-		File file = null;
 		JFileChooser fc = new JFileChooser ();
 
 		// Start in current directory

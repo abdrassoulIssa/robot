@@ -23,7 +23,7 @@ public class DrawPath extends PApplet{
 	private RobotMap map;
 	private PathFinder finder;
 	private boolean diagMovment = false;
-	private static final int maxSearchDistance = 500;
+	private static final int maxSearchDistance = 1000;
 	private static final int cellsize = 30;
 	private int rows, cols;
 	
@@ -34,7 +34,7 @@ public class DrawPath extends PApplet{
 		cells = new HashMap<String, Cell>();
 		cols  = width/cellsize;
 		rows  = height/cellsize;
-		println("row="+cols);
+		print(width);
 	}
 	
 	public void draw(){
@@ -59,7 +59,7 @@ public class DrawPath extends PApplet{
 			for (int i = 0; i < rows; i++) {
 				for (int j = 0; j < cols; j++) {
 					if(map.getTerrain(i, j) == 1){
-						fillCell(i, j, Color.RED);
+						fillCell(j, i, Color.RED);
 					}
 				}
 			}
@@ -103,7 +103,7 @@ public class DrawPath extends PApplet{
 	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
 	  restart();
 	  fillCell(x, y, Color.BLACK);
-	  wayPoint = new Cell(x, y, Color.BLACK);
+	  wayPoint = new Cell(y, x, Color.BLACK);
 	}
 	
 	public void addMap(String filename){
@@ -142,7 +142,9 @@ public class DrawPath extends PApplet{
 					  		wayPoint.getX(), wayPoint.getY());
 			  if(path != null){
 				  for (int i = 0; i < path.getLength()-1; i++) {
-					  fillCell(path.getX(i),path.getY(i),Color.green);
+					  int x = path.getY(i);
+					  int y = path.getX(i);
+					  fillCell(x,y,Color.green);
 				  }
 			  }
 		  }

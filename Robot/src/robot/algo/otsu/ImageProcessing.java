@@ -17,23 +17,26 @@ public class ImageProcessing extends PApplet {
 	 */
 	private static final long serialVersionUID = -3565779079810954270L;
 	PImage img = null;
-	private static final int SWIDTH = 640;
-	private static final int SHEIGHT = 480;
+	private static final int cellsize = 30;
+	private int rows, cols;
 	
 	public void setup(){
-		setSize(SWIDTH, SHEIGHT);
+		size(640,480);
+		cols  = width/cellsize;
+		rows  = height/cellsize;
 	}
 	
 	public void draw(){
-		
 		
 		if(img != null){
 			image(img, 0, 0);
 		}
 		else{
-			for(int i =0;i<21;i++){
-				for(int j = 0;j<16;j++){
-					g.rect(i*30, j*30, 30, 30);
+			for(int i =0;i<cols;i++){
+				for(int j = 0;j<rows;j++){
+					int x = i*cellsize;
+					int y = j*cellsize;
+					g.rect(x, y, cellsize, cellsize);
 				}
 			}
 		}
@@ -42,7 +45,7 @@ public class ImageProcessing extends PApplet {
 	
 	public void addImage(String filename){
 		img = loadImage(filename);
-		img.resize(SWIDTH, SHEIGHT);
+		img.resize(width, height);
 		repaint();
 	}
 	

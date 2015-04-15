@@ -115,14 +115,14 @@ public class RobotMap implements TileBasedMap {
 	 * @see TileBasedMap#getHeightInTiles()
 	 */
 	public int getHeightInTiles() {
-		return WIDTH;
+		return HEIGHT;
 	}
 
 	/**
 	 * @see TileBasedMap#getWidthInTiles()
 	 */
 	public int getWidthInTiles() {
-		return HEIGHT;
+		return WIDTH;
 	}
 
 

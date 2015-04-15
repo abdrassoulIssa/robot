@@ -8,13 +8,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
  
 public class OtsuBinarize {
  
-    @SuppressWarnings("unused")
 	private static BufferedImage original, grayscale, binarized;
  
     public static void main(String[] args) throws IOException {
@@ -115,7 +113,6 @@ public class OtsuBinarize {
     }
  
     // The luminance method
-    @SuppressWarnings("unused")
 	private static BufferedImage toGray(BufferedImage original) {
  
         int alpha, red, green, blue;

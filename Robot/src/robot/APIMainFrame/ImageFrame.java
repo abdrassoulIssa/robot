@@ -39,7 +39,7 @@ public class ImageFrame extends JPanel implements ActionListener{
 		panCenter.setLayout(new BoxLayout(panCenter, BoxLayout.Y_AXIS));
 		panCenter.setBorder(BorderFactory.createCompoundBorder(
               null,
-              BorderFactory.createEmptyBorder(10,10,10,10)));
+              BorderFactory.createEmptyBorder(5,2,2,2)));
 		//panCenter.setSize(640, 600);
 		imageProcessing = new ImageProcessing();
 		imageProcessing.init();
@@ -69,7 +69,7 @@ public class ImageFrame extends JPanel implements ActionListener{
 		splitPane.setAutoscrolls(true);
 		splitPane.setOneTouchExpandable(true);
 		add(splitPane);
-		setBounds(150, 150, 685, 550);
+		//setBounds(150, 150, 685, 550);
 	}
 
 	
