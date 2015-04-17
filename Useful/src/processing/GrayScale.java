@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
 
+@SuppressWarnings("serial")
 public class GrayScale extends PApplet{
 	PImage map;
 	int cellsize = 30;

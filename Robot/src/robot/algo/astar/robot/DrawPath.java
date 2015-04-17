@@ -47,11 +47,11 @@ public class DrawPath extends PApplet{
 		while(keySetIterator.hasNext()){
 		  String key = keySetIterator.next();
 		  Cell cell  = cells.get(key);
-		  int cellX  = cell.getX() * 30;
-		  int cellY  = cell.getY() * 30;
+		  int cellX  = cell.getX() * cellsize;
+		  int cellY  = cell.getY() * cellsize;
 		  int cellColor = cell.getColor();
 		  g.fill(cellColor);
-		  g.rect(cellX, cellY, 30, 30);
+		  g.rect(cellX, cellY, cellsize, cellsize);
 		}
 		
 		//The blocks will be colored by red
