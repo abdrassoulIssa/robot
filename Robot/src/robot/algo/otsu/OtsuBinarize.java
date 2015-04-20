@@ -43,7 +43,7 @@ public class OtsuBinarize {
 		}
 		*/
         imageToMatrix();
-        saveMap("resources/map/map4.data", map);
+        saveMap("resources/map/map4.dat", map);
         
         saveImage(output_f);         
     }
@@ -79,7 +79,6 @@ public class OtsuBinarize {
     	for(int i=0; i<map.length; i++) {
             for(int j=0; j<map[0].length; j++) {
                 // Get pixels
-            	
             	int x = Math.abs(i*30 - 16);
             	int y = Math.abs(j*30 - 21);
             	//System.out.println("x = "+x+" y = "+y);
@@ -91,7 +90,6 @@ public class OtsuBinarize {
                 else {
                 	map[i][j] = 0;
                 }
-                
             }
         }
     	
