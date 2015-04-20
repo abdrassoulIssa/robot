@@ -9,40 +9,73 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static robot.algo.otsu.OTSUConstant.*;
+
 import javax.imageio.ImageIO;
  
 public class OtsuBinarize {
  
+	@SuppressWarnings("unused")
 	private static BufferedImage original, grayscale, binarized;
- 
+	private static int [][] map = new int[ROWS][COLS];
+
     public static void main(String[] args) throws IOException {
+    	
+    	
+
+    	
     	String imgPath = "resources/img/navmap.JPG";
         File original_f = new File(imgPath);
         String output_f = imgPath+"_bin";
         original = ImageIO.read(original_f);
-        original = scale(original, 640, 480);
-
+        original = scale(original, WIDTH, HEIGHT);
+        binarized = binarize(original);
+        /*
         grayscale = toGray(original);
         binarized = binarize(grayscale);
-        //binarized = binarize(original);
-        /*
+
         int [][] map = new int [16][21];
         System.out.println(map.length);
         imageToMatrix(original,map);
        
-        
         for (int i = 0; i < map.length; i++) {
 			System.out.println(Arrays.toString(map[i]));
 		}
+		*/
+        imageToMatrix();
         saveMap("resources/map/map4.data", map);
-        */
+        
         saveImage(output_f);         
+    }
+    
+    private static  boolean findObstacle(int xStart, int yStart){
+		for(int  x = yStart; x < yStart+CELLSIZE; x++){
+			for(int y = xStart; y < xStart+CELLSIZE; y++){				
+                int cellX = x/CELLSIZE;
+				int cellY = y/CELLSIZE;
+                int pixels = new Color(binarized.getRGB(y, x)).getRed();
+
+				if(pixels == 255){
+					map[cellX][cellY] = 1;
+					System.out.println(x+"-"+y);
+					break;
+				}
+			}
+		}
+    	return true;
+    }
+    
+    public static void imageToMatrix(){
+		for (int i = 0; i <= (WIDTH - CELLSIZE); i = i + CELLSIZE) {
+			for (int j = 0; j <=(HEIGHT -CELLSIZE); j = j + CELLSIZE) {
+				findObstacle(i, j);
+			}
+		}
     }
     
     public static void imageToMatrix(BufferedImage image, int [][] map){
     	//BufferedImage binarized = binarize(toGray(image));
-    	BufferedImage binarized = binarize(image);
-    	
+    	binarized = binarize(image);
     	for(int i=0; i<map.length; i++) {
             for(int j=0; j<map[0].length; j++) {
                 // Get pixels
@@ -107,12 +140,12 @@ public class OtsuBinarize {
                 histogram[red]++;
             }
         }
- 
         return histogram;
  
     }
  
     // The luminance method
+	@SuppressWarnings("unused")
 	private static BufferedImage toGray(BufferedImage original) {
  
         int alpha, red, green, blue;

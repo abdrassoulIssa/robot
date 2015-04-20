@@ -8,7 +8,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Test {
+public class Test1 {
 	private static final int CELLSIZE = 5;
 	private static final int WIDTH    = 20;
 	private static final int HEIGHT   = 10;
@@ -30,11 +30,11 @@ public class Test {
 	
 
 	
-	public Test(){
+	public Test1(){
 		map = new int[rows][cols];
 	}
 	
-    private  boolean findObstacle(int width, int height, int cellsize){
+    private  boolean isCellBlock(int width, int height, int cellsize){
 		PrintStream out = System.out;
 		for(int  x = height; x < height+cellsize; x++){
 			for(int y = width; y < width+cellsize; y++){
@@ -54,7 +54,7 @@ public class Test {
     	return true;
     }
     
-    private  boolean findObstacle(){
+    private  boolean isCellBlock(){
 		PrintStream out = System.out;
 		boolean res = false;
 		for(int  x = HEIGHT; x < HEIGHT+CELLSIZE; x++){
@@ -76,7 +76,7 @@ public class Test {
     public void imageTOMatrix(){
 		for (int i = 0; i <= (WIDTH - CELLSIZE); i = i + CELLSIZE) {
 			for (int j = 0; j <=(HEIGHT -CELLSIZE); j = j + CELLSIZE) {
-				findObstacle(i, j,CELLSIZE);
+				isCellBlock(i, j,CELLSIZE);
 			}
 		}
 		
@@ -86,7 +86,7 @@ public class Test {
     }
     
 	public static void main(String[] args) throws IOException {
-		Test t = new Test();
+		Test1 t = new Test1();
 		t.imageTOMatrix();
 
 	}
