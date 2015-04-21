@@ -8,22 +8,18 @@ import javax.imageio.ImageIO;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
+import static robot.algo.otsu.OTSUConstant.*;
 public class ImageProcessing extends PApplet {
 	
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3565779079810954270L;
+	private static final long serialVersionUID = 1920274727011984197L;
 	PImage img = null;
-	private static final int cellsize = 30;
-	private int rows, cols;
-	
+	PImage imgcopy;
 	public void setup(){
-		size(640,480);
-		cols  = width/cellsize;
-		rows  = height/cellsize;
+		size(MWIDTH,MHEIGHT);
 	}
 	
 	public void draw(){
@@ -32,11 +28,11 @@ public class ImageProcessing extends PApplet {
 			image(img, 0, 0);
 		}
 		else{
-			for(int i =0;i<cols;i++){
-				for(int j = 0;j<rows;j++){
-					int x = i*cellsize;
-					int y = j*cellsize;
-					g.rect(x, y, cellsize, cellsize);
+			for(int i =0;i<MCOLS;i++){
+				for(int j = 0;j<MROWS;j++){
+					int x = i*CELLSIZE;
+					int y = j*CELLSIZE;
+					g.rect(x, y, CELLSIZE, CELLSIZE);
 				}
 			}
 		}
@@ -45,7 +41,8 @@ public class ImageProcessing extends PApplet {
 	
 	public void addImage(String filename){
 		img = loadImage(filename);
-		img.resize(width, height);
+		img.resize(MWIDTH, MHEIGHT);
+		imgcopy = img;
 		repaint();
 	}
 	
@@ -67,6 +64,10 @@ public class ImageProcessing extends PApplet {
 			return false;
 		}   
 		return true;
+	}
+	
+	public void reset(){
+		img = imgcopy;
 	}
 	
 	private BufferedImage toBufferedImage(PImage pimage) {

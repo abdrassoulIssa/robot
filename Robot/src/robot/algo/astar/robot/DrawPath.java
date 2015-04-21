@@ -33,10 +33,12 @@ public class DrawPath extends PApplet{
 		size(MWIDTH, MHEIGHT);
 		pg    = createGraphics(MWIDTH, MHEIGHT);
 		cells = new HashMap<String, Cell>();
+		pimage = loadImage("resources/img/navmap.JPG");
+		pimage.resize(MWIDTH, MHEIGHT);
 	}
 	
 	public void draw(){
-		
+		image(pimage,0,0, MWIDTH,MHEIGHT);
 		fillCell(0, 0, Color.BLUE);
 		pg.fill(255);
 		dynamicGrid();

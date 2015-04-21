@@ -19,7 +19,6 @@ public class StartAPI {
 	            	new MainFrame();
 	            }
 	        });
-		
 	}
 
 }

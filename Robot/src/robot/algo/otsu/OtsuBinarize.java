@@ -43,10 +43,10 @@ public class OtsuBinarize {
                 int cellX = x/CELLSIZE;
 				int cellY = y/CELLSIZE;
                 int pixels = new Color(binarized.getRGB(y, x)).getRed();
-
+                System.out.println(x+"-"+y);
 				if(pixels == 255){
 					map[cellX][cellY] = 1;
-					System.out.println(x+"-"+y);
+					//System.out.println(x+"-"+y);
 					break;
 				}
 			}
@@ -71,6 +71,8 @@ public class OtsuBinarize {
 		}
 		
 		try(BufferedWriter buffer = new BufferedWriter(new FileWriter(fp))) {
+			buffer.write(MROWS+"\t"+MCOLS);
+			buffer.newLine();
 			for (int i = 0; i < map.length; i++) {
 				for (int j = 0; j < map[0].length; j++) {
 					buffer.write(map[i][j]+" ");

@@ -22,7 +22,7 @@ import robot.algo.otsu.ImageProcessing;
 public class ImageFrame extends JPanel implements ActionListener{
 	
 	private JPanel panCenter, panButton;
-	private JButton open,save,binarize;
+	private JButton open,save,binarize,reset;
 	private ImageProcessing imageProcessing;
 	File file = new File ("filename.jpg");
 	FileFilter fileFilter = new FileFilter();
@@ -58,11 +58,18 @@ public class ImageFrame extends JPanel implements ActionListener{
 		binarize.addActionListener(this);
 		binarize.setPreferredSize(duttonDim);
 		panButton.add(binarize);
+
+		reset = new JButton ("Reset");
+		reset.addActionListener(this);
+		reset.setPreferredSize(duttonDim);
+		panButton.add(reset);
 		
-		save = new JButton ("save");
+		save = new JButton ("Save");
 		save.addActionListener(this);
 		save.setPreferredSize(duttonDim);
 		panButton.add(save);
+
+
 				  
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,panCenter,panButton);
 		splitPane.setDividerLocation(500);
@@ -178,8 +185,11 @@ public class ImageFrame extends JPanel implements ActionListener{
 				);
 			}
 		}
-		else{
+		else if(cmd.equalsIgnoreCase(binarize.getText())){
 			imageProcessing.binairiseImage();
+		}
+		else{
+			imageProcessing.reset();
 		}
 	}
 

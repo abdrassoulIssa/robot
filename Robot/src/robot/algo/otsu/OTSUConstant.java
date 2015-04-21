@@ -7,7 +7,7 @@ public interface OTSUConstant {
 	public static final int MHEIGHT   = 480;
 	
 	//The navigation map description
-	public static final int CELLSIZE = 30;
+	public static final int CELLSIZE  = 40;
 	public static final int MROWS     = MHEIGHT/CELLSIZE;
 	public static final int MCOLS     = MWIDTH/CELLSIZE;
 	
