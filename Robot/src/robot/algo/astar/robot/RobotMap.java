@@ -20,9 +20,9 @@ import robot.algo.astar.TileBasedMap;
  */
 public class RobotMap implements TileBasedMap {
 	/** The map width in tiles */
-	public static final int WIDTH  = 20;
+	public int WIDTH;
 	/** The map height in tiles */
-	public static final int HEIGHT = 20;
+	public int HEIGHT;
 	public static final int ROBOT  = 2;
 	public static final int BLOCK  = 1;
 		
@@ -30,14 +30,14 @@ public class RobotMap implements TileBasedMap {
 	private int[][] terrain;
 	
 	//Create a new test map with some default configuration
-	public RobotMap() {
+	public RobotMap(int rows, int cols) {
 		// create some test data
+		WIDTH  = cols;
+		HEIGHT = rows;
 		terrain= new int[WIDTH][HEIGHT];
 		fillArea(1,1,5,2,BLOCK);
 		fillArea(6,1,2,5,BLOCK);
-		fillArea(0,6,5,2,BLOCK);
-		fillArea(8,4,5,2,BLOCK);
-		fillArea(8,8,6,10,BLOCK);
+
 	}
 	
 	public RobotMap(String filename) throws IOException{
@@ -47,20 +47,20 @@ public class RobotMap implements TileBasedMap {
 
 	
 	private void readMatrix(String filename){
-		try
-		{
+		try{
 			Scanner sc = new Scanner(new File(filename));
 		    sc.useLocale(Locale.US);
-		    int nl=sc.nextInt();
-		    int nc=sc.nextInt();
-		    terrain = new int[nl][nc];
-		    for (int i=0; i<nl; i++)
-		    	 for (int j=0; j<nc; j++)
-		    terrain[i][j]= sc.nextInt();
+
+			WIDTH  = sc.nextInt();
+			HEIGHT = sc.nextInt();
+		    terrain = new int[WIDTH][HEIGHT];
+		    for (int i=0; i<WIDTH; i++)
+		    	 for (int j=0; j<HEIGHT; j++)
+		    		 terrain[i][j]= sc.nextInt();
 		    sc.close();
 		 }
 		 catch (FileNotFoundException e){
-		  System.out.println("File not found.");
+			 System.out.println("File not found.");
 		 }
 	}
 
@@ -115,14 +115,14 @@ public class RobotMap implements TileBasedMap {
 	 * @see TileBasedMap#getHeightInTiles()
 	 */
 	public int getHeightInTiles() {
-		return WIDTH;
+		return HEIGHT;
 	}
 
 	/**
 	 * @see TileBasedMap#getWidthInTiles()
 	 */
 	public int getWidthInTiles() {
-		return HEIGHT;
+		return WIDTH;
 	}
 
 
@@ -139,9 +139,9 @@ public class RobotMap implements TileBasedMap {
 	}
 	
 	public static void main(String[]args) throws IOException{
-		RobotMap robot = new RobotMap("data/map1.dat");
-		//RobotMap robot = new RobotMap();
+		RobotMap robot = new RobotMap("resources/map/map1.dat");
+		//RobotMap robot = new RobotMap(21,16);
 		robot.display();
-		System.out.println(1+""+2);
+		System.out.println(System.getProperty("user.dir"));
 	}
 }

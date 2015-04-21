@@ -7,9 +7,12 @@ import java.util.Iterator;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
+import processing.core.PImage;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
+import static robot.algo.otsu.OTSUConstant.*;
+
 
 @SuppressWarnings("serial")
 public class DrawPath extends PApplet{
@@ -17,58 +20,58 @@ public class DrawPath extends PApplet{
 
 	private PGraphics pg;  // create a image in the buffer
 	@SuppressWarnings("unused")
+	private PImage pimage;
+	@SuppressWarnings("unused")
 	private Cell startPoint;
 	private Cell wayPoint = new Cell(0, 0);
 	
 	private RobotMap map;
 	private PathFinder finder;
-	private boolean diagMovment = false;
-	private static final int maxSearchDistance = 500;
 	
 
 	public void setup(){
-		size(600, 600);
-		pg        = createGraphics(width, height);
-		cells     = new HashMap<String, Cell>();
+		size(WIDTH, HEIGHT);
+		pg    = createGraphics(WIDTH, HEIGHT);
+		cells = new HashMap<String, Cell>();
 	}
 	
 	public void draw(){
 		
 		fillCell(0, 0, Color.BLUE);
-		g.fill(255);
-		dynamicGrid(30,30);
+		pg.fill(255);
+		dynamicGrid();
 		
 		Iterator<String> keySetIterator = cells.keySet().iterator();
 		while(keySetIterator.hasNext()){
 		  String key = keySetIterator.next();
 		  Cell cell  = cells.get(key);
-		  int cellX  = cell.getX() * 30;
-		  int cellY  = cell.getY() * 30;
+		  int cellX  = cell.getX() * CELLSIZE;
+		  int cellY  = cell.getY() * CELLSIZE;
 		  int cellColor = cell.getColor();
-		  g.fill(cellColor);
-		  g.rect(cellX, cellY, 30, 30);
+		  pg.fill(cellColor);
+		  pg.rect(cellX, cellY, CELLSIZE, CELLSIZE);
 		}
 		
 		//The blocks will be colored by red
 		if(isMapNotEmpty()){
-			for (int i = 0; i < 20; i++) {
-				for (int j = 0; j < 20; j++) {
+			for (int i = 0; i < ROWS; i++) {
+				for (int j = 0; j < COLS; j++) {
 					if(map.getTerrain(i, j) == 1){
-						fillCell(i, j, Color.RED);
+						fillCell(j, i, Color.RED);
 					}
 				}
 			}
 		}
 		
 	}
-	private void dynamicGrid(int gwidth,int gheight){
-		int nl = width/gwidth;
-		int nc = height/gheight;
+	private void dynamicGrid(){
 		pg.beginDraw(); 
 		  pg.fill(255, 255, 255, 0);
-		  for(int i=0;i<nl;i++){
-		    for(int j=0;j<nc;j++){
-		      pg.rect(0 + i*gwidth, 0 + j*gheight, gwidth, gheight);
+		  for(int i=0;i<COLS;i++){
+		    for(int j=0;j<ROWS;j++){
+		      int x = i*CELLSIZE;
+		      int y = j*CELLSIZE;
+		      pg.rect(x, y, CELLSIZE, CELLSIZE);
 		    }
 		  }
 		pg.endDraw();
@@ -94,11 +97,11 @@ public class DrawPath extends PApplet{
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/30; 
 	  int y = mouseY/30;
+	  println(x+"--"+y);
 	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
 	  restart();
 	  fillCell(x, y, Color.BLACK);
-	  wayPoint = new Cell(x, y, Color.BLACK);
-	  println("("+x+","+y+")");
+	  wayPoint = new Cell(y, x, Color.BLACK);
 	}
 	
 	public void addMap(String filename){
@@ -118,10 +121,6 @@ public class DrawPath extends PApplet{
 		return map != null;
 	}
 	
-	public void authorizeDiagMovment(boolean diagMovment){
-		this.diagMovment = diagMovment;
-	}
-	
 	public void restart() {
 		if(cells != null){
 			cells.clear();
@@ -137,7 +136,9 @@ public class DrawPath extends PApplet{
 					  		wayPoint.getX(), wayPoint.getY());
 			  if(path != null){
 				  for (int i = 0; i < path.getLength()-1; i++) {
-					  fillCell(path.getX(i),path.getY(i),Color.green);
+					  int x = path.getY(i);
+					  int y = path.getX(i);
+					  fillCell(x,y,Color.green);
 				  }
 			  }
 		  }

@@ -12,7 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import robot.algo.astar.robot.DrawPath;
 
-public class Simulation extends JPanel implements ActionListener{
+public class SimulationFrame extends JPanel implements ActionListener{
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class Simulation extends JPanel implements ActionListener{
 	private JButton start;
 	private JLabel info;
 	private DrawPath dpath;
-	public Simulation() {
+	public SimulationFrame() {
 		dpath = new DrawPath();
 		dpath.init();
 		dpath.start();
@@ -79,7 +79,7 @@ public class Simulation extends JPanel implements ActionListener{
 		        FileNameExtensionFilter filter = new FileNameExtensionFilter(
 		                ".dat files only.", "dat");
 		        chooser.setFileFilter(filter);
-				int returnVal=chooser.showOpenDialog(Simulation.this);
+				int returnVal=chooser.showOpenDialog(SimulationFrame.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					dpath.addMap(chooser.getSelectedFile().toString());
 					info.setText(chooser.getSelectedFile().getName());

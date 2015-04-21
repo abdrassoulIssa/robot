@@ -8,49 +8,79 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+
+import static robot.algo.otsu.OTSUConstant.*;
 
 import javax.imageio.ImageIO;
  
 public class OtsuBinarize {
  
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private static BufferedImage original, grayscale, binarized;
- 
+	private static int [][] map = new int[ROWS][COLS];
+
     public static void main(String[] args) throws IOException {
+    	
+    	
+
+    	
     	String imgPath = "resources/img/navmap.JPG";
         File original_f = new File(imgPath);
         String output_f = imgPath+"_bin";
         original = ImageIO.read(original_f);
-        original = scale(original, 640, 480);
-
-        //grayscale = toGray(original);
-        //binarized = binarize(grayscale);
+        original = scale(original, WIDTH, HEIGHT);
         binarized = binarize(original);
-        
+        /*
+        grayscale = toGray(original);
+        binarized = binarize(grayscale);
+
         int [][] map = new int [16][21];
         System.out.println(map.length);
         imageToMatrix(original,map);
        
-        
         for (int i = 0; i < map.length; i++) {
 			System.out.println(Arrays.toString(map[i]));
 		}
-		
-		
-		
-        writeMatrix("resources/map/map4.data", map);
-        writeImage(output_f);         
+		*/
+        imageToMatrix();
+        saveMap("resources/map/map4.dat", map);
+        
+        saveImage(output_f);         
+    }
+    
+    //Detect if corresponding tile may be a obstacle
+    private static  boolean findObstacle(int xStart, int yStart){
+		for(int  x = yStart; x < yStart+CELLSIZE; x++){
+			for(int y = xStart; y < xStart+CELLSIZE; y++){				
+                int cellX = x/CELLSIZE;
+				int cellY = y/CELLSIZE;
+                int pixels = new Color(binarized.getRGB(y, x)).getRed();
+
+				if(pixels == 255){
+					map[cellX][cellY] = 1;
+					System.out.println(x+"-"+y);
+					break;
+				}
+			}
+		}
+    	return true;
+    }
+    
+    //Convert the binary image to the navigation map
+    public static void imageToMatrix(){
+		for (int i = 0; i <= (WIDTH - CELLSIZE); i = i + CELLSIZE) {
+			for (int j = 0; j <=(HEIGHT -CELLSIZE); j = j + CELLSIZE) {
+				findObstacle(i, j);
+			}
+		}
     }
     
     public static void imageToMatrix(BufferedImage image, int [][] map){
     	//BufferedImage binarized = binarize(toGray(image));
-    	BufferedImage binarized = binarize(image);
-    	
+    	binarized = binarize(image);
     	for(int i=0; i<map.length; i++) {
             for(int j=0; j<map[0].length; j++) {
                 // Get pixels
-            	
             	int x = Math.abs(i*30 - 16);
             	int y = Math.abs(j*30 - 21);
             	//System.out.println("x = "+x+" y = "+y);
@@ -62,13 +92,12 @@ public class OtsuBinarize {
                 else {
                 	map[i][j] = 0;
                 }
-                
             }
         }
     	
     }
     
-    public static void writeMatrix(String filename,int [][]map) throws IOException{
+    public static void saveMap(String filename,int [][]map) throws IOException{
     	File fp = new File(filename);
 		if(!fp.exists()){
 			fp.createNewFile();
@@ -85,7 +114,7 @@ public class OtsuBinarize {
 		}
     }
  
-    private static void writeImage(String output) throws IOException {
+    private static void saveImage(String output) throws IOException {
         File file = new File(output+".jpg");
         ImageIO.write(binarized, "jpg", file);
     }
@@ -111,13 +140,12 @@ public class OtsuBinarize {
                 histogram[red]++;
             }
         }
- 
         return histogram;
  
     }
  
     // The luminance method
-    @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private static BufferedImage toGray(BufferedImage original) {
  
         int alpha, red, green, blue;
@@ -134,7 +162,7 @@ public class OtsuBinarize {
                 green = new Color(original.getRGB(i, j)).getGreen();
                 blue  = new Color(original.getRGB(i, j)).getBlue();
  
-                red = (int) (0.21 * red + 0.71 * green + 0.07 * blue);
+                red = (int) (0.2126 * red + 0.7152 * green + 0.0722 * blue);
                 // Return back to original format
                 newPixel = colorToRGB(alpha, red, red, red);
  

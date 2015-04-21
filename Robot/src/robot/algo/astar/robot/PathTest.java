@@ -15,11 +15,11 @@ public class PathTest{
 	
 	public static void main(String[] argv) throws IOException {
 		/** The map on which the units will move */
-		 RobotMap map      = new RobotMap("data/map3.dat");
+		 RobotMap map      = new RobotMap("resources/map/map1.dat");
 		/** The path finder we'll use to search our map */
 		 PathFinder finder = new AStarPathFinder(map, 400, true);
 		 
-		 Path path = finder.findPath(new Robot(1), 0, 0, 19, 19);
+		 Path path = finder.findPath(new Robot(1), 0, 0, 15, 18);
 		 map.display();
 		 
 		 System.out.println("Path length"+path.getLength());
