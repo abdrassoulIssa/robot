@@ -39,7 +39,7 @@ public class MainFrame extends JFrame{
 		
 		
 		//tabbedPane.setBounds(0, 0, 500, 500);
-		tabbedPane.addTab("A Star simulation", icon,panel, "Alstar algorithm");
+		tabbedPane.addTab("A Star simulation", icon,panel, "Astar algorithm");
 		tabbedPane.setSelectedIndex(0);//DEFINIT L'ONGLET ACTIF AU DEMARRAGE DE L'API
 		
 		JPanel scenepan = new JPanel();

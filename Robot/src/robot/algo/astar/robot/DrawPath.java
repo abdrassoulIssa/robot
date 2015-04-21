@@ -30,8 +30,8 @@ public class DrawPath extends PApplet{
 	
 
 	public void setup(){
-		size(WIDTH, HEIGHT);
-		pg    = createGraphics(WIDTH, HEIGHT);
+		size(MWIDTH, MHEIGHT);
+		pg    = createGraphics(MWIDTH, MHEIGHT);
 		cells = new HashMap<String, Cell>();
 	}
 	
@@ -54,8 +54,8 @@ public class DrawPath extends PApplet{
 		
 		//The blocks will be colored by red
 		if(isMapNotEmpty()){
-			for (int i = 0; i < ROWS; i++) {
-				for (int j = 0; j < COLS; j++) {
+			for (int i = 0; i < MROWS; i++) {
+				for (int j = 0; j < MCOLS; j++) {
 					if(map.getTerrain(i, j) == 1){
 						fillCell(j, i, Color.RED);
 					}
@@ -67,8 +67,8 @@ public class DrawPath extends PApplet{
 	private void dynamicGrid(){
 		pg.beginDraw(); 
 		  pg.fill(255, 255, 255, 0);
-		  for(int i=0;i<COLS;i++){
-		    for(int j=0;j<ROWS;j++){
+		  for(int i=0;i<MCOLS;i++){
+		    for(int j=0;j<MROWS;j++){
 		      int x = i*CELLSIZE;
 		      int y = j*CELLSIZE;
 		      pg.rect(x, y, CELLSIZE, CELLSIZE);
