@@ -7,6 +7,7 @@ import java.io.*;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class FileChooseApp extends JFrame implements ActionListener {
 	
 	
