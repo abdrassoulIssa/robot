@@ -48,6 +48,7 @@ public class OtsuBinarize {
         saveImage(output_f);         
     }
     
+    //Detect if corresponding tile may be a obstacle
     private static  boolean findObstacle(int xStart, int yStart){
 		for(int  x = yStart; x < yStart+CELLSIZE; x++){
 			for(int y = xStart; y < xStart+CELLSIZE; y++){				
@@ -65,6 +66,7 @@ public class OtsuBinarize {
     	return true;
     }
     
+    //Convert the binary image to the navigation map
     public static void imageToMatrix(){
 		for (int i = 0; i <= (WIDTH - CELLSIZE); i = i + CELLSIZE) {
 			for (int j = 0; j <=(HEIGHT -CELLSIZE); j = j + CELLSIZE) {
