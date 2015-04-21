@@ -1,21 +1,24 @@
 package swing;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Test {
-	private static final int CELLSIZE = 5;
+	
+	//Image resolution
 	private static final int WIDTH    = 20;
 	private static final int HEIGHT   = 10;
-	int rows     = HEIGHT/CELLSIZE;
-	int cols     = WIDTH/CELLSIZE;
-	private int [][] map;
-	private int [][] pixels = { 
+	
+	//The navigation map parameters
+	private static final int CELLSIZE = 5;
+	private static final int ROWS     = HEIGHT/CELLSIZE;
+	private static final int COLS     = WIDTH/CELLSIZE;
+	private static int [][] map = new int[ROWS][COLS];
+	
+	//The binarized image is represented as some pixels table
+	private static int [][] pixels = { 
 			{0,  0, 0, 0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0}, 
 			{0,  0, 0, 0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0}, 
 			{0,  0, 0, 0,   0,   0,   0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0}, 
@@ -28,23 +31,22 @@ public class Test {
 			{0,  0, 0, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0}
 	};
 	
-
-	
-	public Test(){
-		map = new int[rows][cols];
-	}
-	
-    private  boolean findObstacle(int width, int height, int cellsize){
+	/**
+	 * This method determine the property (obstable, void) of the corresponding cell 
+	 * @param xStart the abscissa start position from which we explore the correspoding cell
+	 * @param yStart the ordinate start position from which we explore the cell
+	 * @return return true if the cell is an obstable
+	 */
+    private static  boolean findObstacle(int xStart, int yStart){
 		PrintStream out = System.out;
-		for(int  x = height; x < height+cellsize; x++){
-			for(int y = width; y < width+cellsize; y++){
+		for(int  x = yStart; x < yStart+CELLSIZE; x++){
+			for(int y = xStart; y < xStart+CELLSIZE; y++){
 				
 				int cellX = x/CELLSIZE;
 				int cellY = y/CELLSIZE;
 				if(pixels[x][y] == 255){
 					map[cellX][cellY] = 1;
-				}else{
-					map[cellX][cellY] = 0;
+					break;
 				}
 				out.print("("+x+" "+y+") ");
 			}
@@ -54,29 +56,13 @@ public class Test {
     	return true;
     }
     
-    private  boolean findObstacle(){
-		PrintStream out = System.out;
-		boolean res = false;
-		for(int  x = HEIGHT; x < HEIGHT+CELLSIZE; x++){
-			for(int y = WIDTH; y < WIDTH+CELLSIZE; y++){
-				
-				int cellX = x/CELLSIZE;
-				int cellY = y/CELLSIZE;
-				if(pixels[x][y] == 255){
-					map[cellX][cellY] = 1;
-					res = true;
-					break;
-				}
-			}
-			if(res = true) break;
-		}
-    	return res;
-    }
-    
-    public void imageTOMatrix(){
+    /**
+     * We must to explore all grid cell determining obstacles
+     */
+    public static void imageToMatrix(){
 		for (int i = 0; i <= (WIDTH - CELLSIZE); i = i + CELLSIZE) {
 			for (int j = 0; j <=(HEIGHT -CELLSIZE); j = j + CELLSIZE) {
-				findObstacle(i, j,CELLSIZE);
+				findObstacle(i, j);
 			}
 		}
 		
@@ -86,8 +72,6 @@ public class Test {
     }
     
 	public static void main(String[] args) throws IOException {
-		Test t = new Test();
-		t.imageTOMatrix();
-
+		imageToMatrix();
 	}
 }

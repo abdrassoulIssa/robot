@@ -19,7 +19,6 @@ public class DrawPath extends PApplet{
 	private HashMap<String, Cell> cells;
 
 	private PGraphics pg;  // create a image in the buffer
-	@SuppressWarnings("unused")
 	private PImage pimage;
 	@SuppressWarnings("unused")
 	private Cell startPoint;
