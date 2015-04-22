@@ -96,8 +96,8 @@ public class DrawPath extends PApplet{
     
 	public void mousePressed() {
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
-	  int x = mouseX/30; 
-	  int y = mouseY/30;
+	  int x = mouseX/CELLSIZE; 
+	  int y = mouseY/CELLSIZE;
 	  println(x+"--"+y);
 	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
 	  restart();

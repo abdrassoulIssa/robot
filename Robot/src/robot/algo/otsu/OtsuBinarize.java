@@ -21,7 +21,7 @@ public class OtsuBinarize {
 
     public static void main(String[] args) throws IOException {
     	
-    	String imgPath = "resources/img/navmap.JPG";
+    	String imgPath = "resources/img/map.JPG";
         File original_f = new File(imgPath);
         String output_f = imgPath+"_bin";
         original = ImageIO.read(original_f);
@@ -32,7 +32,7 @@ public class OtsuBinarize {
        //binarized = binarize(grayscale);
 
         imageToMatrix();
-        saveMap("resources/map/map4.dat", map);
+        saveMap("resources/map/map5.dat", map);
         saveImage(output_f);         
     }
     
