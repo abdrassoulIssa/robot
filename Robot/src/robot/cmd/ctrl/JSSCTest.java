@@ -3,7 +3,7 @@ package robot.cmd.ctrl;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
-public class JSSC {
+public class JSSCTest {
 
     /**
      * @param args the command line arguments
