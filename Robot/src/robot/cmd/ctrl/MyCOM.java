@@ -17,7 +17,7 @@ public class MyCOM {
       // initialization with selecting port for communication
       SerialPort serialPort = new SerialPort("COM3");
  
-      /*
+      
       try {
          // open port for communication
          serialPort.openPort();
@@ -32,6 +32,6 @@ public class MyCOM {
       } catch (SerialPortException ex) {
          System.out.println(ex);
       }
-      */
+      
    }
 }
