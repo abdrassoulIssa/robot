@@ -2,6 +2,7 @@ package robot.cmd.ctrl;
 import java.util.Arrays;
 
 import jssc.SerialPort;
+import jssc.SerialPortException;
 import jssc.SerialPortList;
  
 public class MyCOM {
