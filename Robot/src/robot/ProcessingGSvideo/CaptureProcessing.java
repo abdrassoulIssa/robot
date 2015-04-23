@@ -7,7 +7,6 @@ public class CaptureProcessing extends PApplet{
 
 	public void setup() {
 		size(640, 480);
-
 		String[] cameras = Capture.list();
 		
 		if (cameras.length == 0) {
@@ -31,5 +30,9 @@ public class CaptureProcessing extends PApplet{
 		  cam.read();
 		}
 		image(cam, 0, 0);
+	}
+	public void keyPressed() {
+		if(keyCode == ENTER)
+		  cam.stop();
 	}
 }
