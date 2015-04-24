@@ -13,6 +13,6 @@ public interface OTSUConstant {
 	
 	//A star algorithm parameters
 	public static final int maxSearchDistance = 1000;
-	public static final boolean diagMovment = true;
+	public static final boolean diagMovment = false;
 
 }
