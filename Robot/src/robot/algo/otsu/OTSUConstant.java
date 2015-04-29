@@ -14,5 +14,8 @@ public interface OTSUConstant {
 	//A star algorithm parameters
 	public static final int maxSearchDistance = 1000;
 	public static final boolean diagMovment = false;
+	
+	//MoveRobot parameters
+	public static final int DISTANCE = 1;
 
 }

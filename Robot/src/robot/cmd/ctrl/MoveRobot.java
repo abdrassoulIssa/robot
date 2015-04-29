@@ -7,9 +7,12 @@ import processing.video.Capture;
 @SuppressWarnings("serial")
 public class MoveRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
-	private Serial port;
+	private static Serial port;
 	private Capture cam;
-
+	private static double distance = 001.000;
+	private static double angle    = 000.985;
+	@SuppressWarnings("unused")
+	private static String orientation ="E";
 	
 	public void setup(){
 		size(640, 480);
@@ -38,24 +41,42 @@ public class MoveRobot extends PApplet{
 	
 	public void keyPressed(){
 		 //To control the ground robot manually
-		   if (keyCode==UP){//Forward +
-		  		port.write("d"+"003.200"+"a"+"000.000"+"f");
-		      println("Forward");
-		            }  
-		   if (keyCode==DOWN){//Backward 
-		  		port.write("d"+"000.000"+"a"+"000.000"+"f");
+		   if (keyCode==UP){
+			   MOVEROBOT();
+			   println("Forward");
+		   }  
+		   else if (keyCode==DOWN){
+			   sendTrame(setCMD(000.000, 000.000));
 		      println("Backward");
 		   }
-		   if (keyCode==LEFT){//LEFT
-		  		port.write("d"+"000.800"+"a"+"000.985"+"f");
-		      println("LEFT");
+		   else if (keyCode==LEFT){
+			   TURNLEFT();
+			   println("LEFT");
 		   }
-		   if (keyCode==RIGHT){//RIGHT 
-		  		port.write("d"+"000.800"+"a"+"-000.985"+"f");
-		      println("RIGHT");
+		   else if (keyCode==RIGHT){
+			   TURNRIGHT();
+			   println("RIGHT");
 		   }  
 	}
 	
 	
+	public static void MOVEROBOT(){
+		sendTrame(setCMD(distance,000.000));
+	}
+
+	public static void TURNLEFT(){
+		sendTrame(setCMD(000.000,angle));
+	}
+
+	public static void TURNRIGHT(){
+		sendTrame(setCMD(000.000,-angle));
+	}
+	private static String setCMD(double distance, double angle){
+		return "d"+distance+"a"+angle+"f";
+	}
+	
+	private static void sendTrame(String trame){
+		port.write(trame);
+	}
 
 }
