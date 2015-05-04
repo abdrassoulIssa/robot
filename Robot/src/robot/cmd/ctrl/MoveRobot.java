@@ -1,8 +1,11 @@
 package robot.cmd.ctrl;
 
+import java.awt.Color;
+
 import processing.core.PApplet;
 import processing.serial.*;
 import processing.video.Capture;
+import robot.algo.astar.Path;
 
 @SuppressWarnings("serial")
 public class MoveRobot extends PApplet{
@@ -77,6 +80,39 @@ public class MoveRobot extends PApplet{
 	
 	private static void sendTrame(String trame){
 		port.write(trame);
+	}
+
+	/**
+	 * The robot receives commands as characters to move from one box to another.
+	 * N to move upwards.
+	 * S pour se déplacer vers le bas.
+	 * E pour se déplacer vers le vers la droite.
+	 * W pour se déplacer vers le vers la gauche.
+	 * @param path
+	 * @return chain of travels
+	 */
+
+	private String chainOfTravels(Path path){
+		StringBuilder chain = new StringBuilder();
+		for (int i = 0; i < path.getLength()-1; i++) {
+			 int xC = path.getX(i), xF = path.getX(i+1);
+			 int yC = path.getY(i), yF = path.getY(i+1);
+			 
+			 if(xC > xF && yC == yF){
+				 chain.append("W");
+			 }
+			 if(xC < xF && yC == yF){
+				 chain.append("E");
+			 }
+			 if(yC < yF && xC == xF){
+				 chain.append("N");
+			 }
+			 if(yC > yF && xC == xF){
+				 chain.append("S");
+			 }
+		}
+		
+		return chain.toString();
 	}
 
 }

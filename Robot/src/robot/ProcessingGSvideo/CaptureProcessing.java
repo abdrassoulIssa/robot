@@ -20,7 +20,7 @@ public class CaptureProcessing extends PApplet{
 		  
 		  // The camera can be initialized directly using an 
 		  // element from the array returned by list():
-		  cam = new Capture(this, cameras[1]);
+		  cam = new Capture(this, cameras[0]);
 		  cam.start();     
 		}      
 	}
@@ -29,6 +29,7 @@ public class CaptureProcessing extends PApplet{
 		if (cam.available() == true) {
 		  cam.read();
 		}
+		//cam.resize(WIDTH, HEIGHT);
 		image(cam, 0, 0);
 	}
 	public void keyPressed() {
