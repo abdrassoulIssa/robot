@@ -85,9 +85,9 @@ public class MoveRobot extends PApplet{
 	/**
 	 * The robot receives commands as characters to move from one box to another.
 	 * N to move upwards.
-	 * S pour se déplacer vers le bas.
-	 * E pour se déplacer vers le vers la droite.
-	 * W pour se déplacer vers le vers la gauche.
+	 * S to move down.
+	 * E to move to the right..
+	 * W to move to the left..
 	 * @param path
 	 * @return chain of travels
 	 */
