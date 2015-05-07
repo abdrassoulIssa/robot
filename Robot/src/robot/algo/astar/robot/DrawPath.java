@@ -32,8 +32,6 @@ public class DrawPath extends PApplet{
 		size(MWIDTH, MHEIGHT);
 		pg    = createGraphics(MWIDTH, MHEIGHT);
 		cells = new HashMap<String, Cell>();
-		pimage = loadImage("resources/img/navmap.JPG");
-		pimage.resize(MWIDTH, MHEIGHT);
 	}
 	
 	public void draw(){
@@ -116,6 +114,18 @@ public class DrawPath extends PApplet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void addMap(int [][]robotmap){
+		if (isMapNotEmpty()) {
+			restart();
+		}
+		map    = new RobotMap(robotmap);
+		finder = new AStarPathFinder(map, maxSearchDistance, diagMovment);
+	}
+	public void addImage(String filename){
+		pimage = loadImage(filename);
+		pimage.resize(MWIDTH, MHEIGHT);
 	}
 	
 	private boolean isMapNotEmpty(){

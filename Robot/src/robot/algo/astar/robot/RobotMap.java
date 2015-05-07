@@ -44,7 +44,13 @@ public class RobotMap implements TileBasedMap {
 		readMatrix(filename);
 	}
 	
-
+	//Copy of constructor
+	public RobotMap(int [][]map){
+		WIDTH  = map.length;
+		HEIGHT = map[0].length;
+		terrain= new int[WIDTH][HEIGHT];
+		System.arraycopy(map, 0, terrain, 0, WIDTH);
+	}
 	
 	private void readMatrix(String filename){
 		try{
@@ -139,9 +145,26 @@ public class RobotMap implements TileBasedMap {
 	}
 	
 	public static void main(String[]args) throws IOException{
-		RobotMap robot = new RobotMap("resources/map/map1.dat");
-		//RobotMap robot = new RobotMap(21,16);
-		robot.display();
+		int [][]map = { {0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0},
+						{0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+						{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1},
+						{0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0},
+						{0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+						{1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}};
+		//RobotMap robotmap = new RobotMap("resources/map/map1.dat");
+		//RobotMap robotmap = new RobotMap(21,16);
+		RobotMap robotmap = new RobotMap(map);
+		robotmap.display();
 		System.out.println(System.getProperty("user.dir"));
 	}
 }

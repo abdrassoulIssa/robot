@@ -1,6 +1,7 @@
 package robot.cmd.ctrl;
 
 import java.awt.Color;
+import java.util.Arrays;
 
 import processing.core.PApplet;
 import processing.serial.*;
@@ -13,17 +14,18 @@ public class MoveRobot extends PApplet{
 	private static Serial port;
 	private Capture cam;
 	private static double distance = 001.000;
-	private static double angle    = 000.985;
+	private static double theta    = 000.985;
 	@SuppressWarnings("unused")
 	private static String orientation ="E";
 	
 	public void setup(){
 		size(640, 480);
 		//Initialize Xbee communication port
+		/*
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1];  
 		println(XBeePort);
-		port = new Serial(this, XBeePort, 38400);
+		port = new Serial(this, XBeePort, 38400);*/
 		
 		//Initialize webcam capture
 		String[] cameras = Capture.list();
@@ -31,7 +33,8 @@ public class MoveRobot extends PApplet{
 		  println("There are no cameras available for capture.");
 		  exit();
 		}
-		cam = new Capture(this, cameras[1]);
+		System.out.println(Arrays.toString(cameras));
+		cam = new Capture(this, cameras[0]);
 		cam.start();      
 	}
 
@@ -39,7 +42,7 @@ public class MoveRobot extends PApplet{
 		if (cam.available() == true) {
 			  cam.read();
 		}
-		image(cam, 0, 0);
+		image(cam, 0, 0, width, height);
 	}
 	
 	public void keyPressed(){
@@ -68,14 +71,24 @@ public class MoveRobot extends PApplet{
 	}
 
 	public static void TURNLEFT(){
-		sendTrame(setCMD(000.000,angle));
+		theta += 90;
+		sendTrame(setCMD(000.000,theta));
 	}
 
 	public static void TURNRIGHT(){
-		sendTrame(setCMD(000.000,-angle));
+		theta -= 90;
+		sendTrame(setCMD(000.000,-theta));
 	}
-	private static String setCMD(double distance, double angle){
-		return "d"+distance+"a"+angle+"f";
+	private static void orientation(){
+		if(theta == 360){
+			theta = 0;
+		}
+		if(theta == -180){
+			theta = 180;
+		}
+	}
+	private static String setCMD(double distance, double theta){
+		return "d"+distance+"a"+theta+"f";
 	}
 	
 	private static void sendTrame(String trame){

@@ -36,7 +36,7 @@ public class OtsuBinarize {
         saveImage(output_f);         
     }
     
-    //Detect if corresponding tile may be a obstacle
+    //Detect if corresponding tile may be an obstacle
     private static  boolean findObstacle(int xStart, int yStart){
 		for(int  x = yStart; x < yStart+CELLSIZE; x++){
 			for(int y = xStart; y < xStart+CELLSIZE; y++){				
