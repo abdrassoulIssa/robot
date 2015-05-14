@@ -1,25 +1,33 @@
 package robot.cmd.ctrl;
 
-import java.awt.Color;
 import java.util.Arrays;
-
 import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.core.PImage;
 import processing.serial.*;
 import processing.video.Capture;
 import robot.algo.astar.Path;
+import robot.algo.astar.robot.Grid;
+import robot.algo.astar.robot.RobotMap;
+import robot.algo.otsu.OtsuBinarize;
+import static robot.algo.otsu.OTSUConstant.*;
+import static robot.algo.otsu.ImageProcessing.*;
 
 @SuppressWarnings("serial")
-public class MoveRobot extends PApplet{
+public class MovingRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
 	private static Serial port;
 	private Capture cam;
 	private static double distance = 001.000;
 	private static double theta    = 000.985;
-	@SuppressWarnings("unused")
-	private static String orientation ="E";
+	private PGraphics pg;
+	private Grid grid;
+	private RobotMap robotmap;
 	
 	public void setup(){
-		size(640, 480);
+		size(MWIDTH, MHEIGHT);
+		pg	= createGraphics(MWIDTH, MHEIGHT);
+		grid= new Grid(pg);
 		//Initialize Xbee communication port
 		/*
 		int nbPorts = Serial.list().length;
@@ -39,10 +47,29 @@ public class MoveRobot extends PApplet{
 	}
 
 	public void draw() {
+
 		if (cam.available() == true) {
 			  cam.read();
 		}
+		loadMaps();
+		grid.drawGrid();
+		if(robotmap != null){
+			pg.beginDraw();
+			for (int i = 0; i < MROWS; i++) {
+				for (int j = 0; j < MCOLS; j++) {
+					if(robotmap.getTerrain(i, j) == 1){
+						int x = i*CELLSIZE;
+						int y = j*CELLSIZE;
+						pg.fill(color(255, 0,0));
+						pg.rect(x, y, CELLSIZE, CELLSIZE);
+					}
+				}
+			}
+			pg.endDraw();
+		}
 		image(cam, 0, 0, width, height);
+		image(pg,0,0);
+		pg.clear();
 	}
 	
 	public void keyPressed(){
@@ -79,7 +106,7 @@ public class MoveRobot extends PApplet{
 		theta -= 90;
 		sendTrame(setCMD(000.000,-theta));
 	}
-	private static void orientation(){
+	public static void orientation(){
 		if(theta == 360){
 			theta = 0;
 		}
@@ -105,7 +132,7 @@ public class MoveRobot extends PApplet{
 	 * @return chain of travels
 	 */
 
-	private String chainOfTravels(Path path){
+	public String chainOfTravels(Path path){
 		StringBuilder chain = new StringBuilder();
 		for (int i = 0; i < path.getLength()-1; i++) {
 			 int xC = path.getX(i), xF = path.getX(i+1);
@@ -126,6 +153,14 @@ public class MoveRobot extends PApplet{
 		}
 		
 		return chain.toString();
+	}
+	
+	private void loadMaps(){
+		PImage pimage = cam.get(0, 0, MWIDTH, MHEIGHT);
+		OtsuBinarize.binarized = OtsuBinarize.binarize(toBufferedImage(pimage));
+		int [][] map = new int[MROWS][MCOLS];
+		OtsuBinarize.imageToMatrix(map);
+		robotmap    = new RobotMap(map);
 	}
 
 }

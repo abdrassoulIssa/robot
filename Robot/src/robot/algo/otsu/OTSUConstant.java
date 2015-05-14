@@ -15,7 +15,7 @@ public interface OTSUConstant {
 	public static final int maxSearchDistance = 1000;
 	public static final boolean diagMovment = false;
 	
-	//MoveRobot parameters
+	//MovingRobot parameters
 	public static final int DISTANCE = 1;
 
 }

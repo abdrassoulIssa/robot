@@ -76,12 +76,13 @@ public class SimulationFrame extends JPanel implements ActionListener{
 			try {
 				currentFolder = new File(".").getCanonicalFile();
 				chooser = new JFileChooser(currentFolder) ;
+				
 		        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		                ".dat files only.", "dat");
+		                "JPG & GIF Images", "jpg", "gif");
 		        chooser.setFileFilter(filter);
 				int returnVal=chooser.showOpenDialog(SimulationFrame.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					dpath.addMap(chooser.getSelectedFile().toString());
+					dpath.addImage(chooser.getSelectedFile().toString());
 					info.setText(chooser.getSelectedFile().getName());
 				}
 			} catch (IOException e1) {

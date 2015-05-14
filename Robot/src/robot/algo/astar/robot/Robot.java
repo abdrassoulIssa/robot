@@ -3,8 +3,8 @@ package robot.algo.astar.robot;
 import robot.algo.astar.Mover;
 
 /**
- * A mover to represent one of a ID based unit in our example
- * game map
+ * A mover to represent one of a ID based unit in our 
+ * robot map
  *
  * @author Issa
  */

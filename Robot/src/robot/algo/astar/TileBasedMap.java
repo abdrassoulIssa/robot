@@ -1,7 +1,7 @@
 package robot.algo.astar;
 /**
  * The description for the data we're pathfinding over. This provides the contract
- * between the data being searched (i.e. the in game map) and the path finding
+ * between the data being searched (i.e. the in robots map) and the path finding
  * generic tools
  * 
  * @author Issa
@@ -9,7 +9,7 @@ package robot.algo.astar;
 public interface TileBasedMap {
 	/**
 	 * Get the width of the tile map. The slightly odd name is used
-	 * to distinguish this method from commonly used names in game maps.
+	 * to distinguish this method from commonly used names in robots maps.
 	 * 
 	 * @return The number of tiles across the map
 	 */
@@ -17,7 +17,7 @@ public interface TileBasedMap {
 
 	/**
 	 * Get the height of the tile map. The slightly odd name is used
-	 * to distinguish this method from commonly used names in game maps.
+	 * to distinguish this method from commonly used names in robots maps.
 	 * 
 	 * @return The number of tiles down the map
 	 */

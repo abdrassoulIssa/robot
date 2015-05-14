@@ -16,7 +16,9 @@ import javax.imageio.ImageIO;
 public class OtsuBinarize {
  
 	@SuppressWarnings("unused")
-	private static BufferedImage original, grayscale, binarized;
+	private static BufferedImage original, grayscale;
+	@SuppressWarnings("unused")
+	public static BufferedImage binarized;
 	private static int [][] map = new int[MROWS][MCOLS];
 
     public static void main(String[] args) throws IOException {
@@ -31,22 +33,20 @@ public class OtsuBinarize {
        //grayscale = toGray(original);
        //binarized = binarize(grayscale);
 
-        imageToMatrix();
+        imageToMatrix(map);
         saveMap("resources/map/map5.dat", map);
         saveImage(output_f);         
     }
     
     //Detect if corresponding tile may be an obstacle
-    private static  boolean findObstacle(int xStart, int yStart){
+    private static  boolean findObstacle(int xStart, int yStart, int [][]map){
 		for(int  x = yStart; x < yStart+CELLSIZE; x++){
 			for(int y = xStart; y < xStart+CELLSIZE; y++){				
                 int cellX = x/CELLSIZE;
 				int cellY = y/CELLSIZE;
                 int pixels = new Color(binarized.getRGB(y, x)).getRed();
-                System.out.println(x+"-"+y);
 				if(pixels == 255){
 					map[cellX][cellY] = 1;
-					//System.out.println(x+"-"+y);
 					break;
 				}
 			}
@@ -55,10 +55,10 @@ public class OtsuBinarize {
     }
     
     //Convert the binary image to the navigation map
-    public static void imageToMatrix(){
+    public static void imageToMatrix(int [][]map){
 		for (int i = 0; i <= (MWIDTH - CELLSIZE); i = i + CELLSIZE) {
 			for (int j = 0; j <=(MHEIGHT -CELLSIZE); j = j + CELLSIZE) {
-				findObstacle(i, j);
+				findObstacle(i, j,map);
 			}
 		}
     }

@@ -7,19 +7,24 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import processing.core.PImage;
+import robot.algo.astar.robot.Grid;
 import static robot.algo.otsu.OTSUConstant.*;
 public class ImageProcessing extends PApplet {
 	
-
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1920274727011984197L;
-	PImage img = null;
-	PImage imgcopy;
+	private static final long serialVersionUID = -8896851793354753712L;
+	private PImage img = null;
+	private PImage imgcopy;
+	private Grid grid;
+	private PGraphics pg;
 	public void setup(){
 		size(MWIDTH,MHEIGHT);
+		pg	= createGraphics(MWIDTH, MHEIGHT);
+		grid= new Grid(pg);
 	}
 	
 	public void draw(){
@@ -28,13 +33,8 @@ public class ImageProcessing extends PApplet {
 			image(img, 0, 0);
 		}
 		else{
-			for(int i =0;i<MCOLS;i++){
-				for(int j = 0;j<MROWS;j++){
-					int x = i*CELLSIZE;
-					int y = j*CELLSIZE;
-					g.rect(x, y, CELLSIZE, CELLSIZE);
-				}
-			}
+			grid.drawGrid();
+			image(pg, 0, 0);
 		}
 	}
 	
@@ -70,11 +70,11 @@ public class ImageProcessing extends PApplet {
 		img = imgcopy;
 	}
 	
-	private BufferedImage toBufferedImage(PImage pimage) {
+	public static BufferedImage toBufferedImage(PImage pimage) {
 		return (BufferedImage) pimage.getNative();
 	} 
 	
-	private PImage toPImage(BufferedImage bimage) {
+	public static PImage toPImage(BufferedImage bimage) {
 		 return new PImage(bimage);
 	} 
 

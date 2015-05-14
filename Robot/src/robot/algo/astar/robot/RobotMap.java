@@ -11,10 +11,10 @@ import robot.algo.astar.Mover;
 import robot.algo.astar.TileBasedMap;
 
 /**
- * The data map from our example game. This holds the state and context of each tile
+ * The data map from multi-robot system. This holds the state and context of each tile
  * on the map. It also implements the interface required by the path finder. It's implementation
  * of the path finder related methods add specific handling for the types of units
- * and terrain in the example game.
+ * and terrain in the multi-robot system.
  * 
  * @author Issa
  */

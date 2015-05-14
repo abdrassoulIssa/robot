@@ -1,6 +1,6 @@
 package robot.algo.astar;
 /**
- * A tagging interface for an object representing the entity in the game that
+ * A tagging interface for an object representing the entity that
  * is going to moving along the path. This allows us to pass around entity/state
  * information to determine whether a particular tile is blocked, or how much
  * cost to apply on a particular tile.

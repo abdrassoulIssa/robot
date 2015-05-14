@@ -2,8 +2,7 @@ package robot.algo.astar.robot;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -11,13 +10,15 @@ import processing.core.PImage;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
+import robot.algo.otsu.OtsuBinarize;
 import static robot.algo.otsu.OTSUConstant.*;
+import static robot.algo.otsu.ImageProcessing.*;
 
 
 @SuppressWarnings("serial")
 public class DrawPath extends PApplet{
-	private HashMap<String, Cell> cells;
-
+	
+	private Grid grid;
 	private PGraphics pg;  // create a image in the buffer
 	private PImage pimage;
 	@SuppressWarnings("unused")
@@ -30,76 +31,26 @@ public class DrawPath extends PApplet{
 
 	public void setup(){
 		size(MWIDTH, MHEIGHT);
-		pg    = createGraphics(MWIDTH, MHEIGHT);
-		cells = new HashMap<String, Cell>();
+		pg	= createGraphics(MWIDTH, MHEIGHT);
+		grid= new Grid(pg);
 	}
 	
 	public void draw(){
-		image(pimage,0,0, MWIDTH,MHEIGHT);
-		fillCell(0, 0, Color.BLUE);
+		grid.fillCell(0, 0, Color.BLUE);
 		pg.fill(255);
-		dynamicGrid();
+		grid.drawGrid();
+		grid.drawUnits(map);
 		
-		Iterator<String> keySetIterator = cells.keySet().iterator();
-		while(keySetIterator.hasNext()){
-		  String key = keySetIterator.next();
-		  Cell cell  = cells.get(key);
-		  int cellX  = cell.getX() * CELLSIZE;
-		  int cellY  = cell.getY() * CELLSIZE;
-		  int cellColor = cell.getColor();
-		  pg.fill(cellColor);
-		  pg.rect(cellX, cellY, CELLSIZE, CELLSIZE);
-		}
-		
-		//The blocks will be colored by red
-		if(isMapNotEmpty()){
-			for (int i = 0; i < MROWS; i++) {
-				for (int j = 0; j < MCOLS; j++) {
-					if(map.getTerrain(i, j) == 1){
-						fillCell(j, i, Color.RED);
-					}
-				}
-			}
-		}
-		
-	}
-	private void dynamicGrid(){
-		pg.beginDraw(); 
-		  pg.fill(255, 255, 255, 0);
-		  for(int i=0;i<MCOLS;i++){
-		    for(int j=0;j<MROWS;j++){
-		      int x = i*CELLSIZE;
-		      int y = j*CELLSIZE;
-		      pg.rect(x, y, CELLSIZE, CELLSIZE);
-		    }
-		  }
-		pg.endDraw();
 		image(pg,0,0);
 	}
 
-    public void fillCell(int x, int y) {
-    	cells.put(new String(x+""+y), new Cell(x,y));
-    	repaint();
-    }
-    public void fillCell(int x, int y, Color color) {
-    	cells.put(new String(x+""+y), new Cell(x,y,color));
-    	repaint();
-    }
-	public void setCellColor(int x,int y, Color color) {
-		String key = new String(x+""+y);
-		Cell cell  = cells.get(key);
-		cell.setColor(color);
-	}
-
-    
 	public void mousePressed() {
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/CELLSIZE; 
 	  int y = mouseY/CELLSIZE;
-	  println(x+"--"+y);
-	  cells.remove(wayPoint.getX()+""+wayPoint.getY());
+	  grid.removeUnit(wayPoint.getX()+""+wayPoint.getY());
 	  restart();
-	  fillCell(x, y, Color.BLACK);
+	  grid.fillCell(x, y, Color.BLACK);
 	  wayPoint = new Cell(y, x, Color.BLACK);
 	}
 	
@@ -123,9 +74,16 @@ public class DrawPath extends PApplet{
 		map    = new RobotMap(robotmap);
 		finder = new AStarPathFinder(map, maxSearchDistance, diagMovment);
 	}
+	
 	public void addImage(String filename){
 		pimage = loadImage(filename);
 		pimage.resize(MWIDTH, MHEIGHT);
+		image(pimage,0,0, MWIDTH,MHEIGHT);
+		
+		OtsuBinarize.binarized = OtsuBinarize.binarize(toBufferedImage(pimage));
+		int [][] map = new int[MROWS][MCOLS];
+		OtsuBinarize.imageToMatrix(map);
+		addMap(map);
 	}
 	
 	private boolean isMapNotEmpty(){
@@ -133,12 +91,11 @@ public class DrawPath extends PApplet{
 	}
 	
 	public void restart() {
-		if(cells != null){
-			cells.clear();
-			g.clear();
-			pg.clear();
+			grid.removeAllUnits();
+			grid.cleanGraphic();;
 			background(255, 255, 255, 0);
-		}
+			if(pimage != null)
+			image(pimage,0,0, MWIDTH,MHEIGHT);
 	}
 	
 	public void start(){
@@ -149,7 +106,7 @@ public class DrawPath extends PApplet{
 				  for (int i = 0; i < path.getLength()-1; i++) {
 					  int x = path.getY(i);
 					  int y = path.getX(i);
-					  fillCell(x,y,Color.green);
+					  grid.fillCell(x,y,Color.green);
 				  }
 			  }
 		  }
