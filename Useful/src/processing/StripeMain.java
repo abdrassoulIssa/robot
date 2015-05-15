@@ -1,11 +1,11 @@
 package processing;
 import processing.core.*;
 
-public class MyProcessingSketch extends PApplet {
+public class StripeMain extends PApplet {
 
   private static final long serialVersionUID = 1L;
 
-  public MyProcessingSketch() {
+  public StripeMain() {
 	super();
 	// TODO Auto-generated constructor stub
   }

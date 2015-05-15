@@ -2,45 +2,51 @@ package processing;
 
 
 import java.io.*; // for the loadPatternFilenames() function
+
 import jp.nyatla.nyar4psg.MultiMarker;
 import jp.nyatla.nyar4psg.NyAR4PsgConfig; // the NyARToolkit Processing library
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
-import processing.opengl.*;
+import processing.video.Capture;
 
 /**
  * @author issa
  * 
  */
-public class DrawBox extends PApplet{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2818873783875290971L;
-	String camPara = "/home/issa/workspaceSTAGE/Useful/resources/camera_para.dat";
+@SuppressWarnings("serial")
+public class MarkerTracking extends PApplet{
+
+	private static final String camPara = "/home/issa/workspace/myapp/resources/camera_para.dat";
 	// the full path to the .patt pattern files
-	String patternPath = "/home/issa/workspaceSTAGE/Useful/resources/patterns/";
+	private static final String patternPath = "/home/issa/workspace/myapp/resources/patterns/";
 	// the dimensions at which the AR will take place. 
-	int arWidth = 1280;
-	int arHeight = 720;
+	private static final int arWidth = 640;
+	private static final int arHeight = 480;
 	// the number of pattern markers (from the complete list of .patt files)
 	// that will be detected.
-	int numMarkers = 10;
+	private static final int numMarkers = 5;
+	private Capture cam;
+	private MultiMarker nya;
+	private float displayScale;
 
-	MultiMarker nya;
-	float displayScale;
+	private int [] colors  = new int[numMarkers];
+	private float[] scaler = new float[numMarkers];
 
-	int [] colors = new int[numMarkers];
-	float[] scaler = new float[numMarkers];
-	PImage pimage;
 
 	public void setup() {
-		size(1280, 720, OPENGL); 
+		size(640, 480, OPENGL); 
 		textFont(createFont("Arial", 80));
-		pimage = loadImage("pimage.jpg");
-		pimage.resize(arWidth, arHeight);
-				
+		
+		//Initialize webcam capture
+		String[] cameras = Capture.list();
+		if (cameras.length == 0) {
+		  println("There are no cameras available for capture.");
+		  exit();
+		}
+		cam = new Capture(this, cameras[0]);
+		cam.start();  
+		noStroke(); 
 		//to correct for the scale difference between the AR detection coordinates 
 		//and the size at which the result is displayed
 		displayScale = (float) width / arWidth;
@@ -61,11 +67,15 @@ public class DrawBox extends PApplet{
 	}
 
 	public void draw() {
-		background(0); // a background call is needed for correct display of the marker results
-		image(pimage, 0, 0, width, height); // display the image at the width and height of the sketch window
-		nya.detect(pimage); // detect markers in the pimage image at the correct resolution (incorrect resolution will give assertion error)
-		drawMarkers(); // draw the coordinates of the detected markers (2D)
-		drawBoxes(); // draw boxes on the detected markers (3D)
+		if(cam.available()) {
+		 cam.read();
+		 image(cam, 0, 0, width, height); 
+		 PImage pimage = cam.get();
+		 pimage.resize(640, 480);
+		 nya.detect(pimage);
+		 drawMarkers(); 
+	     drawBoxes();
+		}
 	}
 
 	// this function draws the marker coordinates, note that this is completely 2D and based on the AR dimensions (not the final display size)
@@ -114,7 +124,7 @@ public class DrawBox extends PApplet{
 			lights(); // turn on some lights
 			stroke(0); // give the box a black stroke
 			fill(colors[i]); // fill the box by it's individual color
-			box(40); // the BOX! ;-)
+			box(40); 
 			noLights(); // turn off the lights
 			translate(0, 0, 20.1f); // translate to just slightly above the box (to prevent OPENGL uglyness)
 			noStroke();

@@ -44,6 +44,8 @@ public class Grid {
 	 */
 	public void drawUnits(RobotMap map){
 		Iterator<String> keySetIterator = cells.keySet().iterator();
+		
+		if(cells.size() > 0)
 		while(keySetIterator.hasNext()){
 		  String key = keySetIterator.next();
 		  Cell cell  = cells.get(key);

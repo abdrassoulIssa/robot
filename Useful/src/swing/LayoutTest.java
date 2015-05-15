@@ -14,14 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import processing.MyProcessingSketch;
+import processing.StripeMain;
 
 public class LayoutTest extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	MyProcessingSketch sketch = new MyProcessingSketch();
+	StripeMain sketch = new StripeMain();
 	public LayoutTest() {
 		super("RCRTL");
 		init();
