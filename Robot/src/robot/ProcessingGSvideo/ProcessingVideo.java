@@ -1,27 +1,29 @@
 package robot.ProcessingGSvideo;
+import java.util.Arrays;
+
 import processing.core.PApplet;
 import processing.video.*;
+import static robot.algo.otsu.OTSUConstant.*;
+
 @SuppressWarnings("serial")
-public class CaptureProcessing extends PApplet{
-	Capture cam;
+public class ProcessingVideo extends PApplet{
+	private Capture cam;
 
 	public void setup() {
-		size(640, 480);
-		String[] cameras = Capture.list();
+		size(MWIDTH, MHEIGHT);
 		
+		//Initialize webcam capture
+		String[] cameras = Capture.list();
 		if (cameras.length == 0) {
 		  println("There are no cameras available for capture.");
 		  exit();
-		} else {
-		  println("Available cameras:");
-		  for (int i = 0; i < cameras.length; i++) {
-		    println(cameras[i]);
-		  }
-		  
+		} 
+		else {
 		  // The camera can be initialized directly using an 
 		  // element from the array returned by list():
-		  cam = new Capture(this, cameras[0]);
-		  cam.start();     
+			println(Arrays.toString(cameras));
+			cam = new Capture(this, cameras[0]);
+			cam.start();     
 		}      
 	}
 
@@ -33,7 +35,6 @@ public class CaptureProcessing extends PApplet{
 		image(cam, 0, 0);
 	}
 	public void keyPressed() {
-		if(keyCode == ENTER)
-		  cam.stop();
+
 	}
 }

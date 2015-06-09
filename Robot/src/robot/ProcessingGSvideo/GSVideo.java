@@ -3,7 +3,7 @@ package robot.ProcessingGSvideo;
 import codeanticode.gsvideo.GSCapture;
 import processing.core.PApplet;
 
-public class CaptureGSVideo extends PApplet {
+public class GSVideo extends PApplet {
 	private static final long serialVersionUID = 1L;
 	GSCapture video;
 	

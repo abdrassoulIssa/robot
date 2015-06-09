@@ -2,12 +2,10 @@ package robot.algo.astar.robot;
 
 import java.awt.Color;
 import java.io.IOException;
-import java.util.Arrays;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
-import processing.video.Capture;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
@@ -27,8 +25,6 @@ public class AstarSimulation extends PApplet{
 	private PImage pimage;
 	//The point to which the robot moves.
 	private Cell goalPoint = new Cell(0, 0);
-	//Grabbing image using GSVideo
-	private Capture cam;
 	//For Robot navigation environment.
 	private RobotMap map;
 	private PathFinder finder;
@@ -38,32 +34,15 @@ public class AstarSimulation extends PApplet{
 		size(MWIDTH, MHEIGHT);
 		pg	= createGraphics(MWIDTH, MHEIGHT);
 		grid= new Grid(pg);
-		
 		//Initialize Xbee communication port
 		InitXBeeCom(this);
-		
-		//Initialize webcam capture
-		String[] cameras = Capture.list();
-		if (cameras.length == 0) {
-		  println("There are no cameras available for capture.");
-		  exit();
-		}
-		
-		println(Arrays.toString(cameras));
-		cam = new Capture(this, cameras[0]);
-		cam.start(); 
 	}
 	
 	public void draw(){
-		/*
-		if (cam.available() == true) {
-			  cam.read();
-		}*/	
 		grid.fillCell(0, 0, Color.BLUE);
 		pg.fill(255);
 		grid.drawGrid();
 		grid.drawUnits(map);
-		image(cam, 0, 0, width, height);
 		image(pg,0,0);
 	}
 

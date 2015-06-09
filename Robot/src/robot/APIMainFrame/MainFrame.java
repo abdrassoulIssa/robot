@@ -45,10 +45,10 @@ public class MainFrame extends JFrame{
 		JPanel scenepan = new JPanel();
 		scenepan.setPreferredSize(new Dimension(600,600));
 		scenepan.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		panel = new SceneCaptureFrame();
+		panel = new RealTimeFrame();
 		scenepan.add(panel);
 		tabbedPane.addTab("Image processing", icon, new ImageFrame(), "Binarize image");
-		tabbedPane.addTab("Scene Capture ", icon, scenepan, "Video");
+		tabbedPane.addTab("Real time ", icon, new RealTimeFrame(), "Video");
 
 		container.setLayout(new GridLayout(1, 1));
 		container.add(tabbedPane);
