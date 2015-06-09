@@ -5,18 +5,18 @@ import static robot.algo.otsu.OTSUConstant.MCOLS;
 import static robot.algo.otsu.OTSUConstant.MROWS;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 import processing.core.PGraphics;
 
 public class Grid {
 	private PGraphics parent; 
-	private HashMap<String, Cell> cells;
+	private ConcurrentHashMap<String, Cell> cells;
 	
 	public Grid(PGraphics p) {
 		parent = p;
-		cells = new HashMap<String, Cell>();
+		cells = new ConcurrentHashMap<String, Cell>();
 	}
 	
 	/**

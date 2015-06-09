@@ -7,7 +7,6 @@ import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
-import processing.serial.Serial;
 import processing.video.Capture;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
@@ -72,10 +71,31 @@ public class AstarSimulation extends PApplet{
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/CELLSIZE; 
 	  int y = mouseY/CELLSIZE;
+	  println("Goal Point("+x+","+y+")");
 	  grid.removeUnit(goalPoint.getX()+""+goalPoint.getY());
 	  restart();
 	  grid.fillCell(x, y, Color.BLACK);
 	  goalPoint = new Cell(y, x, Color.BLACK);
+	}
+	
+	public void keyPressed(){
+		 //To control the ground robot manually
+		if (keyCode==UP){
+		 GOSTRAIGHT();
+		 println("GOSTRAIGHT");
+		}  
+		else if (keyCode==DOWN){
+		  sendTrame(setCMD("000.000", "000.000"));
+		  println("Backward");
+		}
+		else if (keyCode==LEFT){
+		  GOLEFT();
+		  println("LEFT");
+		}
+		else if (keyCode==RIGHT){
+		  GORIGHT();
+		  println("RIGHT");
+		} 	   
 	}
 	
 	public void addMap(String filename){
@@ -126,7 +146,13 @@ public class AstarSimulation extends PApplet{
 		  if(isMapNotEmpty()){
 			  Path path = finder.findPath(new Robot(1), 0, 0,
 					  		goalPoint.getX(), goalPoint.getY());
+			  
 			  if(path != null){
+				  String chain = AStarPathFollowing(path);
+				  String cmd   = AstarTrajectoryTracking(chain);
+				  //AstarActionsPerforming(cmd);
+				  println(cmd);
+				  
 				  for (int i = 0; i < path.getLength()-1; i++) {
 					  int x = path.getY(i);
 					  int y = path.getX(i);

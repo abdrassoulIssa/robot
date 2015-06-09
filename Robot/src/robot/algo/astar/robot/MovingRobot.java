@@ -19,33 +19,7 @@ public class MovingRobot extends PApplet{
 			port = new Serial(parent, XBeePort, 38400);   
 	}
 
-	
-	public void keyPressed(){
-		String chain = "ARALA";
-		
-		if(keyCode == ENTER){
-			ActionsPerforming(chain);
-		}
-		 //To control the ground robot manually
-		if (keyCode==UP){
-		 GOSTRAIGHT();
-		 println("GOSTRAIGHT");
-		}  
-		else if (keyCode==DOWN){
-		  sendTrame(setCMD("000.000", "000.000"));
-		  println("Backward");
-		}
-		else if (keyCode==LEFT){
-		  GOLEFT();
-		  println("LEFT");
-		}
-		else if (keyCode==RIGHT){
-		  GORIGHT();
-		  println("RIGHT");
-		} 	   
-	}
-	
-	public static void ActionsPerforming(String chain){
+	public static void AstarActionsPerforming(String chain){
 		try {
 			char cmd;
 			for (int i = 0; i < chain.length(); i++) {
@@ -92,11 +66,11 @@ public class MovingRobot extends PApplet{
 		sendTrame(setCMD("000.150","-001.570"));
 	}
 	
-	private static String setCMD(String distance, String theta){
+	public static String setCMD(String distance, String theta){
 		return "d"+distance+"a"+theta+"f";
 	}
 	
-	private static void sendTrame(String trame){
+	public static void sendTrame(String trame){
 		port.write(trame);
 	}
 }

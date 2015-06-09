@@ -17,7 +17,6 @@ public class OtsuBinarize {
  
 	@SuppressWarnings("unused")
 	private static BufferedImage original, grayscale;
-	@SuppressWarnings("unused")
 	public static BufferedImage binarized;
 	private static int [][] map = new int[MROWS][MCOLS];
 
