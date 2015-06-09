@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import robot.algo.astar.robot.DrawPath;
+import robot.algo.astar.robot.AstarSimulation;
 
 public class SimulationFrame extends JPanel implements ActionListener{
 
@@ -22,9 +22,9 @@ public class SimulationFrame extends JPanel implements ActionListener{
 	private JButton choosemap;
 	private JButton start;
 	private JLabel info;
-	private DrawPath dpath;
+	private AstarSimulation dpath;
 	public SimulationFrame() {
-		dpath = new DrawPath();
+		dpath = new AstarSimulation();
 		dpath.init();
 		dpath.start();
 		build();

@@ -16,7 +16,7 @@ import static robot.algo.otsu.ImageProcessing.*;
 
 
 @SuppressWarnings("serial")
-public class DrawPath extends PApplet{
+public class AstarSimulation extends PApplet{
 	
 	private Grid grid;
 	private PGraphics pg;  // create a image in the buffer
@@ -91,11 +91,11 @@ public class DrawPath extends PApplet{
 	}
 	
 	public void restart() {
-			grid.removeAllUnits();
-			grid.cleanGraphic();;
-			background(255, 255, 255, 0);
-			if(pimage != null)
-			image(pimage,0,0, MWIDTH,MHEIGHT);
+		grid.removeAllUnits();
+		grid.cleanGraphic();;
+		background(255, 255, 255, 0);
+		if(pimage != null)
+		image(pimage,0,0, MWIDTH,MHEIGHT);
 	}
 	
 	public void start(){

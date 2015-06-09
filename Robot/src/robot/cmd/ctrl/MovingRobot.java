@@ -30,12 +30,12 @@ public class MovingRobot extends PApplet{
 		pg	= createGraphics(MWIDTH, MHEIGHT);
 		grid= new Grid(pg);
 		//Initialize Xbee communication port
-		
+		/*
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1];  
 		println(XBeePort);
 		port = new Serial(this, XBeePort, 38400);
-		
+		*/
 		//Initialize webcam capture
 		String[] cameras = Capture.list();
 		if (cameras.length == 0) {
@@ -51,22 +51,49 @@ public class MovingRobot extends PApplet{
 		if (cam.available() == true) {
 			  cam.read();
 		}
-		loadMaps();
+		grid.drawGrid();
 		image(cam, 0, 0, width, height);
+		image(pg,0,0);
 	}
 	
 	public void keyPressed(){
 		String chain = "ARALA";
 		
 		if(keyCode == ENTER){
-			try {
-				for (int i = 0; i < chain.length(); i++) {
-					char cmd = chain.charAt(i);
-					switch (cmd) {
+			ActionsPerforming(chain);
+		}
+		 //To control the ground robot manually
+		if (keyCode==UP){
+		  //port.write("d"+"001.200"+"a"+"000.000"+"f");
+		 GOSTRAIGHT();
+		 println("GOSTRAIGHT");
+		}  
+		else if (keyCode==DOWN){
+		  sendTrame(setCMD("000.000", "000.000"));
+		  println("Backward");
+		}
+		else if (keyCode==LEFT){
+		  GOLEFT();
+		  println("LEFT");
+		}
+		else if (keyCode==RIGHT){
+		  GORIGHT();
+		  println("RIGHT");
+		} 	   
+	}
+	
+	public static void ActionsPerforming(String chain){
+		try {
+			char cmd;
+			for (int i = 0; i < chain.length(); i++) {
+				cmd = chain.charAt(i);
+				switch (cmd) {
 					case 'A':
 					{
 						GOSTRAIGHT();
-						Thread.sleep(10000);
+						
+							Thread.sleep(10000);
+	
 						break;
 					}
 					case 'R':
@@ -81,37 +108,13 @@ public class MovingRobot extends PApplet{
 						Thread.sleep(15000);
 						break;
 					}
-					}
-						//Thread.sleep(10000);
 				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		 //To control the ground robot manually
-		   if (keyCode==UP){
-			   //port.write("d"+"001.200"+"a"+"000.000"+"f");
-			   GOSTRAIGHT();
-			   println("GOSTRAIGHT");
-		   }  
-		   else if (keyCode==DOWN){
-			   sendTrame(setCMD("000.000", "000.000"));
-		      println("Backward");
-		   }
-		   else if (keyCode==LEFT){
-			   GOLEFT();
-			   println("LEFT");
-		   }
-		   else if (keyCode==RIGHT){
-			   GORIGHT();
-			   println("RIGHT");
-		   } 
-		   
 	}
-	
-	
 	public static void GOSTRAIGHT(){
 		String cmd = setCMD(distance,"000.000");
 		System.out.println(cmd);
@@ -132,64 +135,6 @@ public class MovingRobot extends PApplet{
 	
 	private static void sendTrame(String trame){
 		port.write(trame);
-	}
-
-	/**
-	 * The robot receives commands as characters to move from one box to another.
-	 * N to move upwards.
-	 * S to move down.
-	 * E to move to the right..
-	 * W to move to the left..
-	 * @param path
-	 * @return chain of travels
-	 */
-
-	public static String AStarPathFollowing(Path path){
-		StringBuilder chain = new StringBuilder();
-		for (int i = 0; i < path.getLength()-1; i++) {
-			 int xC = path.getX(i), xF = path.getX(i+1);
-			 int yC = path.getY(i), yF = path.getY(i+1);
-			 
-			 if(xC > xF && yC == yF){
-				 chain.append("N");
-			 }
-			 else if(xC < xF && yC == yF){
-				 chain.append("S");
-			 }
-			 else if(yC < yF && xC == xF){
-				 chain.append("E");
-			 }
-			 else if(yC > yF && xC == xF){
-				 chain.append("W");
-			 }
-		}
-		
-		return chain.toString();
-	}
-
-	public static String AstarTrajectoryTracking(String chain){
-		StringBuffer actions = new StringBuffer(); 
-		for (int i = 0; i < chain.length() - 1; i++) {
-			char currentAction = chain.charAt(i);
-			char followingAction = chain.charAt(i+1);
-			
-			if(currentAction== followingAction) actions.append("A");
-			else if((currentAction== 'N' && followingAction == 'E') ||
-					(currentAction== 'E' && followingAction == 'S') ||
-					(currentAction== 'S' && followingAction == 'W') ||
-					(currentAction== 'W' && followingAction == 'N')){
-					actions.append("RA");
-			}
-			else if((currentAction== 'N' && followingAction == 'W') ||
-					(currentAction== 'W' && followingAction == 'S') ||
-					(currentAction== 'S' && followingAction == 'E') ||
-					(currentAction== 'E' && followingAction == 'N'))
-			{
-				actions.append("LA");
-			}
-			
-		}
-		return actions.toString();
 	}
 	
 	private void loadMaps(){
