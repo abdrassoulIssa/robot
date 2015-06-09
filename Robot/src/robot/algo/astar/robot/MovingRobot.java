@@ -1,55 +1,24 @@
 package robot.algo.astar.robot;
 
-import java.util.Arrays;
 
 import processing.core.PApplet;
-import processing.core.PGraphics;
 import processing.serial.*;
-import processing.video.Capture;
-import robot.algo.astar.robot.Grid;
-
-import static robot.algo.otsu.OTSUConstant.*;
 
 @SuppressWarnings("serial")
 public class MovingRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
 	private static Serial port;
-	private Capture cam;
 	private static String distance = "000.800";
-	private PGraphics pg;
-	private Grid grid;
-
 	
-	public void setup(){
-		size(MWIDTH, MHEIGHT);
-		pg	= createGraphics(MWIDTH, MHEIGHT);
-		grid= new Grid(pg);
+	public static void InitXBeeCom(PApplet parent){
 		//Initialize Xbee communication port
-		/*
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1];  
 		println(XBeePort);
-		port = new Serial(this, XBeePort, 38400);
-		*/
-		//Initialize webcam capture
-		String[] cameras = Capture.list();
-		if (cameras.length == 0) {
-		  println("There are no cameras available for capture.");
-		  exit();
-		}
-		System.out.println(Arrays.toString(cameras));
-		cam = new Capture(this, cameras[0]);
-		cam.start();      
+		if(XBeePort.equals("ttyUSB0"))
+			port = new Serial(parent, XBeePort, 38400);   
 	}
 
-	public void draw() {
-		if (cam.available() == true) {
-			  cam.read();
-		}
-		grid.drawGrid();
-		image(cam, 0, 0, width, height);
-		image(pg,0,0);
-	}
 	
 	public void keyPressed(){
 		String chain = "ARALA";
@@ -130,6 +99,4 @@ public class MovingRobot extends PApplet{
 	private static void sendTrame(String trame){
 		port.write(trame);
 	}
-	
-
 }
