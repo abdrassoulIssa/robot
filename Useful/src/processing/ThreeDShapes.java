@@ -7,6 +7,7 @@ public class ThreeDShapes extends PApplet {
 
 	public void setup() {
 	 size(640, 480, OPENGL);
+	 System.out.println(System.getProperty("user.dir"));
 	}
 
 	public void draw()

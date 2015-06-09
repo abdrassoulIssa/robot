@@ -2,13 +2,12 @@ package processing;
 
 
 import java.io.*; // for the loadPatternFilenames() function
-
 import jp.nyatla.nyar4psg.MultiMarker;
 import jp.nyatla.nyar4psg.NyAR4PsgConfig; // the NyARToolkit Processing library
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
-import processing.video.Capture;
+import processing.video.*;
 
 /**
  * @author issa
@@ -17,12 +16,12 @@ import processing.video.Capture;
 @SuppressWarnings("serial")
 public class MarkerTracking extends PApplet{
 
-	private static final String camPara = "/home/issa/workspace/myapp/resources/camera_para.dat";
+	private static final String camPara = "../resources/camera_para.dat";
 	// the full path to the .patt pattern files
-	private static final String patternPath = "/home/issa/workspace/myapp/resources/patterns/";
+	private static final String patternPath = "../resources/patterns/";
 	// the dimensions at which the AR will take place. 
-	private static final int arWidth = 640;
-	private static final int arHeight = 480;
+	private static final int arWidth  = 1280;
+	private static final int arHeight = 720;
 	// the number of pattern markers (from the complete list of .patt files)
 	// that will be detected.
 	private static final int numMarkers = 5;
@@ -32,10 +31,10 @@ public class MarkerTracking extends PApplet{
 
 	private int [] colors  = new int[numMarkers];
 	private float[] scaler = new float[numMarkers];
-
+	PImage pimage;
 
 	public void setup() {
-		size(640, 480, OPENGL); 
+		size(arWidth, arHeight, OPENGL); 
 		textFont(createFont("Arial", 80));
 		
 		//Initialize webcam capture
@@ -44,9 +43,8 @@ public class MarkerTracking extends PApplet{
 		  println("There are no cameras available for capture.");
 		  exit();
 		}
-		cam = new Capture(this, cameras[0]);
-		cam.start();  
-		noStroke(); 
+		cam = new Capture(this, cameras[0]);//For processing
+		cam.start();
 		//to correct for the scale difference between the AR detection coordinates 
 		//and the size at which the result is displayed
 		displayScale = (float) width / arWidth;
@@ -64,18 +62,23 @@ public class MarkerTracking extends PApplet{
 			colors[i] = color(random(255), random(255), random(255), 160); // random color, always at a transparency of 160
 			scaler[i] = random(0.5f, 1.9f); // scaled at half to double size
 		}
+		noStroke();
 	}
 
 	public void draw() {
-		if(cam.available()) {
+		
+		if(cam.available()==true) {
 		 cam.read();
-		 image(cam, 0, 0, width, height); 
-		 PImage pimage = cam.get();
-		 pimage.resize(640, 480);
+		 image(cam, 0, 0, arWidth, arHeight); 
+		
+		 pimage = cam.get();
+		 pimage.resize(arWidth, arHeight);
+		
 		 nya.detect(pimage);
 		 drawMarkers(); 
-	     drawBoxes();
+		 drawBoxes();
 		}
+		
 	}
 
 	// this function draws the marker coordinates, note that this is completely 2D and based on the AR dimensions (not the final display size)
@@ -83,7 +86,6 @@ public class MarkerTracking extends PApplet{
 		// set the text alignment (to the left) and size (small)
 		textAlign(LEFT, TOP);
 		textSize(10);
-		noStroke();
 		// scale from AR detection size to sketch display size (changes the display of the coordinates, not the values)
 		scale(displayScale);
 		// for all the markers...
@@ -112,30 +114,76 @@ public class MarkerTracking extends PApplet{
 		// set the text alignment (full centered) and size (big)
 		textAlign(CENTER, CENTER);
 		textSize(20);
+		
 		// for all the markers...
 		for (int i=0; i<numMarkers;i++){ // if the marker does NOT exist (the ! exlamation mark negates it) continue to the next marker, aka do nothing
 			if ((!nya.isExistMarker(i))) { continue; }
 			// the following code is only reached and run if the marker DOES EXIST
 			// get the Matrix for this marker and use it (through setMatrix)
-			setMatrix(nya.getMarkerMatrix(i));
-			scale(1, -1); // turn things upside down to work intuitively for Processing users
-			scale(scaler[i]); // scale the box by it's individual scaler
+			/*
+			setMatrix(nya.getMarkerMatrix(i));	
+			
+			scale(1, -1); // turn things upside down to work intuitively for Processing users	
+			//scale(scaler[i]); // scale the box by it's individual scaler
 			translate(0, 0, 20); // translate the box by half (20) of it's size (40)
+			cube();
+			
 			lights(); // turn on some lights
-			stroke(0); // give the box a black stroke
+			//stroke(0); // give the box a black stroke
 			fill(colors[i]); // fill the box by it's individual color
 			box(40); 
 			noLights(); // turn off the lights
 			translate(0, 0, 20.1f); // translate to just slightly above the box (to prevent OPENGL uglyness)
-			noStroke();
+		
+			//No stroke
+			
 			fill(255, 50);
 			rect(-20, -20, 40, 40); // display a transparent white rectangle right above the box
 			translate(0, 0, 0.1f); // translate to just slightly above the rectangle (to prevent OPENGL uglyness)
+			
 			fill(0);
 			text("" + i, -20, -20, 40, 40); // display the ID of the box in black text centered in the rectangle
+			*/
 		}
+		
 		// reset to the default perspective
 		perspective();
+	}
+	
+	private void cube(){
+		beginShape(QUADS);
+	
+		fill(0, 1, 1); vertex(-1, 1, 1);
+		fill(1, 1, 1); vertex( 1, 1, 1);
+		fill(1, 0, 1); vertex( 1, -1, 1);
+		fill(0, 0, 1); vertex(-1, -1, 1);
+
+		fill(1, 1, 1); vertex( 1, 1, 1);
+		fill(1, 1, 0); vertex( 1, 1, -1);
+		fill(1, 0, 0); vertex( 1, -1, -1);
+		fill(1, 0, 1); vertex( 1, -1, 1);
+
+		fill(1, 1, 0); vertex( 1, 1, -1);
+		fill(0, 1, 0); vertex(-1, 1, -1);
+		fill(0, 0, 0); vertex(-1, -1, -1);
+		fill(1, 0, 0); vertex( 1, -1, -1);
+
+		fill(0, 1, 0); vertex(-1, 1, -1);
+		fill(0, 1, 1); vertex(-1, 1, 1);
+		fill(0, 0, 1); vertex(-1, -1, 1);
+		fill(0, 0, 0); vertex(-1, -1, -1);
+
+		fill(0, 1, 0); vertex(-1, 1, -1);
+		fill(1, 1, 0); vertex( 1, 1, -1);
+		fill(1, 1, 1); vertex( 1, 1, 1);
+		fill(0, 1, 1); vertex(-1, 1, 1);
+
+		fill(0, 0, 0); vertex(-1, -1, -1);
+		fill(1, 0, 0); vertex( 1, -1, -1);
+		fill(1, 0, 1); vertex( 1, -1, 1);
+		fill(0, 0, 1); vertex(-1, -1, 1);
+
+		endShape();
 	}
 	
 	public String[] loadPatternFilenames(String path) {

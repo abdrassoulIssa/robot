@@ -11,10 +11,10 @@ public class MultiMarkersTracking extends PApplet{
 	private static final long serialVersionUID = 1L;
 	private String camPara     = "/home/issa/workspaceSTAGE/Robot/resources/camera_para.dat";
 	private String patternPath = "/home/issa/workspaceSTAGE/Robot/resources/patterns/";
-	private String background  ="/home/issa/workspaceSTAGE/Robot/resources/img/canvas.png";
 	private static final int SCREEN_WIDTH  = 640;
 	private static final int SCREEN_HEIGHT = 360;
 	private static  float displayScale;
+	private PImage pimage;
 	private int numMarkers = 0;
 	
 	GSCapture cam;
@@ -22,6 +22,7 @@ public class MultiMarkersTracking extends PApplet{
 
 	public void setup() {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
+		
 		cam = new GSCapture(this, SCREEN_WIDTH, SCREEN_HEIGHT,"/dev/video1"); // initializing the webcam capture at a specific resolution
 		cam.start(); // start capturing
 		noStroke(); 
@@ -43,14 +44,11 @@ public class MultiMarkersTracking extends PApplet{
 		//IF THERE IS A CAM IMAGE COMING IN 
 		if (cam.available()) {
 			cam.read(); // READ THE CAM IMAGE
-			PImage backimg = loadImage(background);
-			backimg.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
-			background(backimg);
 			image(cam, 0, 0, width, height); // DISPLAY THE IMAGE AT THE WIDTH AN HEIGHT OF THE SKETCH WINDOW
 			//CREATE A COPY OF THE CAM IMAGE AT THE RESOLUTION OF THE AR DETECTION
-			PImage cSmall = cam.get();
-			cSmall.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
-			nya.detect(cSmall); // detect markers in the image
+			pimage = cam.get();
+			pimage.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
+			nya.detect(pimage); // detect markers in the image
 			drawMarkers(); //DRAW DINAMICALLY FOLLOWING MARKERS ON THE DETECTED MARKERS(3D)
 		}
 	}

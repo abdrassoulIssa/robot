@@ -140,9 +140,7 @@ public class OtsuBinarize {
  
             }
         }
- 
         return lum;
- 
     }
  
     // Get binary treshold using Otsu's method

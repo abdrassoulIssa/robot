@@ -1,6 +1,8 @@
 package robot.cmd.ctrl;
 
 import java.util.Arrays;
+import java.util.Scanner;
+
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
@@ -18,8 +20,7 @@ public class MovingRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
 	private static Serial port;
 	private Capture cam;
-	private static double distance = 001.000;
-	private static double theta    = 000.985;
+	private static String distance = "000.800";
 	private PGraphics pg;
 	private Grid grid;
 	private RobotMap robotmap;
@@ -29,11 +30,11 @@ public class MovingRobot extends PApplet{
 		pg	= createGraphics(MWIDTH, MHEIGHT);
 		grid= new Grid(pg);
 		//Initialize Xbee communication port
-		/*
+		
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1];  
 		println(XBeePort);
-		port = new Serial(this, XBeePort, 38400);*/
+		port = new Serial(this, XBeePort, 38400);
 		
 		//Initialize webcam capture
 		String[] cameras = Capture.list();
@@ -47,74 +48,85 @@ public class MovingRobot extends PApplet{
 	}
 
 	public void draw() {
-
 		if (cam.available() == true) {
 			  cam.read();
 		}
 		loadMaps();
-		grid.drawGrid();
-		if(robotmap != null){
-			pg.beginDraw();
-			for (int i = 0; i < MROWS; i++) {
-				for (int j = 0; j < MCOLS; j++) {
-					if(robotmap.getTerrain(i, j) == 1){
-						int x = i*CELLSIZE;
-						int y = j*CELLSIZE;
-						pg.fill(color(255, 0,0));
-						pg.rect(x, y, CELLSIZE, CELLSIZE);
-					}
-				}
-			}
-			pg.endDraw();
-		}
 		image(cam, 0, 0, width, height);
-		image(pg,0,0);
-		pg.clear();
 	}
 	
 	public void keyPressed(){
+		String chain = "ARALA";
+		
+		if(keyCode == ENTER){
+			try {
+				for (int i = 0; i < chain.length(); i++) {
+					char cmd = chain.charAt(i);
+					switch (cmd) {
+					case 'A':
+					{
+						GOSTRAIGHT();
+						Thread.sleep(10000);
+						break;
+					}
+					case 'R':
+					{
+						GORIGHT();
+						Thread.sleep(15000);
+						break;
+					}
+					case 'L':
+					{
+						GOLEFT();
+						Thread.sleep(15000);
+						break;
+					}
+					}
+						//Thread.sleep(10000);
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		 //To control the ground robot manually
 		   if (keyCode==UP){
-			   MOVEROBOT();
-			   println("Forward");
+			   //port.write("d"+"001.200"+"a"+"000.000"+"f");
+			   GOSTRAIGHT();
+			   println("GOSTRAIGHT");
 		   }  
 		   else if (keyCode==DOWN){
-			   sendTrame(setCMD(000.000, 000.000));
+			   sendTrame(setCMD("000.000", "000.000"));
 		      println("Backward");
 		   }
 		   else if (keyCode==LEFT){
-			   TURNLEFT();
+			   GOLEFT();
 			   println("LEFT");
 		   }
 		   else if (keyCode==RIGHT){
-			   TURNRIGHT();
+			   GORIGHT();
 			   println("RIGHT");
-		   }  
+		   } 
+		   
 	}
 	
 	
-	public static void MOVEROBOT(){
-		sendTrame(setCMD(distance,000.000));
+	public static void GOSTRAIGHT(){
+		String cmd = setCMD(distance,"000.000");
+		System.out.println(cmd);
+		sendTrame(cmd);
 	}
 
-	public static void TURNLEFT(){
-		theta += 90;
-		sendTrame(setCMD(000.000,theta));
+	public static void GOLEFT(){
+		sendTrame(setCMD("000.150","001.570"));
 	}
 
-	public static void TURNRIGHT(){
-		theta -= 90;
-		sendTrame(setCMD(000.000,-theta));
+	public static void GORIGHT(){
+		sendTrame(setCMD("000.150","-001.570"));
 	}
-	public static void orientation(){
-		if(theta == 360){
-			theta = 0;
-		}
-		if(theta == -180){
-			theta = 180;
-		}
-	}
-	private static String setCMD(double distance, double theta){
+	
+	private static String setCMD(String distance, String theta){
 		return "d"+distance+"a"+theta+"f";
 	}
 	
@@ -132,27 +144,52 @@ public class MovingRobot extends PApplet{
 	 * @return chain of travels
 	 */
 
-	public String chainOfTravels(Path path){
+	public static String AStarPathFollowing(Path path){
 		StringBuilder chain = new StringBuilder();
 		for (int i = 0; i < path.getLength()-1; i++) {
 			 int xC = path.getX(i), xF = path.getX(i+1);
 			 int yC = path.getY(i), yF = path.getY(i+1);
 			 
 			 if(xC > xF && yC == yF){
-				 chain.append("W");
-			 }
-			 if(xC < xF && yC == yF){
-				 chain.append("E");
-			 }
-			 if(yC < yF && xC == xF){
 				 chain.append("N");
 			 }
-			 if(yC > yF && xC == xF){
+			 else if(xC < xF && yC == yF){
 				 chain.append("S");
+			 }
+			 else if(yC < yF && xC == xF){
+				 chain.append("E");
+			 }
+			 else if(yC > yF && xC == xF){
+				 chain.append("W");
 			 }
 		}
 		
 		return chain.toString();
+	}
+
+	public static String AstarTrajectoryTracking(String chain){
+		StringBuffer actions = new StringBuffer(); 
+		for (int i = 0; i < chain.length() - 1; i++) {
+			char currentAction = chain.charAt(i);
+			char followingAction = chain.charAt(i+1);
+			
+			if(currentAction== followingAction) actions.append("A");
+			else if((currentAction== 'N' && followingAction == 'E') ||
+					(currentAction== 'E' && followingAction == 'S') ||
+					(currentAction== 'S' && followingAction == 'W') ||
+					(currentAction== 'W' && followingAction == 'N')){
+					actions.append("RA");
+			}
+			else if((currentAction== 'N' && followingAction == 'W') ||
+					(currentAction== 'W' && followingAction == 'S') ||
+					(currentAction== 'S' && followingAction == 'E') ||
+					(currentAction== 'E' && followingAction == 'N'))
+			{
+				actions.append("LA");
+			}
+			
+		}
+		return actions.toString();
 	}
 	
 	private void loadMaps(){
