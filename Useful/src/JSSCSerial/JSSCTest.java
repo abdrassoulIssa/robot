@@ -1,4 +1,4 @@
-package robot.cmd.ctrl;
+package JSSCSerial;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;

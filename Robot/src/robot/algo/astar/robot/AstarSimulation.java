@@ -13,7 +13,7 @@ import robot.algo.astar.PathFinder;
 import robot.algo.otsu.OtsuBinarize;
 import static robot.algo.otsu.OTSUConstant.*;
 import static robot.algo.otsu.ImageProcessing.*;
-
+import static robot.algo.astar.robot.RobotActionPlanning.*;
 
 @SuppressWarnings("serial")
 public class AstarSimulation extends PApplet{

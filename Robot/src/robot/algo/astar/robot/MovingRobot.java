@@ -1,19 +1,14 @@
-package robot.cmd.ctrl;
+package robot.algo.astar.robot;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import processing.core.PImage;
 import processing.serial.*;
 import processing.video.Capture;
-import robot.algo.astar.Path;
 import robot.algo.astar.robot.Grid;
-import robot.algo.astar.robot.RobotMap;
-import robot.algo.otsu.OtsuBinarize;
+
 import static robot.algo.otsu.OTSUConstant.*;
-import static robot.algo.otsu.ImageProcessing.*;
 
 @SuppressWarnings("serial")
 public class MovingRobot extends PApplet{
@@ -23,7 +18,7 @@ public class MovingRobot extends PApplet{
 	private static String distance = "000.800";
 	private PGraphics pg;
 	private Grid grid;
-	private RobotMap robotmap;
+
 	
 	public void setup(){
 		size(MWIDTH, MHEIGHT);
@@ -64,7 +59,6 @@ public class MovingRobot extends PApplet{
 		}
 		 //To control the ground robot manually
 		if (keyCode==UP){
-		  //port.write("d"+"001.200"+"a"+"000.000"+"f");
 		 GOSTRAIGHT();
 		 println("GOSTRAIGHT");
 		}  
@@ -137,12 +131,5 @@ public class MovingRobot extends PApplet{
 		port.write(trame);
 	}
 	
-	private void loadMaps(){
-		PImage pimage = cam.get(0, 0, MWIDTH, MHEIGHT);
-		OtsuBinarize.binarized = OtsuBinarize.binarize(toBufferedImage(pimage));
-		int [][] map = new int[MROWS][MCOLS];
-		OtsuBinarize.imageToMatrix(map);
-		robotmap    = new RobotMap(map);
-	}
 
 }

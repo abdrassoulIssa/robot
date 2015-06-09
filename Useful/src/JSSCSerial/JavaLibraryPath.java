@@ -1,4 +1,4 @@
-package robot.cmd.ctrl;
+package JSSCSerial;
 import java.util.logging.Logger;
 
 public class JavaLibraryPath {
