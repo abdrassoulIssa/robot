@@ -9,7 +9,7 @@ import static robot.algo.otsu.OTSUConstant.*;
 public class ProcessingVideo extends PApplet{
 	private Capture cam;
 
-	public void setup() {
+	public  void setup() {
 		size(MWIDTH, MHEIGHT);
 		
 		//Initialize webcam capture
@@ -23,11 +23,11 @@ public class ProcessingVideo extends PApplet{
 		  // element from the array returned by list():
 			println(Arrays.toString(cameras));
 			cam = new Capture(this, cameras[0]);
-			cam.start();     
+			//cam.start();     
 		}      
 	}
 
-	public void draw() {
+	public  void draw() {
 		if (cam.available() == true) {
 		  cam.read();
 		}
@@ -35,6 +35,8 @@ public class ProcessingVideo extends PApplet{
 		image(cam, 0, 0);
 	}
 	public void keyPressed() {
-
+		if(keyCode == ENTER)
+		cam.start();  
+		cam.read();
 	}
 }

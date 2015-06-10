@@ -28,9 +28,7 @@ public class MovingRobot extends PApplet{
 					case 'A':
 					{
 						GOSTRAIGHT();
-						
-							Thread.sleep(10000);
-	
+						Thread.sleep(10000);
 						break;
 					}
 					case 'R':

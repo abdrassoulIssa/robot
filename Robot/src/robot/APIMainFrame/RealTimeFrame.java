@@ -18,8 +18,8 @@ public class RealTimeFrame extends JPanel {
 	ProcessingVideo pvideo;
 	public RealTimeFrame() {
 		pvideo = new ProcessingVideo();
-		//pvideo.init();
-		//pvideo.start();
+		pvideo.init();
+		pvideo.start();
 		build();
 	}
 	

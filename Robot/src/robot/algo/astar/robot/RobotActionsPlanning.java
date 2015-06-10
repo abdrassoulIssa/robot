@@ -2,7 +2,7 @@ package robot.algo.astar.robot;
 
 import robot.algo.astar.Path;
 
-public class RobotActionPlanning {
+public class RobotActionsPlanning {
 
 	/**
 	 * The robot receives commands as characters to move from one box to another.

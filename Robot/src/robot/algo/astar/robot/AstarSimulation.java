@@ -12,7 +12,7 @@ import robot.algo.astar.PathFinder;
 import robot.algo.otsu.OtsuBinarize;
 import static robot.algo.otsu.OTSUConstant.*;
 import static robot.algo.otsu.ImageProcessing.*;
-import static robot.algo.astar.robot.RobotActionPlanning.*;
+import static robot.algo.astar.robot.RobotActionsPlanning.*;
 import static robot.algo.astar.robot.MovingRobot.*;
 
 @SuppressWarnings("serial")
@@ -30,7 +30,7 @@ public class AstarSimulation extends PApplet{
 	private PathFinder finder;
 	
 
-	public void setup(){
+	public  void setup(){
 		size(MWIDTH, MHEIGHT);
 		pg	= createGraphics(MWIDTH, MHEIGHT);
 		grid= new Grid(pg);
@@ -38,7 +38,7 @@ public class AstarSimulation extends PApplet{
 		InitXBeeCom(this);
 	}
 	
-	public void draw(){
+	public  void draw(){
 		grid.fillCell(0, 0, Color.BLUE);
 		pg.fill(255);
 		grid.drawGrid();
@@ -130,7 +130,7 @@ public class AstarSimulation extends PApplet{
 				  String chain = AStarPathFollowing(path);
 				  String cmd   = AstarTrajectoryTracking(chain);
 				  //AstarActionsPerforming(cmd);
-				  println(cmd);
+				  println("Command chain : "+cmd);
 				  
 				  for (int i = 0; i < path.getLength()-1; i++) {
 					  int x = path.getY(i);
