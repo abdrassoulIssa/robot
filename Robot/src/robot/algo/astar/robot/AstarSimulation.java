@@ -2,6 +2,7 @@ package robot.algo.astar.robot;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.List;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -13,7 +14,6 @@ import robot.algo.otsu.OtsuBinarize;
 import static robot.algo.otsu.OTSUConstant.*;
 import static robot.algo.otsu.ImageProcessing.*;
 import static robot.algo.astar.robot.RobotActionsPlanning.*;
-import static robot.algo.astar.robot.MovingRobot.*;
 
 @SuppressWarnings("serial")
 public class AstarSimulation extends PApplet{
@@ -28,14 +28,14 @@ public class AstarSimulation extends PApplet{
 	//For Robot navigation environment.
 	private RobotMap map;
 	private PathFinder finder;
-	
+	private MovingRobot robot;
+	private static final char ROBOTORIENTATION = 'E';
 
 	public  void setup(){
 		size(MWIDTH, MHEIGHT);
-		pg	= createGraphics(MWIDTH, MHEIGHT);
-		grid= new Grid(pg);
-		//Initialize Xbee communication port
-		InitXBeeCom(this);
+		pg	  = createGraphics(MWIDTH, MHEIGHT);
+		grid  = new Grid(pg);
+		robot = new MovingRobot(this);
 	}
 	
 	public  void draw(){
@@ -60,19 +60,19 @@ public class AstarSimulation extends PApplet{
 	public void keyPressed(){
 		 //To control the ground robot manually
 		if (keyCode==UP){
-		 GOSTRAIGHT();
+		 robot.GOSTRAIGHT("000.800");
 		 println("GOSTRAIGHT");
 		}  
 		else if (keyCode==DOWN){
-		  sendTrame(setCMD("000.000", "000.000"));
+		  robot.sendTrame(robot.setCMD("000.000", "000.000"));
 		  println("Backward");
 		}
 		else if (keyCode==LEFT){
-		  GOLEFT();
+		  robot.TURNLEFT();
 		  println("LEFT");
 		}
 		else if (keyCode==RIGHT){
-		  GORIGHT();
+		  robot.TURNRIGHT();
 		  println("RIGHT");
 		} 	   
 	}
@@ -127,17 +127,21 @@ public class AstarSimulation extends PApplet{
 					  		goalPoint.getX(), goalPoint.getY());
 			  
 			  if(path != null){
-				  String chain = AStarPathFollowing(path);
-				  String cmd   = AstarTrajectoryTracking(chain);
-				  //AstarActionsPerforming(cmd);
-				  println("Command chain : "+cmd);
-				  
-				  for (int i = 0; i < path.getLength()-1; i++) {
-					  int x = path.getY(i);
-					  int y = path.getX(i);
-					  grid.fillCell(x,y,Color.green);
-				  }
+				  String cmd = AStarPathFollowing(path);
+				  cmd   = AstarGenerateTrajectory(ROBOTORIENTATION+""+cmd);
+				  List<String> chain= AstarTrajectoryTracking(cmd);
+				  println("Command chain : "+chain);
+				  pathDrawing(path);
+				  robot.AstarActionsPerforming(chain);
 			  }
+		  }
+	}
+	
+	private void pathDrawing (Path path){
+		  for (int i = 0; i < path.getLength()-1; i++) {
+			  int x = path.getY(i);
+			  int y = path.getX(i);
+			  grid.fillCell(x,y,Color.green);
 		  }
 	}
 }

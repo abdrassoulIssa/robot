@@ -1,46 +1,53 @@
 package robot.algo.astar.robot;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import processing.core.PApplet;
 import processing.serial.*;
 
 @SuppressWarnings("serial")
 public class MovingRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
-	private static Serial port;
-	private static String distance = "000.800";
+	private  Serial port;
+	private static final String DISTANCE = "000.800";
 	
-	public static void InitXBeeCom(PApplet parent){
+	public MovingRobot(PApplet parent){
 		//Initialize Xbee communication port
 		int nbPorts = Serial.list().length;
-		String XBeePort = Serial.list()[nbPorts -1];  
-		println(XBeePort);
-		if(XBeePort.equals("ttyUSB0"))
-			port = new Serial(parent, XBeePort, 38400);   
+		String XBeePort = Serial.list()[nbPorts -1]; 
+		println(Arrays.toString(Serial.list()));
+		println("XBeePort "+XBeePort);
+		port = new Serial(parent, XBeePort, 38400);  
 	}
 
-	public static void AstarActionsPerforming(String chain){
+	public void AstarActionsPerforming(List<String> chain){
 		try {
-			char cmd;
-			for (int i = 0; i < chain.length(); i++) {
-				cmd = chain.charAt(i);
+			String cmd;
+			for (int i = 0; i < chain.size(); i++) {
+				cmd = chain.get(i);
 				switch (cmd) {
-					case 'A':
+					case "R":
 					{
-						GOSTRAIGHT();
-						Thread.sleep(10000);
-						break;
-					}
-					case 'R':
-					{
-						GORIGHT();
+						TURNRIGHT();
 						Thread.sleep(15000);
 						break;
 					}
-					case 'L':
+					case "L":
 					{
-						GOLEFT();
+						TURNLEFT();
 						Thread.sleep(15000);
+						break;
+					}
+					default :{
+						int coef = Integer.valueOf(new String(cmd));
+						println("Distance "+getDistance(DISTANCE, coef));
+						GOSTRAIGHT(getDistance(DISTANCE, coef));
+						if(coef == 1)
+							Thread.sleep(10000);
+						else
+							Thread.sleep(coef*3000+10000);
 						break;
 					}
 				}
@@ -50,25 +57,29 @@ public class MovingRobot extends PApplet{
 			e.printStackTrace();
 		}
 	}
-	public static void GOSTRAIGHT(){
+	public  void GOSTRAIGHT(String distance){
 		String cmd = setCMD(distance,"000.000");
-		System.out.println(cmd);
 		sendTrame(cmd);
 	}
 
-	public static void GOLEFT(){
+	public  void TURNLEFT(){
 		sendTrame(setCMD("000.150","001.570"));
 	}
 
-	public static void GORIGHT(){
+	public  void TURNRIGHT(){
 		sendTrame(setCMD("000.150","-001.570"));
 	}
 	
-	public static String setCMD(String distance, String theta){
+	public  String setCMD(String distance, String theta){
 		return "d"+distance+"a"+theta+"f";
 	}
 	
-	public static void sendTrame(String trame){
+	public  void sendTrame(String trame){
 		port.write(trame);
+	}
+	
+	private String getDistance(String distance, int coef){
+		float op = Float.valueOf(distance)*coef;
+		return nf(op,3,3);
 	}
 }
