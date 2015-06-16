@@ -64,7 +64,7 @@ public class AstarSimulation extends PApplet{
 		 println("GOSTRAIGHT");
 		}  
 		else if (keyCode==DOWN){
-		  robot.sendTrame(robot.setCMD("000.000", "000.000"));
+		  robot.sendDataToRobot(robot.setCMD("000.000", "000.000"));
 		  println("Backward");
 		}
 		else if (keyCode==LEFT){

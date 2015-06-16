@@ -59,23 +59,34 @@ public class MovingRobot extends PApplet{
 	}
 	public  void GOSTRAIGHT(String distance){
 		String cmd = setCMD(distance,"000.000");
-		sendTrame(cmd);
+		sendDataToRobot(cmd);
 	}
 
 	public  void TURNLEFT(){
-		sendTrame(setCMD("000.150","001.570"));
+		sendDataToRobot(setCMD("000.150","001.570"));
 	}
 
 	public  void TURNRIGHT(){
-		sendTrame(setCMD("000.150","-001.570"));
+		sendDataToRobot(setCMD("000.150","-001.570"));
 	}
 	
 	public  String setCMD(String distance, String theta){
 		return "d"+distance+"a"+theta+"f";
 	}
 	
-	public  void sendTrame(String trame){
+	//Writing data to serial port
+	public  void sendDataToRobot(String trame){
 		port.write(trame);
+	}
+	
+	//Reading data from serial port
+	public boolean readDataFromRobot(){
+		boolean signal = false;
+		int receiveData = port.read();
+		if(receiveData != 0){
+			signal = true;
+		}
+		return signal;
 	}
 	
 	private String getDistance(String distance, int coef){

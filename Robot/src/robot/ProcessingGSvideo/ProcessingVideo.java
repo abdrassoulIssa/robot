@@ -1,6 +1,4 @@
 package robot.ProcessingGSvideo;
-import java.util.Arrays;
-
 import processing.core.PApplet;
 import processing.video.*;
 import static robot.algo.otsu.OTSUConstant.*;
@@ -21,9 +19,8 @@ public class ProcessingVideo extends PApplet{
 		else {
 		  // The camera can be initialized directly using an 
 		  // element from the array returned by list():
-			println(Arrays.toString(cameras));
 			cam = new Capture(this, cameras[0]);
-			//cam.start();     
+			cam.start();     
 		}      
 	}
 
@@ -33,10 +30,5 @@ public class ProcessingVideo extends PApplet{
 		}
 		//cam.resize(WIDTH, HEIGHT);
 		image(cam, 0, 0);
-	}
-	public void keyPressed() {
-		if(keyCode == ENTER)
-		cam.start();  
-		cam.read();
 	}
 }
