@@ -23,39 +23,38 @@ public class MovingRobot extends PApplet{
 	}
 
 	public void AstarActionsPerforming(List<String> chain){
-		try {
-			String cmd;
-			for (int i = 0; i < chain.size(); i++) {
-				cmd = chain.get(i);
+		String cmd;
+		for (int i = 0; i < chain.size(); i++) {
+			cmd = chain.get(i);
+			if(port.available() > 0){
 				switch (cmd) {
 					case "R":
 					{
 						TURNRIGHT();
-						Thread.sleep(15000);
+						//Thread.sleep(15000);
 						break;
 					}
 					case "L":
 					{
 						TURNLEFT();
-						Thread.sleep(15000);
+						//Thread.sleep(15000);
 						break;
 					}
 					default :{
 						int coef = Integer.valueOf(new String(cmd));
 						println("Distance "+getDistance(DISTANCE, coef));
 						GOSTRAIGHT(getDistance(DISTANCE, coef));
+						/*
 						if(coef == 1)
 							Thread.sleep(10000);
 						else
 							Thread.sleep(coef*3000+10000);
+						*/
 						break;
 					}
-				}
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				}//END SWITCH
+			}//END IF
+		}//END FOR
 	}
 	public  void GOSTRAIGHT(String distance){
 		String cmd = setCMD(distance,"000.000");
@@ -82,8 +81,9 @@ public class MovingRobot extends PApplet{
 	//Reading data from serial port
 	public boolean readDataFromRobot(){
 		boolean signal = false;
-		int receiveData = port.read();
-		if(receiveData != 0){
+		int receiveData;
+		if(port.available()>0){
+			receiveData = port.read();
 			signal = true;
 		}
 		return signal;

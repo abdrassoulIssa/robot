@@ -123,15 +123,22 @@ public class AstarSimulation extends PApplet{
 	
 	public void start(){
 		  if(isMapNotEmpty()){
+			  
 			  Path path = finder.findPath(new Robot(1), 0, 0,
 					  		goalPoint.getX(), goalPoint.getY());
 			  
 			  if(path != null){
+				  
 				  String cmd = AStarPathFollowing(path);
 				  cmd   = AstarGenerateTrajectory(ROBOTORIENTATION+""+cmd);
 				  List<String> chain= AstarTrajectoryTracking(cmd);
 				  println("Command chain : "+chain);
+				 
+				  //Drawing the path computed
 				  pathDrawing(path);
+				  //Sending signal to the robot when ready to perform the mission 
+				  robot.sendDataToRobot("go");
+				  //Sending command to the robot
 				  robot.AstarActionsPerforming(chain);
 			  }
 		  }
