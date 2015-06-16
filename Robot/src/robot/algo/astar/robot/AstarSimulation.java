@@ -57,25 +57,6 @@ public class AstarSimulation extends PApplet{
 	  goalPoint = new Cell(y, x, Color.BLACK);
 	}
 	
-	public void keyPressed(){
-		 //To control the ground robot manually
-		if (keyCode==UP){
-		 robot.GOSTRAIGHT("000.800");
-		 println("GOSTRAIGHT");
-		}  
-		else if (keyCode==DOWN){
-		  robot.sendDataToRobot(robot.setCMD("000.000", "000.000"));
-		  println("Backward");
-		}
-		else if (keyCode==LEFT){
-		  robot.TURNLEFT();
-		  println("LEFT");
-		}
-		else if (keyCode==RIGHT){
-		  robot.TURNRIGHT();
-		  println("RIGHT");
-		} 	   
-	}
 	
 	public void addMap(String filename){
 		try {
@@ -113,6 +94,9 @@ public class AstarSimulation extends PApplet{
 		return map != null;
 	}
 	
+	public void stop(){
+		robot.closePort();
+	}
 	public void restart() {
 		grid.removeAllUnits();
 		grid.cleanGraphic();;
@@ -137,7 +121,7 @@ public class AstarSimulation extends PApplet{
 				  //Drawing the path computed
 				  pathDrawing(path);
 				  //Sending signal to the robot when ready to perform the mission 
-				  robot.sendDataToRobot("go");
+				  //robot.sendDataToRobot("go");
 				  //Sending command to the robot
 				  robot.AstarActionsPerforming(chain);
 			  }

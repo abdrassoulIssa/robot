@@ -19,7 +19,7 @@ public class Binarize extends PApplet{
 	{
 		size(640,480); 
 		numPixels = width * height;
-		map= loadImage("../img/navmap.JPG");
+		map= loadImage("../resources/img/navmap.JPG");
 		map.resize(640,480);
 	}
 

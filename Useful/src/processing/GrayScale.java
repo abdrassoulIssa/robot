@@ -17,7 +17,7 @@ public class GrayScale extends PApplet{
 		 size(640,480); 
 		 grid = createGraphics(640, 480);
 		 println(System.getProperty("user.dir"));
-		 map= loadImage("../img/navmap.JPG");
+		 map= loadImage("../resources/img/navmap.JPG");
 		
 		 // Initialize columns and rows
 		 cols = width/cellsize;

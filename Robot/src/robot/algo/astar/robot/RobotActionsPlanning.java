@@ -2,6 +2,7 @@ package robot.algo.astar.robot;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import robot.algo.astar.Path;
 
 public class RobotActionsPlanning{
@@ -90,8 +91,15 @@ public class RobotActionsPlanning{
 	public static void main(String[] args) {
 		String cmd = "ESSSEESSEENNNE";
 		cmd = AstarGenerateTrajectory(cmd);
-		System.out.println(cmd);
+		//System.out.println(cmd);
 		List<String> chain = AstarTrajectoryTracking(cmd);
-		System.out.println(chain);	
+		for (String val : chain) {
+			//System.out.println(val);
+			if(!val.equals("R") && !val.equals("L")){
+				//int coef = Integer.valueOf(new String(cmd));
+				System.out.println(val);
+			}
+		}
+		
 	}
 }

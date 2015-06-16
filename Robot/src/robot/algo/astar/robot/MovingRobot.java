@@ -21,38 +21,52 @@ public class MovingRobot extends PApplet{
 		println("XBeePort "+XBeePort);
 		port = new Serial(parent, XBeePort, 38400);  
 	}
+	
+	public void keyPressed(){
+		 //To control the ground robot manually
+		if (keyCode==UP){
+		 GOSTRAIGHT("000.800");
+		 println("GOSTRAIGHT");
+		}  
+		else if (keyCode==DOWN){
+		  sendDataToRobot(setCMD("000.000", "000.000"));
+		  println("Backward");
+		}
+		else if (keyCode==LEFT){
+		  TURNLEFT();
+		  println("LEFT");
+		}
+		else if (keyCode==RIGHT){
+		  TURNRIGHT();
+		  println("RIGHT");
+		} 	   
+	}
 
 	public void AstarActionsPerforming(List<String> chain){
 		String cmd;
+		String receive = null;
 		for (int i = 0; i < chain.size(); i++) {
 			cmd = chain.get(i);
 			if(port.available() > 0){
-				switch (cmd) {
-					case "R":
-					{
-						TURNRIGHT();
-						//Thread.sleep(15000);
-						break;
-					}
-					case "L":
-					{
-						TURNLEFT();
-						//Thread.sleep(15000);
-						break;
-					}
-					default :{
-						int coef = Integer.valueOf(new String(cmd));
-						println("Distance "+getDistance(DISTANCE, coef));
-						GOSTRAIGHT(getDistance(DISTANCE, coef));
-						/*
-						if(coef == 1)
-							Thread.sleep(10000);
-						else
-							Thread.sleep(coef*3000+10000);
-						*/
-						break;
-					}
-				}//END SWITCH
+				receive = port.readString();
+				println("Recieved data "+receive);
+				//Clear the buffer, or available() will still be > 0:
+				port.clear();
+				
+				if(cmd.equals("R")){
+					TURNRIGHT();
+					waiting();
+				}
+				else if(cmd.equals("L")){
+					TURNLEFT();
+					waiting();
+				}
+				else{
+					int coef = Integer.valueOf(cmd);
+					println("Distance "+getDistance(DISTANCE, coef));
+					GOSTRAIGHT(getDistance(DISTANCE, coef));
+					waiting();
+				}
 			}//END IF
 		}//END FOR
 	}
@@ -62,11 +76,11 @@ public class MovingRobot extends PApplet{
 	}
 
 	public  void TURNLEFT(){
-		sendDataToRobot(setCMD("000.150","001.570"));
+		sendDataToRobot(setCMD("000.000","001.570"));
 	}
 
 	public  void TURNRIGHT(){
-		sendDataToRobot(setCMD("000.150","-001.570"));
+		sendDataToRobot(setCMD("000.000","-001.570"));
 	}
 	
 	public  String setCMD(String distance, String theta){
@@ -79,18 +93,25 @@ public class MovingRobot extends PApplet{
 	}
 	
 	//Reading data from serial port
-	public boolean readDataFromRobot(){
-		boolean signal = false;
-		int receiveData;
+	public String readDataFromRobot(){
+		String receiveData = null;
 		if(port.available()>0){
-			receiveData = port.read();
-			signal = true;
+			receiveData = port.readString();
 		}
-		return signal;
+		return receiveData;
 	}
 	
 	private String getDistance(String distance, int coef){
 		float op = Float.valueOf(distance)*coef;
 		return nf(op,3,3);
+	}
+	
+	public void waiting(){
+		while(port.available() <= 0);
+	}
+	
+	public void closePort(){
+		port.clear();
+		port.stop();
 	}
 }
