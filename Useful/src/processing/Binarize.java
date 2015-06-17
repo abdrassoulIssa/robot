@@ -38,6 +38,8 @@ public class Binarize extends PApplet{
 		map_bin.updatePixels(); 
 		image(map_bin, 0, 0); 
 	}
+	
+	
 }
 
 

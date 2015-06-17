@@ -209,6 +209,8 @@ public class OtsuBinarize {
         }
         return binarized;
     }
+    
+
  
     // Convert R, G, B, Alpha to standard 8 bit
     private static int colorToRGB(int alpha, int red, int green, int blue) {
