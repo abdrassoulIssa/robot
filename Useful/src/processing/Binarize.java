@@ -8,7 +8,7 @@ import processing.core.PImage;
 public class Binarize extends PApplet{
 
 	PImage map;
-	PImage map_bin = new PImage(640,480,PConstants.ARGB);
+	PImage map_bin = new PImage(640,480,PConstants.RGB);
 	double tolerance = 150.0;
 	double red_value;
 	int i;
@@ -30,6 +30,7 @@ public class Binarize extends PApplet{
 				if(red_value > tolerance){
 				 	map_bin.pixels[i] = color(0, 0, 0);  
 				}
+				
 				else{
 				 	map_bin.pixels[i] = color(255, 255, 255);
 				} 
