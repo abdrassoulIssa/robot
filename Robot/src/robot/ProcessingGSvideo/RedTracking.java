@@ -10,7 +10,11 @@ import processing.core.PImage;
 import codeanticode.gsvideo.*;
 
 public class RedTracking extends PApplet{
-  // Variable for capture device
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+// Variable for capture device
   GSCapture video;
   // Previous Frame
   PImage prevFrame;
@@ -36,8 +40,8 @@ public class RedTracking extends PApplet{
     for (int x = 0; x < video.width; x ++ ) {
       for (int y = 0; y < video.height; y ++ ) {
         
-        int loc = x + y*video.width;            // Step 1, what is the 1D pixel location
-        int current = video.pixels[loc];      // Step 2, what is the current color
+        int loc = x + y*video.width;            
+        int current = video.pixels[loc];      
         
         float red_value = red(current);
         if (red_value > threshold) { 
