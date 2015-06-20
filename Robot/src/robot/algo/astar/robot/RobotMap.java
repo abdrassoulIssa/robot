@@ -44,7 +44,7 @@ public class RobotMap implements TileBasedMap {
 		readMatrix(filename);
 	}
 	
-	//Copy of constructor
+	//Constructor of copy
 	public RobotMap(int [][]map){
 		WIDTH  = map.length;
 		HEIGHT = map[0].length;

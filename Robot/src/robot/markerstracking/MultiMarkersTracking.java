@@ -12,7 +12,7 @@ public class MultiMarkersTracking extends PApplet{
 	private String camPara     = "/home/issa/workspaceSTAGE/Robot/resources/camera_para.dat";
 	private String patternPath = "/home/issa/workspaceSTAGE/Robot/resources/patterns/";
 	private static final int SCREEN_WIDTH  = 640;
-	private static final int SCREEN_HEIGHT = 360;
+	private static final int SCREEN_HEIGHT = 480;
 	private static  float displayScale;
 	private PImage pimage;
 	private int numMarkers = 0;
@@ -23,7 +23,7 @@ public class MultiMarkersTracking extends PApplet{
 	public void setup() {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 		
-		cam = new GSCapture(this, SCREEN_WIDTH, SCREEN_HEIGHT,"/dev/video1"); // initializing the webcam capture at a specific resolution
+		cam = new GSCapture(this, SCREEN_WIDTH, SCREEN_HEIGHT); // initializing the webcam capture at a specific resolution
 		cam.start(); // start capturing
 		noStroke(); 
 		displayScale = (float) width / SCREEN_WIDTH;
@@ -67,6 +67,7 @@ public class MultiMarkersTracking extends PApplet{
 			if((!nya.isExistMarker(i))){ 
 				continue; 
 			}
+			
 			//THE FOLLOWING CODE IS ONLY REACHED AND RUN IF THE MARKER DOES EXIST
 			//GET THE FOUR MARKER COORDINATES INTO AN ARRY OF 2D PVectors
 			PVector[] pos2d = nya.getMarkerVertex2D(i);

@@ -7,7 +7,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
-public class Otsuprocessing extends PApplet{
+public class Otsuprocessing {
  
 
     /**
@@ -16,35 +16,20 @@ public class Otsuprocessing extends PApplet{
 	private static final long serialVersionUID = 1L;
 	PImage binarized_image;
 	PImage pp;
-	public Otsuprocessing(){
+	PApplet parent;
+	public Otsuprocessing(PApplet parent){
 		binarized_image = 
 				new PImage(MWIDTH,MHEIGHT,PConstants.ARGB);
+		this.parent = parent;
     }
-	
-	
-	public void setup(){
-		size(MWIDTH,MHEIGHT);
-		pp = loadImage("../resources/img/navmap.JPG");
-		pp.resize(MWIDTH, MHEIGHT);
-		println(otsuTreshold(pp));
-		pp = redBinarize(pp);
-		int [][] map = new int[MROWS][MCOLS];
-		imageToMatrix(map);
-		
-		for (int i = 0; i < map.length; i++) {
-			println(" "+Arrays.toString(map[i]));
-		}
-		image(pp, 0, 0);
-	}
-
-    
+	   
     //Detect if corresponding tile may be an obstacle
     private boolean findObstacle(int xStart, int yStart, int [][]map){
 		for(int  x = yStart; x < yStart+CELLSIZE; x++){
 			for(int y = xStart; y < xStart+CELLSIZE; y++){				
                 int cellX = x/CELLSIZE;
 				int cellY = y/CELLSIZE;
-                int pixels = (int) red(binarized_image.pixels[y + x*binarized_image.width]);
+                int pixels = (int) parent.red(binarized_image.pixels[y + x*binarized_image.width]);
 				if(pixels == 255){
 					map[cellX][cellY] = 1;
 					break;
@@ -74,7 +59,7 @@ public class Otsuprocessing extends PApplet{
             for(int y = 0; y < pimage.height; y++) {       
                 indexofpixel = x + y*pimage.width;
                 current_pixel = pimage.pixels[indexofpixel];
-                int red_value = (int) red(current_pixel);
+                int red_value = (int) parent.red(current_pixel);
                 histogram[red_value]++;
             }
         }
@@ -95,9 +80,9 @@ public class Otsuprocessing extends PApplet{
                 indexofpixel  = x + y*pimage.width; 
                 current_pixel = pimage.pixels[indexofpixel];
                 
-                red_value   = red(current_pixel);
-                green_value = green(current_pixel);
-                blue_value  = blue(current_pixel);
+                red_value   = parent.red(current_pixel);
+                green_value = parent.green(current_pixel);
+                blue_value  = parent.blue(current_pixel);
  
                 grayscale = (int) (0.2126 * red_value + 0.7152 * green_value + 0.0722 * blue_value); 
                 // Write pixels into image
@@ -109,7 +94,7 @@ public class Otsuprocessing extends PApplet{
     }
  
     // Get binary treshold using Otsu's method
-    private int otsuTreshold(PImage pimage) {
+    public int otsuTreshold(PImage pimage) {
  
         int[] histogram = imageHistogram(pimage);
         int total = pimage.width * pimage.height;
@@ -162,13 +147,13 @@ public class Otsuprocessing extends PApplet{
                 
                 indexofpixel  = x + y*pimage.width; 
                 current_pixel = pimage.pixels[indexofpixel];
-                red_value = red(current_pixel);
+                red_value = parent.red(current_pixel);
 
                 if(red_value > threshold) {
-                    binarized.pixels[indexofpixel] = color(255);
+                    binarized.pixels[indexofpixel] = parent.color(255);
                 }
                 else {
-                    binarized.pixels[indexofpixel] = color(0);
+                    binarized.pixels[indexofpixel] = parent.color(0);
                 }
             }
         }
@@ -178,7 +163,7 @@ public class Otsuprocessing extends PApplet{
     }
     
     public PImage addImage(String filename){
-    	PImage  pimage = loadImage(filename);
+    	PImage  pimage = parent.loadImage(filename);
 		return pimage;
     }
  

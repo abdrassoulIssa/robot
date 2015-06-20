@@ -10,10 +10,9 @@ import processing.core.PImage;
 import robot.algo.astar.AStarPathFinder;
 import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
-import robot.algo.otsu.OtsuBinarize;
 import static robot.algo.otsu.OTSUConstant.*;
-import static robot.algo.otsu.ImageProcessing.*;
 import static robot.algo.astar.robot.RobotActionsPlanning.*;
+import robot.algo.otsu.Otsuprocessing;
 
 @SuppressWarnings("serial")
 public class AstarSimulation extends PApplet{
@@ -29,12 +28,14 @@ public class AstarSimulation extends PApplet{
 	private RobotMap map;
 	private PathFinder finder;
 	private MovingRobot robot;
+	private Otsuprocessing otsu;
 	private static final char ROBOTORIENTATION = 'E';
 
 	public  void setup(){
 		size(MWIDTH, MHEIGHT);
 		pg	  = createGraphics(MWIDTH, MHEIGHT);
 		grid  = new Grid(pg);
+		otsu  = new Otsuprocessing(this);
 		robot = new MovingRobot(this);
 	}
 	
@@ -83,10 +84,14 @@ public class AstarSimulation extends PApplet{
 		pimage = loadImage(filename);
 		pimage.resize(MWIDTH, MHEIGHT);
 		image(pimage,0,0, MWIDTH,MHEIGHT);
-		
-		OtsuBinarize.binarized = OtsuBinarize.binarize(toBufferedImage(pimage));
 		int [][] map = new int[MROWS][MCOLS];
+		/*
+		OtsuBinarize.binarized = OtsuBinarize.binarize(toBufferedImage(pimage));
 		OtsuBinarize.imageToMatrix(map);
+		addMap(map);
+		*/
+		otsu.redBinarize(pimage);
+		otsu.imageToMatrix(map);
 		addMap(map);
 	}
 	

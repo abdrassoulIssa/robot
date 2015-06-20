@@ -7,7 +7,7 @@ import processing.core.PImage;
 @SuppressWarnings("serial")
 public class GrayScale extends PApplet{
 	PImage map;
-	int cellsize = 30;
+	int cellsize = 40;
 	PGraphics grid;
 	int cols, rows;
 	// Declare 2D array
