@@ -7,7 +7,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
-public class Otsuprocessing {
+public class OtsuProcessing {
  
 
     /**
@@ -15,9 +15,8 @@ public class Otsuprocessing {
 	 */
 	private static final long serialVersionUID = 1L;
 	PImage binarized_image;
-	PImage pp;
 	PApplet parent;
-	public Otsuprocessing(PApplet parent){
+	public OtsuProcessing(PApplet parent){
 		binarized_image = 
 				new PImage(MWIDTH,MHEIGHT,PConstants.ARGB);
 		this.parent = parent;

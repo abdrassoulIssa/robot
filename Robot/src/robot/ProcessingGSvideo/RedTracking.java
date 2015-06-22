@@ -6,7 +6,7 @@ package robot.ProcessingGSvideo;
 // Modified by Davide Rocchesso - 2012
 
 import processing.core.PApplet;
-import robot.algo.otsu.Otsuprocessing;
+import robot.algo.otsu.OtsuProcessing;
 import codeanticode.gsvideo.*;
 
 public class RedTracking extends PApplet{
@@ -18,10 +18,10 @@ public class RedTracking extends PApplet{
   private GSCapture video;
   // How different must a pixel be to be a "motion" pixel
   private float threshold = 0;
-  private Otsuprocessing otsu;
+  private OtsuProcessing otsu;
   public void setup() {
     size(640,480);
-	otsu  = new Otsuprocessing(this);
+	otsu  = new OtsuProcessing(this);
     video = new GSCapture(this, width, height, 30);
     video.start();
   }

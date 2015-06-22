@@ -12,7 +12,7 @@ import robot.algo.astar.Path;
 import robot.algo.astar.PathFinder;
 import static robot.algo.otsu.OTSUConstant.*;
 import static robot.algo.astar.robot.RobotActionsPlanning.*;
-import robot.algo.otsu.Otsuprocessing;
+import robot.algo.otsu.OtsuProcessing;
 
 @SuppressWarnings("serial")
 public class AstarSimulation extends PApplet{
@@ -28,14 +28,14 @@ public class AstarSimulation extends PApplet{
 	private RobotMap map;
 	private PathFinder finder;
 	private MovingRobot robot;
-	private Otsuprocessing otsu;
+	private OtsuProcessing otsu;
 	private static final char ROBOTORIENTATION = 'E';
 
 	public  void setup(){
 		size(MWIDTH, MHEIGHT);
 		pg	  = createGraphics(MWIDTH, MHEIGHT);
 		grid  = new Grid(pg);
-		otsu  = new Otsuprocessing(this);
+		otsu  = new OtsuProcessing(this);
 		robot = new MovingRobot(this);
 	}
 	
