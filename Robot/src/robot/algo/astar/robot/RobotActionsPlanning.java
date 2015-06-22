@@ -17,7 +17,7 @@ public class RobotActionsPlanning{
 	 * @return chain of travels
 	 */
 	
-	public static String AStarPathFollowing(Path path){
+	public static String toCardinalPointsOfOrientation(Path path){
 		StringBuilder chain = new StringBuilder();
 		for (int i = 0; i < path.getLength()-1; i++) {
 			 int xC = path.getX(i), xF = path.getX(i+1);
@@ -39,7 +39,7 @@ public class RobotActionsPlanning{
 		return chain.toString();
 	}
 
-	public static String AstarGenerateTrajectory(String chain){
+	public static String cardinalPointsToTheActions(String chain){
 		StringBuilder actions = new StringBuilder();
 		for (int i = 0; i < chain.length() - 1; i++) {
 			char currentAction = chain.charAt(i);
@@ -66,7 +66,7 @@ public class RobotActionsPlanning{
 		return actions.toString();
 	}
 	
-	public static List<String> AstarTrajectoryTracking(String chain){
+	public static List<String> reducedFormulaOfTheActions(String chain){
 		int count = 0; 
 		List<String> actions = new ArrayList<String>();
 		for (int i = 0; i < chain.length(); i++) {
@@ -90,9 +90,9 @@ public class RobotActionsPlanning{
 	
 	public static void main(String[] args) {
 		String cmd = "ESSSEESSEENNNE";
-		cmd = AstarGenerateTrajectory(cmd);
+		cmd = cardinalPointsToTheActions(cmd);
 		//System.out.println(cmd);
-		List<String> chain = AstarTrajectoryTracking(cmd);
+		List<String> chain = reducedFormulaOfTheActions(cmd);
 		for (String val : chain) {
 			//System.out.println(val);
 			if(!val.equals("R") && !val.equals("L")){

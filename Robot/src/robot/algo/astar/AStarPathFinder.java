@@ -96,7 +96,6 @@ public class AStarPathFinder implements PathFinder {
 			addToClosed(current);
 			
 			// search through all the neighbours of the current node evaluating
-
 			// them as next steps
 
 			for (int x=-1;x<2;x++) {

@@ -118,9 +118,9 @@ public class AstarSimulation extends PApplet{
 			  
 			  if(path != null){
 				  
-				  String cmd = AStarPathFollowing(path);
-				  cmd   = AstarGenerateTrajectory(ROBOTORIENTATION+""+cmd);
-				  List<String> chain= AstarTrajectoryTracking(cmd);
+				  String cmd = toCardinalPointsOfOrientation(path);
+				  cmd        = cardinalPointsToTheActions(ROBOTORIENTATION+""+cmd);
+				  List<String> chain= reducedFormulaOfTheActions(cmd);
 				  println("Command chain : "+chain);
 				 
 				  //Drawing the path computed
@@ -128,7 +128,7 @@ public class AstarSimulation extends PApplet{
 				  //Sending signal to the robot when ready to perform the mission 
 				  //robot.sendDataToRobot("go");
 				  //Sending command to the robot
-				  robot.AstarActionsPerforming(chain);
+				  robot.AstarTrajectoryTracking(chain);
 			  }
 		  }
 	}
