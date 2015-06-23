@@ -11,6 +11,7 @@ public class MovingRobot extends PApplet{
 	 //Variable for communication port (used for Xbee)
 	private  Serial port;
 	private static final String DISTANCE = "000.800";
+	private String receiveData = "";
 	
 	public MovingRobot(PApplet parent){
 		//Initialize Xbee communication port
@@ -46,33 +47,36 @@ public class MovingRobot extends PApplet{
 
 	public void AstarTrajectoryTracking(List<String> chain){
 		String cmd;
-		String receive = null;
-		for (int i = 0; i < chain.size(); i++) {
+		int i = 0;
+		receiveData = "F";
+		do {
 			cmd = chain.get(i);
-			waiting();
-			if(port.available() > 0){
-				receive = port.readString();
-				println("Received data "+receive);
-				//Clear the buffer, or available() will still be > 0:
-				port.clear();
-				
+			if(receiveData.length() > 0){
 				if(cmd.equals("R")){
 					TURNRIGHT();
-					waiting();
 				}
 				else if(cmd.equals("L")){
 					TURNLEFT();
-					waiting();
 				}
 				else{
 					int coef = Integer.valueOf(cmd);
-					println("Distance "+getDistance(DISTANCE, coef));
+					println("Distance : "+getDistance(DISTANCE, coef));
 					GOSTRAIGHT(getDistance(DISTANCE, coef));
-					waiting();
 				}
+				i++;
 			}//END IF
-		}//END FOR
+			if(port.available() > 0){
+				receiveData = port.readString();
+				println("Received data "+receiveData);
+				receiveData = "";
+				port.clear();
+			}
+		}while(i < chain.size());//END WHILE
+		println("FIN:",i);
+		port.clear();
 	}
+	
+
 	public  void GOSTRAIGHT(String distance){
 		String cmd = setCMD(distance,"000.000");
 		sendDataToRobot(cmd);

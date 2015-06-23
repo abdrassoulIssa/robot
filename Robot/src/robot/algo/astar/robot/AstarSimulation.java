@@ -58,6 +58,25 @@ public class AstarSimulation extends PApplet{
 	  goalPoint = new Cell(y, x, Color.BLACK);
 	}
 	
+	public void keyPressed(){
+		 //To control the ground robot manually
+		if (keyCode==UP){
+		 robot.GOSTRAIGHT("000.800");
+		 println("GOSTRAIGHT");
+		}  
+		else if (keyCode==DOWN){
+		  robot.sendDataToRobot(robot.setCMD("000.000", "000.000"));
+		  println("Backward");
+		}
+		else if (keyCode==LEFT){
+		  robot.TURNLEFT();
+		  println("LEFT");
+		}
+		else if (keyCode==RIGHT){
+		 robot.TURNRIGHT();
+		  println("RIGHT");
+		} 	   
+	}
 	
 	public void addMap(String filename){
 		try {
