@@ -35,20 +35,23 @@ public class MainFrame extends JFrame{
 	
 		ImageIcon icon = null;
 		JTabbedPane tabbedPane = new JTabbedPane();
-		Component panel = new SimulationFrame();
-		
-		
-		//tabbedPane.setBounds(0, 0, 500, 500);
-		tabbedPane.addTab("A Star simulation", icon,panel, "Astar algorithm");
+		SimulationFrame simlation = new SimulationFrame();
+		new Thread(simlation).start();		
+
+		tabbedPane.addTab("A Star simulation", icon,simlation, "Astar algorithm");
 		tabbedPane.setSelectedIndex(0);//DEFINIT L'ONGLET ACTIF AU DEMARRAGE DE L'API
 		
+		Component panel;
 		JPanel scenepan = new JPanel();
 		scenepan.setPreferredSize(new Dimension(600,600));
 		scenepan.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-		panel = new RealTimeFrame();
+		panel = new ImageFrame();
 		scenepan.add(panel);
-		tabbedPane.addTab("Image processing", icon, new ImageFrame(), "Binarize image");
-		tabbedPane.addTab("Real time ", icon, new RealTimeFrame(), "Video");
+		tabbedPane.addTab("Image processing", icon, panel, "Binarize image");
+		
+		RealTimeFrame realtime = new RealTimeFrame();
+		new Thread(realtime).start();
+		tabbedPane.addTab("Real time ", icon, realtime, "Video");
 
 		container.setLayout(new GridLayout(1, 1));
 		container.add(tabbedPane);

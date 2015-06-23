@@ -1,7 +1,6 @@
 package robot.algo.astar.robot;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import processing.core.PApplet;
@@ -21,8 +20,7 @@ public class MovingRobot extends PApplet{
 	private void initXbeeCom(PApplet parent){
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1]; 
-		println(Arrays.toString(Serial.list()));
-		println("XBeePort "+XBeePort);
+		println("XBeePort : "+XBeePort);
 		port = new Serial(parent, XBeePort, 38400); 
 	}
 	
@@ -51,9 +49,10 @@ public class MovingRobot extends PApplet{
 		String receive = null;
 		for (int i = 0; i < chain.size(); i++) {
 			cmd = chain.get(i);
+			waiting();
 			if(port.available() > 0){
 				receive = port.readString();
-				println("Recieved data "+receive);
+				println("Received data "+receive);
 				//Clear the buffer, or available() will still be > 0:
 				port.clear();
 				

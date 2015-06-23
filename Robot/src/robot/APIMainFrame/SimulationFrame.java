@@ -12,7 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import robot.algo.astar.robot.AstarSimulation;
 
-public class SimulationFrame extends JPanel implements ActionListener{
+public class SimulationFrame extends JPanel implements ActionListener, Runnable{
 
 	/**
 	 * 
@@ -25,8 +25,6 @@ public class SimulationFrame extends JPanel implements ActionListener{
 	private AstarSimulation dpath;
 	public SimulationFrame() {
 		dpath = new AstarSimulation();
-		dpath.init();
-		dpath.start();
 		build();
 	}
 	
@@ -90,6 +88,13 @@ public class SimulationFrame extends JPanel implements ActionListener{
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		dpath.init();
+		dpath.start();
 	}
 	
 }
