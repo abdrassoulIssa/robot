@@ -161,9 +161,5 @@ public class OtsuProcessing {
         return binarized;
     }
     
-    public PImage addImage(String filename){
-    	PImage  pimage = parent.loadImage(filename);
-		return pimage;
-    }
  
 }
