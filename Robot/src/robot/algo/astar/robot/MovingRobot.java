@@ -25,33 +25,15 @@ public class MovingRobot extends PApplet{
 		port = new Serial(parent, XBeePort, 38400); 
 	}
 	
-	public void keyPressed(){
-		 //To control the ground robot manually
-		if (keyCode==UP){
-		 GOSTRAIGHT("000.800");
-		 println("GOSTRAIGHT");
-		}  
-		else if (keyCode==DOWN){
-		  sendDataToRobot(setCMD("000.000", "000.000"));
-		  println("Backward");
-		}
-		else if (keyCode==LEFT){
-		  TURNLEFT();
-		  println("LEFT");
-		}
-		else if (keyCode==RIGHT){
-		  TURNRIGHT();
-		  println("RIGHT");
-		} 	   
-	}
 
 	public void AstarTrajectoryTracking(List<String> chain){
+		println("BEGINING OF PERFORMING TRAGECTORY TRACKING");
 		String cmd;
 		int i = 0;
 		receiveData = "F";
 		do {
 			cmd = chain.get(i);
-			if(receiveData.length() > 0){
+			if(receiveData != null && receiveData.equalsIgnoreCase("F")){
 				if(cmd.equals("R")){
 					TURNRIGHT();
 				}
@@ -65,15 +47,10 @@ public class MovingRobot extends PApplet{
 				}
 				i++;
 			}//END IF
-			if(port.available() > 0){
-				receiveData = port.readString();
-				println("Received data "+receiveData);
-				receiveData = "";
-				port.clear();
-			}
+			receiveData = port.readString();
+			println("performing...");
 		}while(i < chain.size());//END WHILE
-		println("FIN:",i);
-		port.clear();
+		println("END OF COMMANDS EXECTION WITH A TOTAL OF "+i+" ACTIONS");
 	}
 	
 
@@ -101,9 +78,10 @@ public class MovingRobot extends PApplet{
 	
 	//Reading data from serial port
 	public String readDataFromRobot(){
-		String receiveData = null;
+		String receiveData = "G";
 		if(port.available()>0){
 			receiveData = port.readString();
+			println("Received data "+receiveData);
 		}
 		return receiveData;
 	}
@@ -114,7 +92,7 @@ public class MovingRobot extends PApplet{
 	}
 	
 	public void waiting(){
-		while(port.available() <= 0);
+
 	}
 	
 	public void closePort(){

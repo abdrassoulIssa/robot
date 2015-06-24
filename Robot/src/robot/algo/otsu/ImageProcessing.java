@@ -21,10 +21,12 @@ public class ImageProcessing extends PApplet {
 	private PImage imgcopy;
 	private Grid grid;
 	private PGraphics pg;
+	private OtsuProcessing otsu;
 	public void setup(){
 		size(MWIDTH,MHEIGHT);
 		pg	= createGraphics(MWIDTH, MHEIGHT);
 		grid= new Grid(pg);
+		otsu = new OtsuProcessing(this);
 	}
 	
 	public void draw(){
@@ -32,10 +34,8 @@ public class ImageProcessing extends PApplet {
 		if(img != null){
 			image(img, 0, 0);
 		}
-		else{
-			grid.drawGrid();
-			image(pg, 0, 0);
-		}
+		grid.drawGrid();
+		image(pg, 0, 0);
 	}
 	
 	
@@ -47,8 +47,11 @@ public class ImageProcessing extends PApplet {
 	}
 	
 	public void binairiseImage(){
+		/*
 		BufferedImage binarized = OtsuBinarize.binarize(toBufferedImage(img));
 		img = toPImage(binarized);
+		*/
+		img = otsu.redBinarize(img);
 		image(img, 0, 0);      
 		repaint();
 	}
