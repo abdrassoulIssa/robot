@@ -88,18 +88,4 @@ public class RobotActionsPlanning{
 		return actions;
 	}
 	
-	public static void main(String[] args) {
-		String cmd = "ESSSEESSEENNNE";
-		cmd = cardinalPointsToTheActions(cmd);
-		//System.out.println(cmd);
-		List<String> chain = reducedFormulaOfTheActions(cmd);
-		for (String val : chain) {
-			//System.out.println(val);
-			if(!val.equals("R") && !val.equals("L")){
-				//int coef = Integer.valueOf(new String(cmd));
-				System.out.println(val);
-			}
-		}
-		
-	}
 }

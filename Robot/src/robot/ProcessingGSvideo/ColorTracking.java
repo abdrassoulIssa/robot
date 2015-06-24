@@ -6,6 +6,10 @@ import codeanticode.gsvideo.*;
 public class ColorTracking extends PApplet
 {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -593105168032214352L;
 	// Variable for capture device 
 	GSCapture video; 
 	// A variable for the color we are searching for. 

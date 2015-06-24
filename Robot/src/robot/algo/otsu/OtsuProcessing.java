@@ -1,19 +1,12 @@
 package robot.algo.otsu;
 import static robot.algo.otsu.OTSUConstant.*;
 
-import java.util.Arrays;
-
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
 public class OtsuProcessing {
  
-
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	PImage binarized_image;
 	PApplet parent;
 	public OtsuProcessing(PApplet parent){

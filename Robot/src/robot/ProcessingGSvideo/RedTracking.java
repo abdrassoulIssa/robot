@@ -31,10 +31,10 @@ public class RedTracking extends PApplet{
     // Capture video
     if (video.available()) {
       video.read();
+      video.loadPixels();
     }
     threshold = otsu.otsuTreshold(video.get());
-   // loadPixels();
-    video.loadPixels();
+    
     // Begin loop to walk through every pixel
     for (int x = 0; x < video.width; x ++ ) {
       for (int y = 0; y < video.height; y ++ ) {
@@ -45,9 +45,7 @@ public class RedTracking extends PApplet{
         float red_value = red(current);
         if (red_value > threshold) { 
           video.pixels[loc] = color(255,0,0);
-        } else {
-          //video.pixels[loc] = color(255,255,255);
-        }
+        } 
       }
     }
     updatePixels();

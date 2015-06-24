@@ -18,24 +18,7 @@ public class OtsuBinarize {
 	@SuppressWarnings("unused")
 	private static BufferedImage original, grayscale;
 	public static BufferedImage binarized;
-	private static int [][] map = new int[MROWS][MCOLS];
 
-    public static void main(String[] args) throws IOException {
-    	
-    	String imgPath = "resources/img/map.JPG";
-        File original_f = new File(imgPath);
-        String output_f = imgPath+"_bin";
-        original = ImageIO.read(original_f);
-        original = scale(original, MWIDTH, MHEIGHT);
-        binarized = binarize(original);
-        
-       //grayscale = toGray(original);
-       //binarized = binarize(grayscale);
-
-        imageToMatrix(map);
-        saveMap("resources/map/map5.dat", map);
-        saveImage(output_f);         
-    }
     
     //Detect if corresponding tile may be an obstacle
     private static  boolean findObstacle(int xStart, int yStart, int [][]map){
@@ -82,7 +65,7 @@ public class OtsuBinarize {
 		}
     }
  
-    private static void saveImage(String output) throws IOException {
+    public static void saveImage(String output) throws IOException {
         File file = new File(output+".jpg");
         ImageIO.write(binarized, "jpg", file);
     }
