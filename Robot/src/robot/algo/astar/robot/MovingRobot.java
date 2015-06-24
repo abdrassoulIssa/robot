@@ -29,10 +29,11 @@ public class MovingRobot extends PApplet{
 	public void AstarTrajectoryTracking(List<String> chain){
 		println("BEGINING OF PERFORMING TRAGECTORY TRACKING");
 		String cmd;
-		int i = 0;
+		int count = 0;
+		//int timeout = 0;
 		receiveData = "F";
 		do {
-			cmd = chain.get(i);
+			cmd = chain.get(count);
 			if(receiveData != null && receiveData.equalsIgnoreCase("F")){
 				if(cmd.equals("R")){
 					TURNRIGHT();
@@ -45,12 +46,15 @@ public class MovingRobot extends PApplet{
 					println("Distance : "+getDistance(DISTANCE, coef));
 					GOSTRAIGHT(getDistance(DISTANCE, coef));
 				}
-				i++;
+				count++;
 			}//END IF
 			receiveData = port.readString();
 			println("performing...");
-		}while(i < chain.size());//END WHILE
-		println("END OF COMMANDS EXECTION WITH A TOTAL OF "+i+" ACTIONS");
+			//timeout++;
+			//if(timeout == 10000) break;
+			
+		}while(count < chain.size());//END WHILE
+		println("END OF COMMANDS EXECTION WITH A TOTAL OF "+count+" ACTIONS");
 	}
 	
 

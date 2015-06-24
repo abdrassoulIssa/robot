@@ -9,8 +9,9 @@ import codeanticode.gsvideo.*; // The GSVideo library
 
 public class MultiMarkersTracking extends PApplet{
 	private static final long serialVersionUID = 1L;
-	private String camPara     = "/home/issa/workspaceSTAGE/Robot/resources/camera_para.dat";
-	private String patternPath = "/home/issa/workspaceSTAGE/Robot/resources/patterns/";
+	String path = System.getProperty("user.dir");
+	private String camPara     = path+"/../resources/camera_para.dat";
+	private String patternPath = path+"/../resources/patterns/";
 	private static final int SCREEN_WIDTH  = 640;
 	private static final int SCREEN_HEIGHT = 480;
 	private static  float displayScale;
@@ -22,7 +23,6 @@ public class MultiMarkersTracking extends PApplet{
 
 	public void setup() {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
-		
 		cam = new GSCapture(this, SCREEN_WIDTH, SCREEN_HEIGHT); // initializing the webcam capture at a specific resolution
 		cam.start(); // start capturing
 		noStroke(); 
