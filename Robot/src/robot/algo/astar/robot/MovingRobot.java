@@ -12,6 +12,7 @@ public class MovingRobot extends PApplet{
 	private  Serial port;
 	private static final String DISTANCE = "000.800";
 	private String receiveData = "";
+	boolean xbeeOK = false; //Ad a flag to test when the port is OK
 	
 	public MovingRobot(PApplet parent){
 		//Initialize Xbee communication port
@@ -22,7 +23,13 @@ public class MovingRobot extends PApplet{
 		int nbPorts = Serial.list().length;
 		String XBeePort = Serial.list()[nbPorts -1]; 
 		println("XBeePort : "+XBeePort);
-		port = new Serial(parent, XBeePort, 38400); 
+	     try {
+	        port = new Serial(parent, XBeePort, 38400);
+	        xbeeOK = true;
+	     } catch (Exception e) {
+	        xbeeOK = false;
+	        println("You have to connect the Xbee usb, please...");
+	     }
 	}
 	
 
@@ -32,29 +39,34 @@ public class MovingRobot extends PApplet{
 		int count = 0;
 		//int timeout = 0;
 		receiveData = "F";
-		do {
-			cmd = chain.get(count);
-			if(receiveData != null && receiveData.equalsIgnoreCase("F")){
-				if(cmd.equals("R")){
-					TURNRIGHT();
-				}
-				else if(cmd.equals("L")){
-					TURNLEFT();
-				}
-				else{
-					int coef = Integer.valueOf(cmd);
-					println("Distance : "+getDistance(DISTANCE, coef));
-					GOSTRAIGHT(getDistance(DISTANCE, coef));
-				}
-				count++;
-			}//END IF
-			receiveData = port.readString();
-			println("performing...");
-			//timeout++;
-			//if(timeout == 10000) break;
-			
-		}while(count < chain.size());//END WHILE
-		println("END OF COMMANDS EXECTION WITH A TOTAL OF "+count+" ACTIONS");
+			if(xbeeOK == true){
+			do {
+				cmd = chain.get(count);
+				if(receiveData != null && receiveData.equalsIgnoreCase("F")){
+					if(cmd.equals("R")){
+						TURNRIGHT();
+					}
+					else if(cmd.equals("L")){
+						TURNLEFT();
+					}
+					else{
+						int coef = Integer.valueOf(cmd);
+						println("Distance : "+getDistance(DISTANCE, coef));
+						GOSTRAIGHT(getDistance(DISTANCE, coef));
+					}
+					count++;
+				}//END IF
+				receiveData = port.readString();
+				//receiveData = readDataFromRobot();
+				println("performing...");
+				//timeout++;
+				//if(timeout == 10000) break;
+				
+			}while(count < chain.size());//END WHILE
+			println("END OF COMMANDS EXECTION WITH A TOTAL OF "+count+" ACTIONS");
+		}
+		else
+			println("You have to connect the Xbee usb, please...");
 	}
 	
 
@@ -77,12 +89,16 @@ public class MovingRobot extends PApplet{
 	
 	//Writing data to serial port
 	public  void sendDataToRobot(String trame){
-		port.write(trame);
+		if(xbeeOK == true)
+			port.write(trame);
+		else
+			println("You have to connect the Xbee usb, please...");
 	}
 	
 	//Reading data from serial port
 	public String readDataFromRobot(){
-		String receiveData = "G";
+		//String receiveData = "G";
+		String receiveData = null;
 		if(port.available()>0){
 			receiveData = port.readString();
 			println("Received data "+receiveData);
