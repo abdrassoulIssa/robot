@@ -19,14 +19,16 @@ public class RedTracking extends PApplet{
   // How different must a pixel be to be a "motion" pixel
   private float threshold = 0;
   private OtsuProcessing otsu;
-  public void setup() {
+  @Override
+public void setup() {
     size(640,480);
 	otsu  = new OtsuProcessing(this);
     video = new GSCapture(this, width, height, 30);
     video.start();
   }
 
-  public void draw() {
+  @Override
+public void draw() {
     
     // Capture video
     if (video.available()) {

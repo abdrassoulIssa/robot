@@ -7,6 +7,7 @@ import static robot.algo.otsu.OTSUConstant.*;
 public class ProcessingVideo extends PApplet{
 	private Capture cam;
 
+	@Override
 	public  void setup() {
 		size(MWIDTH, MHEIGHT);
 		
@@ -24,6 +25,7 @@ public class ProcessingVideo extends PApplet{
 		}      
 	}
 
+	@Override
 	public  void draw() {
 		if (cam.available() == true) {
 		  cam.read();

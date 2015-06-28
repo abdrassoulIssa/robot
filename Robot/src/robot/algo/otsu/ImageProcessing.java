@@ -22,6 +22,7 @@ public class ImageProcessing extends PApplet {
 	private Grid grid;
 	private PGraphics pg;
 	private OtsuProcessing otsu;
+	@Override
 	public void setup(){
 		size(MWIDTH,MHEIGHT);
 		pg	= createGraphics(MWIDTH, MHEIGHT);
@@ -29,6 +30,7 @@ public class ImageProcessing extends PApplet {
 		otsu = new OtsuProcessing(this);
 	}
 	
+	@Override
 	public void draw(){
 		
 		if(img != null){

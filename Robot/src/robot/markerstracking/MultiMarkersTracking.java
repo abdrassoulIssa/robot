@@ -21,6 +21,7 @@ public class MultiMarkersTracking extends PApplet{
 	GSCapture cam;
 	MultiMarker nya;
 
+	@Override
 	public void setup() {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 		cam = new GSCapture(this, SCREEN_WIDTH, SCREEN_HEIGHT); // initializing the webcam capture at a specific resolution
@@ -40,6 +41,7 @@ public class MultiMarkersTracking extends PApplet{
 		}
 	}
 	
+	@Override
 	public void draw() {
 		//IF THERE IS A CAM IMAGE COMING IN 
 		if (cam.available()) {
@@ -88,6 +90,7 @@ public class MultiMarkersTracking extends PApplet{
 	public String[] loadPatternFilenames(String path) {
 		File folder = new File(path);
 		FilenameFilter pattFilter = new FilenameFilter() {
+			@Override
 			public boolean accept(File dir, String name) {
 				return name.toLowerCase().endsWith(".patt");
 			}

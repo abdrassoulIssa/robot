@@ -102,6 +102,7 @@ public class RobotMap implements TileBasedMap {
 	/**
 	 * @see TileBasedMap#blocked(Mover, int, int)
 	 */
+	@Override
 	public boolean blocked(Mover mover, int x, int y) {
 		// if there's a unit at the location, then it's blocked
 		if (getTerrain(x,y) != 0) {
@@ -113,6 +114,7 @@ public class RobotMap implements TileBasedMap {
 	/**
 	 * @see TileBasedMap#getCost(Mover, int, int, int, int)
 	 */
+	@Override
 	public float getCost(Mover mover, int sx, int sy, int tx, int ty) {
 		return 1;
 	}
@@ -120,6 +122,7 @@ public class RobotMap implements TileBasedMap {
 	/**
 	 * @see TileBasedMap#getHeightInTiles()
 	 */
+	@Override
 	public int getHeightInTiles() {
 		return HEIGHT;
 	}
@@ -127,6 +130,7 @@ public class RobotMap implements TileBasedMap {
 	/**
 	 * @see TileBasedMap#getWidthInTiles()
 	 */
+	@Override
 	public int getWidthInTiles() {
 		return WIDTH;
 	}

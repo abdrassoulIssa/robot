@@ -14,6 +14,7 @@ public class ColorTracking extends PApplet
 	GSCapture video; 
 	// A variable for the color we are searching for. 
 	int trackColor; 
+	@Override
 	public void setup() 
 	{ 
 		size(320,240); 
@@ -24,6 +25,7 @@ public class ColorTracking extends PApplet
 		smooth(); 
 	} 
 
+	@Override
 	public void draw() 
 	{ 
 		// Capture and display the video 
@@ -75,6 +77,7 @@ public class ColorTracking extends PApplet
 		} 
 	} 
 
+	@Override
 	public void mousePressed() { 
 		// Save color where the mouse is clicked in trackColor variable 
 		int loc = mouseX + mouseY*video.width; 

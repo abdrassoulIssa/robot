@@ -31,6 +31,7 @@ public class AstarSimulation extends PApplet{
 	private OtsuProcessing otsu;
 	private static final char ROBOTORIENTATION = 'E';
 
+	@Override
 	public  void setup(){
 		size(MWIDTH, MHEIGHT);
 		pg	  = createGraphics(MWIDTH, MHEIGHT);
@@ -39,6 +40,7 @@ public class AstarSimulation extends PApplet{
 		robot = new MovingRobot(this);
 	}
 	
+	@Override
 	public  void draw(){
 		grid.fillCell(0, 0, Color.BLUE);
 		pg.fill(255);
@@ -47,6 +49,7 @@ public class AstarSimulation extends PApplet{
 		image(pg,0,0);
 	}
 
+	@Override
 	public void mousePressed() {
 	  // TRANSLATION OF MOUSE COORDINATES  IN THE SYSTEM OF THE GRID
 	  int x = mouseX/CELLSIZE; 
@@ -58,6 +61,7 @@ public class AstarSimulation extends PApplet{
 	  goalPoint = new Cell(y, x, Color.BLACK);
 	}
 	
+	@Override
 	public void keyPressed(){
 		 //To control the ground robot manually
 		if (keyCode==UP){
@@ -118,6 +122,7 @@ public class AstarSimulation extends PApplet{
 		return map != null;
 	}
 	
+	@Override
 	public void stop(){
 		robot.closePort();
 	}
@@ -129,6 +134,7 @@ public class AstarSimulation extends PApplet{
 		image(pimage,0,0, MWIDTH,MHEIGHT);
 	}
 	
+	@Override
 	public void start(){
 		  if(isMapNotEmpty()){
 			  

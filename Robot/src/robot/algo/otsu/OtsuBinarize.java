@@ -2,6 +2,7 @@ package robot.algo.otsu;
  
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
@@ -70,7 +71,7 @@ public class OtsuBinarize {
         ImageIO.write(binarized, "jpg", file);
     }
     public static BufferedImage scale(BufferedImage source, int width, int height) {
-        BufferedImage buf = new BufferedImage(width, height, BufferedImage.SCALE_DEFAULT);
+        BufferedImage buf = new BufferedImage(width, height, Image.SCALE_DEFAULT);
         Graphics2D g = buf.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(source, 0, 0, width, height, null);

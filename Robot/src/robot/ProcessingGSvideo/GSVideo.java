@@ -7,6 +7,7 @@ public class GSVideo extends PApplet {
 	private static final long serialVersionUID = 1L;
 	GSCapture video;
 	
+	@Override
 	public void setup(){
 		size(640,780);
 		background(10);
@@ -16,6 +17,7 @@ public class GSVideo extends PApplet {
 		
 	}
 	
+	@Override
 	public void draw(){
 		if(video.available()){
 			video.read();
