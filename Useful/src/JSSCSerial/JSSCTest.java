@@ -9,7 +9,7 @@ public class JSSCTest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+    	
     	String XBeePort = "/dev/ttyUSB0";
         SerialPort serialPort = new SerialPort(XBeePort);
         System.out.println(XBeePort);
